@@ -1,5 +1,8 @@
-<x-landingpage-layout>hola mundo</x-landingpage-layout>
-
+<x-landingpage-layout>
+    <x-slot name="header"> hola header </x-slot>
+    <div>hola</div>
+    <x-slot name="footer">@include('layouts.navigation')</x-slot>
+</x-landingpage-layout>
 {{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
