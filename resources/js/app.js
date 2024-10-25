@@ -19,7 +19,7 @@ import { Swiper } from 'swiper';
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-
+import 'bootstrap-icons/font/bootstrap-icons.css';
 // Initialize Swiper
 
   

@@ -15,7 +15,6 @@
             </div>
         </div>
     @endforeach
-    ...
   </div>
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>

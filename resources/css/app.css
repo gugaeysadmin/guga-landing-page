@@ -1,6 +1,9 @@
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* En resources/css/app.css */
 
 @layer components {
     .card {
