@@ -19,7 +19,7 @@
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
+                <header id="navbar" class="sticky top-0 z-20 w-full dark:bg-gray-800 shadow transition-all duration-300">
                         {{ $header }}
                 </header>
             @endisset
