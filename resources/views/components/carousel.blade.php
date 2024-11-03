@@ -47,8 +47,8 @@
                             alt="..." />
                         <div
                             class="absolute bottom-5 hidden py-5 text-center text-white md:block">
-                            <h5 class="text-xl">guga equipos y servicios</h5>
-                            <button class = "bg-white">xs<button>
+                            {{-- <h5 class="text-xl">guga equipos y servicios</h5>
+                            <button class = "bg-white">xs<button> --}}
                         </div> 
                 </div>
             @foreach ($images as $index => $image )

@@ -3,8 +3,12 @@
     {{-- Header --}}
     <x-slot name="header"> <x-header :pages="$pages"/></x-slot>
     
+    <div class="block">
+        <x-landing-video/>
+    </div>
+
     {{-- Carrusel --}}
-    <x-carousel :images="$imagelist" />
+    {{-- <x-carousel :images="$imagelist" /> --}}
     
     {{-- Alianzas --}}
     <section class="pt-20">

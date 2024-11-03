@@ -59,13 +59,13 @@ document.addEventListener('scroll', function() {
     const scrollY = window.scrollY;
 
     if (scrollY > 50) { // Cambia el color cuando se haya desplazado más de 50px
-        navbar.classList.remove('bg-white');
-        navbar.classList.add('bg-blue-50');
-        navbar.classList.add('bg-opacity-90'); 
+        // navbar.classList.remove('bg-white');
+        // navbar.classList.add('bg-blue-50');
+        // navbar.classList.add('bg-opacity-90'); 
     } else {
-        navbar.classList.remove('bg-blue-50');
-        navbar.classList.remove('bg-opacity-90'); 
-        navbar.classList.add('bg-white');
+        // navbar.classList.remove('bg-blue-50');
+        // navbar.classList.remove('bg-opacity-90'); 
+        // navbar.classList.add('bg-white');
     }
 });
 
