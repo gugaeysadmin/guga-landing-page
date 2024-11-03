@@ -3,8 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* En resources/css/app.css */
 
+.overlay-transparent {
+    /* background-color: linear-gradient(180deg, #1e40af 0%, #000000 100%); */
+    /* opacity: 0.85; */
+    background: linear-gradient(180deg, #061a58 1%, #000000 99%);
+    opacity: 0.70;
+}
 @layer components {
     .card {
         @apply rounded-lg shadow-md p-4 bg-slate-400 rounded-sm  shadow-md;

@@ -39,7 +39,8 @@
                             <div class="hidden sm:flex sm:items-center">
                                 <x-dropdown align="right" width="48">
                                     <x-slot name="trigger">
-                                        <button class="inline-flex items-center  py-2 border border-transparent leading-4 font-semibold rounded-md text-gray-200 dark:text-gray-200 dark:bg-gray-800 text-lg hover:text-white hover:font-bold dark:hover:text-gray-200 focus:outline-none transition ease-in-out duration-150">
+                                                        {{--hnav-item selector from app.js  --}}
+                                        <button class=" hnav-item inline-flex items-center  py-2 border border-transparent leading-4 font-semibold rounded-md text-gray-200 dark:text-gray-200 dark:bg-gray-800 text-lg hover:text-white hover:font-bold dark:hover:text-gray-200 focus:outline-none transition ease-in-out duration-150">
                                             <div>{{ $page['name'] }}</div>
 
                                             <div class="ms-1">
