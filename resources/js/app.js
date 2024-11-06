@@ -48,8 +48,12 @@ const swiper = new Swiper('.swiper', {
         spaceBetween: 20,
         },
         1200: {
-        slidesPerView: 4,
+        slidesPerView: 3,
         spaceBetween: 40,
+        },
+        1500: {
+            slidesPerView: 5,
+            spaceBetween: 40,
         },
     },
 });
@@ -68,7 +72,7 @@ document.addEventListener('scroll', function() {
             navitem.classList.add('hover:text-sky-500');
             navitem.classList.add('font-semibold');
         });
-        navbar.classList.add('bg-white');
+        navbar.classList.add('bg-slate-50');
         navbar.classList.add('shadow');
         logo.src = "img/logo_normal.png";
     } else {
@@ -79,7 +83,7 @@ document.addEventListener('scroll', function() {
             navitem.classList.add('text-gray-200');
             navitem.classList.add('hover:text-white');
         });
-        navbar.classList.remove('bg-white');
+        navbar.classList.remove('bg-slate-50');
         navbar.classList.remove('shadow');
         logo.src = "img/logo_white.png";
     }

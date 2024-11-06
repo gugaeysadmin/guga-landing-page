@@ -1,8 +1,8 @@
 
-<div {{ $attributes->merge(['class'=> 'grid grid-cols-1 md:grid-cols-3 gap-20 py-6 sm:px-4 md:px-12 lg:px-32 bg-[linear-gradient(120deg,rgba(255,255,255,0)_0%,rgba(163,186,221,1)_100%)]']) }}>
+<div {{ $attributes->merge(['class'=> 'grid grid-cols-1 md:grid-cols-3 gap-20 py-12 sm:px-4 md:px-12 lg:px-32 bg-slate-800']) }}>
     <!-- Informacion de la empresa -->
-    <div class="block" >
-        <img src="{{ asset('img/LogoGUGAChico.png') }}" class="my-4" alt="" />
+    <div class="block text-gray-200" >
+        <img src="{{ asset('img/logo_white.png') }}" class="mb-8" alt="" />
         <p class="mt-2 mb-4 pr-12">
         Somos una empresa comprometida con ofrecer a todos los médicos
         material de la más alta calidad.
@@ -12,9 +12,9 @@
         <a class="bi bi-facebook mr-2" href="https://www.facebook.com/gugaeys/" target="_blank"></a>
         <a class="bi bi-linkedin" href="https://www.linkedin.com/company/guga-equipos-y-servicios-sa-de-cv" target="_blank"></a>
     </div>
-    <div  class="block ga">
+    <div  class="block ga text-gray-200">
         <!-- Seccion con la direccion, telefono y correo -->
-        <p class="bi bi-geo-alt mt-8">
+        <p class="bi bi-geo-alt">
             Jazmines #34 Col. Granjas San Pablo C.P. 54930 Tultitlan Estado de
             México México
         </p>
