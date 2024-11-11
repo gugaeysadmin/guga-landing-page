@@ -17,25 +17,25 @@
     <section class="bg-slate-700 block px-4 sm:p-16 text-center">
         <h1 class="px-5 sm:px-5 md:px-32 mb-12 text-[3rem] font-sans font-semibold text-slate-50">{{ __('Alianzas') }}</h1>
         <div class="w-full px-4 md:px-24 flex flex-wrap justify-around">
-            <div class="bg-white mt-6 rounded-full p-6 w-[20rem] h-[20rem] flex justify-center items-center">
+            <div class="bg-white mt-6 rounded-2xl p-6 w-[17rem] h-[17rem] flex justify-center items-center">
                <a href="" class="my-auto" >
                   <img src={{ asset("img/cisa.png") }} alt="..." class="object-contain" />
                 </a>
             </div>
 
-            <div class="bg-white mt-6 rounded-full p-6 w-[20rem] h-[20rem] flex justify-center items-center">
+            <div class="bg-white mt-6 rounded-2xl p-6 w-[17rem] h-[17rem] flex justify-center items-center">
                <a href="" class="my-auto" >
                   <img src={{ asset("img/amtai.png") }} alt="..." class="object-contain" />
                 </a>
             </div>
 
-            <div class="bg-white mt-6 rounded-full p-6 w-[20rem] h-[20rem] flex justify-center items-center">
+            <div class="bg-white mt-6 rounded-2xl p-6 w-[17rem] h-[17rem] flex justify-center items-center">
                <a href="" class="my-auto" >
                   <img src={{ asset("img/biodex.jpg") }} alt="..." class="object-contain" />
                 </a>
             </div>
 
-            <div class="bg-white mt-6 rounded-full p-6 w-[20rem] h-[20rem] flex justify-center items-center">
+            <div class="bg-white mt-6 rounded-2xl p-6 w-[17rem] h-[17rem] flex justify-center items-center">
                <a href="" class="my-auto" >
                   <img src={{ asset("img/fiochetti.jpg") }} alt="..." class="object-contain" />
                 </a>
