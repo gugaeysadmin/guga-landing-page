@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 use Illuminate\View\Component;
 
-class ServicesController extends Controller
+class AboutController extends Controller
 {
     /**
      * Get the view / contents that represents the component.
@@ -23,6 +23,6 @@ class ServicesController extends Controller
                 ]],
             ['name' => 'Contáctenos', 'to' => '/contact'],
         ];
-        return view('services',compact('pages'));
+        return view('about',compact('pages'));
     }
 }

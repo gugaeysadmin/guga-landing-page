@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\View\Components\Pages\AboutController;
 use App\View\Components\Pages\AlliancesController;
 use App\View\Components\Pages\CatalogsController;
 use App\View\Components\Pages\ContactController;
@@ -15,10 +16,11 @@ Route::get('/home', function () {
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 Route::get('/speciality-area/{specialty}', [SpecialityAreaController::class, 'showBySpecialty'])->name('speciality-area.show');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/catalogs', [CatalogsController::class, 'index'])->name('catalogs');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/services', [ServicesController::class, 'index'])->name('services');
-Route::get('/catalogs', [AlliancesController::class, 'index'])->name('catalogs');
+Route::get('/alliances', [AlliancesController::class, 'index'])->name('catalogs');
 
 
 

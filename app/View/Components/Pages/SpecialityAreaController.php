@@ -16,9 +16,18 @@ class SpecialityAreaController extends Controller
             'refrigeration' => 'Información sobre Refrigeración',
             'sterilization' => 'Información sobre Esterilización',
         ];
-
+        $pages = [
+            ['name' => 'Nosotros', 'to' => '/about'],
+            ['name' => 'Alianzas', 'to' => '/alliances'],
+            ['name' => 'Catálogo', 'to' => '/catalogs'],
+            ['name' => 'Servicios', 'sublinks' => [
+                ['name' => 'Instalación y Re-instalación',          'to' => '/services'],
+                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
+                ]],
+            ['name' => 'Contáctenos', 'to' => '/contact'],
+        ];
         if (array_key_exists($specialty, $data)) {
-            return view('speciality-area', ['info' => $data[$specialty]]);
+            return view('speciality-area', ['info' => $data[$specialty]],compact('pages'));
         }
 
         // Si no se encuentra, puedes redirigir o mostrar un error

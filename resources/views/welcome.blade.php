@@ -1,7 +1,7 @@
 
 <x-layouts.landingpage-layout>
     {{-- Header --}}
-    <x-slot name="header"> <x-header :pages="$pages"/></x-slot>
+    <x-slot name="header"> <x-header/></x-slot>
     
     <div class="block">
         <x-landing-video/>

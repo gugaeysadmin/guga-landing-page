@@ -9,10 +9,9 @@
             ['name' => 'menu2', 'to' => 'to'],
             ['name' => 'menu3', 'to' => 'to']
         ]]
+@props(['pages'])
     ]
 @endphp --}}
-@props(['pages'])
-
 
 <nav id="header" x-data="{ open: false }" class=" dark:bg-gray-800  dark:border-gray-700">
     <!-- Primary Navigation Menu -->
@@ -53,7 +52,7 @@
 
                                     <x-slot name="content">
                                         @foreach ($page['sublinks'] as $sublink)
-                                            <x-dropdown-link :href="route('home')">
+                                            <x-dropdown-link href="{{ $sublink['to'] }}">
                                                 {{ __($sublink['name']) }}
                                             </x-dropdown-link>
                                         @endforeach
@@ -61,7 +60,7 @@
                                 </x-dropdown>
                             </div>
                         @else
-                            <x-nav-link :active="false" :href="route('home')">
+                            <x-nav-link :active="false" href="{{ $page['to'] }}">
                                 {{ __($page['name']) }}
                             </x-nav-link>
                         @endif

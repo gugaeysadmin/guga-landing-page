@@ -14,15 +14,15 @@ class AlliancesController extends Controller
     public function index()
     {
         $pages = [
-            ['name' => 'Nosotros', 'to' => 'welecome'],
-            ['name' => 'Alianzas', 'to' => 'alliances'],
-            ['name' => 'Catálogo', 'to' => 'catalogs'],
+            ['name' => 'Nosotros', 'to' => '/about'],
+            ['name' => 'Alianzas', 'to' => '/alliances'],
+            ['name' => 'Catálogo', 'to' => '/catalogs'],
             ['name' => 'Servicios', 'sublinks' => [
-                ['name' => 'Instalación y Re-instalación',          'to' => 'services'],
-                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => 'services']
+                ['name' => 'Instalación y Re-instalación',          'to' => '/services'],
+                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
                 ]],
-            ['name' => 'Contáctenos', 'to' => 'contact'],
+            ['name' => 'Contáctenos', 'to' => '/contact'],
         ];
-        return view('alliances');
+        return view('alliances',compact('pages'));
     }
 }

@@ -1,17 +1,18 @@
 <?php
 
-namespace App\View\Components\Pages;
+namespace App\View\Components;
 
-use App\Http\Controllers\Controller;
-use Illuminate\View\View;
+use Closure;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ServicesController extends Controller
+class Header extends Component
 {
+
     /**
-     * Get the view / contents that represents the component.
+     * Get the view / contents that represent the component.
      */
-    public function index()
+    public function render(): View|Closure|string
     {
         $pages = [
             ['name' => 'Nosotros', 'to' => '/about'],
@@ -23,6 +24,6 @@ class ServicesController extends Controller
                 ]],
             ['name' => 'Contáctenos', 'to' => '/contact'],
         ];
-        return view('services',compact('pages'));
+        return view('components.header', compact('pages'));
     }
 }

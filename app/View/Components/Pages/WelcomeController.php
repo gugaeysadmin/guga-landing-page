@@ -20,14 +20,14 @@ class WelcomeController extends Controller
             ['image' => asset('img/img4.jpg'), 'description' => 'imagen 4'],
         ];
         $pages = [
-            ['name' => 'Nosotros', 'to' => 'welecome'],
-            ['name' => 'Alianzas', 'to' => 'alliances'],
-            ['name' => 'Catálogo', 'to' => 'catalogs'],
+            ['name' => 'Nosotros', 'to' => '/about'],
+            ['name' => 'Alianzas', 'to' => '/alliances'],
+            ['name' => 'Catálogo', 'to' => '/catalogs'],
             ['name' => 'Servicios', 'sublinks' => [
-                ['name' => 'Instalación y Re-instalación',          'to' => 'services'],
-                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => 'services']
+                ['name' => 'Instalación y Re-instalación',          'to' => '/services'],
+                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
                 ]],
-            ['name' => 'Contáctenos', 'to' => '/'],
+            ['name' => 'Contáctenos', 'to' => '/contact'],
         ];
         $aliances = [
             ['image' => asset('img/amtai.png'),     'to' => 'https://www.amtai.com'],
