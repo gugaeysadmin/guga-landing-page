@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\View\Components\SpecialityAreaController;
-use App\View\Components\WelcomeController;
+use App\View\Components\Pages\SpecialityAreaController;
+use App\View\Components\Pages\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/home', function () {
@@ -10,7 +10,7 @@ Route::get('/home', function () {
 })->name('home2');
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
-Route::get('/specielity-area/{specialty}', [SpecialityAreaController::class, 'showBySpecialty'])->name('speciality-area.show');
+Route::get('/speciality-area/{specialty}', [SpecialityAreaController::class, 'showBySpecialty'])->name('speciality-area.show');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

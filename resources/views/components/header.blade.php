@@ -53,7 +53,7 @@
 
                                     <x-slot name="content">
                                         @foreach ($page['sublinks'] as $sublink)
-                                            <x-dropdown-link :href="route('profile.edit')">
+                                            <x-dropdown-link :href="route('home')">
                                                 {{ __($sublink['name']) }}
                                             </x-dropdown-link>
                                         @endforeach
@@ -61,7 +61,7 @@
                                 </x-dropdown>
                             </div>
                         @else
-                            <x-nav-link :active="false">
+                            <x-nav-link :active="false" :href="route('home')">
                                 {{ __($page['name']) }}
                             </x-nav-link>
                         @endif

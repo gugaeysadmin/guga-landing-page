@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Pages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
@@ -20,14 +20,14 @@ class WelcomeController extends Controller
             ['image' => asset('img/img4.jpg'), 'description' => 'imagen 4'],
         ];
         $pages = [
-            ['name' => 'Nosotros', 'to' => 'to'],
-            ['name' => 'Alianzas', 'to' => 'to'],
-            ['name' => 'Catálogo', 'to' => 'to'],
+            ['name' => 'Nosotros', 'to' => 'welecome'],
+            ['name' => 'Alianzas', 'to' => 'welecome'],
+            ['name' => 'Catálogo', 'to' => 'welecome'],
             ['name' => 'Servicios', 'sublinks' => [
-                ['name' => 'Instalación y Re-instalación',          'to' => 'to1'],
-                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => 'to2']
+                ['name' => 'Instalación y Re-instalación',          'to' => 'welecome'],
+                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => 'welecome']
                 ]],
-            ['name' => 'Contáctenos', 'to' => 'to'],
+            ['name' => 'Contáctenos', 'to' => '/'],
         ];
         $aliances = [
             ['image' => asset('img/amtai.png'),     'to' => 'https://www.amtai.com'],

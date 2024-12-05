@@ -1,5 +1,5 @@
 
-<x-landingpage-layout>
+<x-layouts.landingpage-layout>
     {{-- Header --}}
     <x-slot name="header"> <x-header :pages="$pages"/></x-slot>
     
@@ -111,7 +111,7 @@
     
     {{-- Footer --}}
     <x-slot name="footer"><x-footer/></x-slot>
-</x-landingpage-layout>
+</x-layouts.landingpage-layout>
 {{-- Viejo codigo --}}
 
 
