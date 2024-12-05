@@ -21,11 +21,11 @@ class WelcomeController extends Controller
         ];
         $pages = [
             ['name' => 'Nosotros', 'to' => 'welecome'],
-            ['name' => 'Alianzas', 'to' => 'welecome'],
-            ['name' => 'Catálogo', 'to' => 'welecome'],
+            ['name' => 'Alianzas', 'to' => 'alliances'],
+            ['name' => 'Catálogo', 'to' => 'catalogs'],
             ['name' => 'Servicios', 'sublinks' => [
-                ['name' => 'Instalación y Re-instalación',          'to' => 'welecome'],
-                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => 'welecome']
+                ['name' => 'Instalación y Re-instalación',          'to' => 'services'],
+                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => 'services']
                 ]],
             ['name' => 'Contáctenos', 'to' => '/'],
         ];

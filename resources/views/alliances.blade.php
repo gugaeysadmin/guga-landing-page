@@ -1,6 +1,7 @@
+
 <x-layouts.landingpage-layout>
     <x-slot name="header"> <x-header :pages="$pages"/></x-slot>
     <div>
-        areas de especialidad
+        alianzas
     </div>
 </x-layouts.landingpage-layout>
