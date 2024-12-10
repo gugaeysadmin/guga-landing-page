@@ -1,5 +1,5 @@
 
-<div {{ $attributes->merge(['class'=> 'grid grid-cols-1 md:grid-cols-3 gap-20 py-12 sm:px-4 md:px-12 lg:px-32 bg-slate-800']) }}>
+<div {{ $attributes->merge(['class'=> 'grid grid-cols-1 md:grid-cols-2 gap-20 py-12 sm:px-4 md:px-12 lg:px-32 bg-slate-800']) }}>
     <!-- Informacion de la empresa -->
     <div class="block text-gray-200" >
         <img src="{{ asset('img/logo_white.png') }}" class="mb-8" alt="" />
@@ -34,7 +34,7 @@
             </a>
         </p>
     </div>
-    <div  class="block">
+    {{-- <div  class="block">
         <!-- iframe que consume la api de google para mostrar en mapa la ubicacion -->
         <iframe
         src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d330.64515789098084!2d-99.082913472065!3d19.662795710207423!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f3286c8db41d%3A0xbb7218bc15b13646!2sGUGA%20EQUIPOS%20Y%20SERVICIOS%20SA%20DE%20CV!5e0!3m2!1ses-419!2smx!4v1694476453664!5m2!1ses-419!2smx"
@@ -45,5 +45,5 @@
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         ></iframe>
-    </div>
+    </div> --}}
 </div>

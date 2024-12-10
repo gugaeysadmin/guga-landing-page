@@ -13,7 +13,9 @@
         
         <link rel="preload" href="{{ asset('img/logo_normal.png') }}" as="image">
         <!-- Scripts -->
+        
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @stack('scripts')
     </head>
     <body class="font-sans antialiased">
         <div class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">

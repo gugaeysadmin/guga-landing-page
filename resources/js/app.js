@@ -20,45 +20,89 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'bootstrap-icons/font/bootstrap-icons.css';
-// Initialize Swiper
 
   
-const swiper = new Swiper('.swiper', {
-    modules: [Navigation, Pagination, Autoplay],
-    slidesPerView: "1",
-    centeredSlides: true,
-    spaceBetween: 50,
-    pagination: {
-        el: ".swiper-pagination",
-        dynamicBullets:true,
-        clickable:true,
-    },
-    navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
+// var swiper = new Swiper('.swiper', {
+//     modules: [Navigation, Pagination, Autoplay],
+//     slidesPerView: "1",
+//     centeredSlides: true,
+//     spaceBetween: 50,
+//     pagination: {
+//         el: ".swiper-pagination",
+//         dynamicBullets:true,
+//         clickable:true,
+//     },
+//     navigation: {
+//         nextEl: ".swiper-button-next",
+//         prevEl: ".swiper-button-prev",
+//     },
 
-    autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-    },
-    breakpoints: {
-        640: {
-        slidesPerView: 2,
-        spaceBetween: 20,
-        },
-        1200: {
-        slidesPerView: 3,
-        spaceBetween: 40,
-        },
-        1500: {
-            slidesPerView: 5,
-            spaceBetween: 40,
-        },
-    },
+//     autoplay: {
+//         delay: 2000,
+//         disableOnInteraction: false,
+//     },
+//     breakpoints: {
+//         640: {
+//         slidesPerView: 2,
+//         spaceBetween: 20,
+//         },
+//         1200: {
+//         slidesPerView: 3,
+//         spaceBetween: 40,
+//         },
+//         1500: {
+//             slidesPerView: 5,
+//             spaceBetween: 40,
+//         },
+//     },
+// });
+var swiper3= new Swiper(".product-thumb", {
+    loop: true,
+    spaceBetween: 12,
+    slidesPerView: 4,
+    
+    freeMode: true,
+    watchSlidesProgress: true,
+   
 });
+var swiper2 = new Swiper(".product-prev", {
+    loop: true,
+    spaceBetween: 32,
+    effect: "fade",
+   
+    thumbs: {
+        swiper: swiper,
+    },
+    
+});
+// document.addEventListener('DOMContentLoaded', function () {
+
+//     if (window.location.pathname === '/') {
+//         return; 
+//     }
+
+//     const navbar = document.getElementById('navbar');
+//     const logo = document.getElementById("hlogo");
+//     const navItems = document.querySelectorAll(".hnav-item");
+//     navItems.forEach(function(navitem) {
+//         navitem.classList.remove('text-gray-500');
+//         navitem.classList.remove('hover:text-sky-500');
+//         navitem.classList.remove('font-semibold');
+//         navitem.classList.add('text-gray-200');
+//         navitem.classList.add('hover:text-white');
+//     });
+//     navbar.classList.remove('bg-slate-50');
+//     navbar.classList.remove('shadow');
+//     logo.src = "img/logo_white.png";
+
+// });
+
 
 document.addEventListener('scroll', function() {
+    // if (window.location.pathname !== '/') {
+    //     return; 
+    // }
+
     const navbar = document.getElementById('navbar');
     const logo = document.getElementById("hlogo");
     const navItems= document.querySelectorAll(".hnav-item");
