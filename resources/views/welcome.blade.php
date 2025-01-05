@@ -7,7 +7,7 @@
         <x-landing-video/>
     </div>
 
-{{-- Areas de equipamiento --}}
+    {{-- Areas de equipamiento --}}
     <section class="pt-14 pb-24 px-4 sm:px-12 bg-slate-50">
         <x-equipment-areas/>
     </section>

@@ -13,21 +13,14 @@ class SpecialityAreaController extends Controller
         // Lógica para manejar la especialidad
         // Por ejemplo, buscar información en la base de datos:
         $data = [
-            'refrigeration' => 'Información sobre Refrigeración',
-            'sterilization' => 'Información sobre Esterilización',
+            'refrigeration' => 'Refrigeración',
+            'sterilization' => 'sterilización',
+            'operating-room' => 'Quirófano',
+            'imageneology' => 'Imageneologia'
         ];
-        $pages = [
-            ['name' => 'Nosotros', 'to' => '/about'],
-            ['name' => 'Alianzas', 'to' => '/alliances'],
-            ['name' => 'Catálogo', 'to' => '/catalogs'],
-            ['name' => 'Servicios', 'sublinks' => [
-                ['name' => 'Instalación y Re-instalación',          'to' => '/services'],
-                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
-                ]],
-            ['name' => 'Contáctenos', 'to' => '/contact'],
-        ];
+
         if (array_key_exists($specialty, $data)) {
-            return view('speciality-area', ['info' => $data[$specialty]],compact('pages'));
+            return view('speciality-area', ['info' => $data[$specialty]]);
         }
 
         // Si no se encuentra, puedes redirigir o mostrar un error

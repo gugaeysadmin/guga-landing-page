@@ -19,16 +19,16 @@ class WelcomeController extends Controller
             ['image' => asset('img/img3.jpg'), 'description' => 'imagen 3'],
             ['image' => asset('img/img4.jpg'), 'description' => 'imagen 4'],
         ];
-        $pages = [
-            ['name' => 'Nosotros', 'to' => '/about'],
-            ['name' => 'Alianzas', 'to' => '/alliances'],
-            ['name' => 'Catálogo', 'to' => '/catalogs'],
-            ['name' => 'Servicios', 'sublinks' => [
-                ['name' => 'Instalación y Re-instalación',          'to' => '/services'],
-                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
-                ]],
-            ['name' => 'Contáctenos', 'to' => '/contact'],
-        ];
+        // $pages = [
+        //     ['name' => 'Nosotros', 'to' => '/about'],
+        //     ['name' => 'Catálogo', 'to' => '/catalogs'],
+        //     ['name' => 'Alianzas', 'to' => '/services'],
+        //     ['name' => 'Servicios', 'sublinks' => [
+        //         ['name' => 'Instalación y Re-instalación',          'to' => '/services'],
+        //         ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
+        //         ]],
+        //     ['name' => 'Contáctenos', 'to' => '/contact'],
+        // ];
         $aliances = [
             ['image' => asset('img/amtai.png'),     'to' => 'https://www.amtai.com'],
             ['image' => asset('img/biobase.png'),   'to' => 'https://www.biobase.cc/'],
@@ -54,6 +54,6 @@ class WelcomeController extends Controller
             ['image' => asset('img/3.png'), 'to' => ''],
         ];
         
-        return view('welcome', compact('imagelist', 'pages', 'aliances', 'areas','services'));
+        return view('welcome', compact('imagelist', 'aliances', 'areas','services'));
     }
 }

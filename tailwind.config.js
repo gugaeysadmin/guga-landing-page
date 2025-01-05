@@ -9,6 +9,7 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
          "./node_modules/tw-elements/js/**/*.js",
+         "./node_modules/flowbite/**/*.js",
          './resources/**/*.js'
     ],
     darkMode: 'class',
@@ -23,5 +24,5 @@ export default {
         },
     },
 
-    plugins: [forms, plugin],
+    plugins: [forms, plugin, require('flowbite/plugin')],
 };

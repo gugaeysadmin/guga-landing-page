@@ -1,7 +1,7 @@
 <h1 class="text-center text-[3rem]  font-sans font-semibold text-[#0392ceff]">{{ __('Areas de especialidad') }}</h1>
 <div class="relative flex flex-wrap justify-around  mt-16">
     <x-spec-area-button 
-        href=" {{ config('routes.esterilization') }}" 
+        href=" {{ config('routes.sterilization') }}" 
         text="Esterilización" 
         image="icons/esterilization.png" 
     />

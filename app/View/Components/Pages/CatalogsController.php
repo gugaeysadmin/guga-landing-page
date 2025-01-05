@@ -3,6 +3,7 @@
 namespace App\View\Components\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\View\View;
 use Illuminate\View\Component;
 
@@ -23,6 +24,7 @@ class CatalogsController extends Controller
                 ]],
             ['name' => 'Contáctenos', 'to' => '/contact'],
         ];
-        return view('catalogs',compact('pages'));
+        $products = Product::paginate(10);
+        return view('catalogs',compact('pages', 'products'));
     }
 }

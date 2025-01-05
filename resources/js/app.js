@@ -1,10 +1,18 @@
 import './bootstrap';
+import 'flowbite';
 import Alpine from 'alpinejs';
 
-import { Tooltip,Carousel, initTWE } from "tw-elements";
+import { Tooltip,Carousel,Collapse, initTWE } from "tw-elements";
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import Swiper from 'swiper/bundle';
+
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-initTWE({ Tooltip, Carousel });
+initTWE({ Tooltip, Carousel, Collapse });
 
 
 window.Alpine = Alpine;
@@ -13,50 +21,46 @@ Alpine.start();
 
 
 
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import { Swiper } from 'swiper';
+var swiperAux = new Swiper('.swiper', {
+    modules: [Navigation, Pagination, Autoplay],
+    slidesPerView: "4",
+    centeredSlides: true,
+    spaceBetween: 50,
+    pagination: {
+        el: ".swiper-pagination",
+        dynamicBullets:true,
+        clickable:true,
+    },
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
 
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import 'bootstrap-icons/font/bootstrap-icons.css';
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,
+    },
+    breakpoints: {
+        640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+        },
+        1200: {
+        slidesPerView: 3,
+        spaceBetween: 40,
+        },
+        1500: {
+            slidesPerView: 5,
+            spaceBetween: 40,
+        },
+    },
+});
 
-  
-// var swiper = new Swiper('.swiper', {
-//     modules: [Navigation, Pagination, Autoplay],
-//     slidesPerView: "1",
-//     centeredSlides: true,
-//     spaceBetween: 50,
-//     pagination: {
-//         el: ".swiper-pagination",
-//         dynamicBullets:true,
-//         clickable:true,
-//     },
-//     navigation: {
-//         nextEl: ".swiper-button-next",
-//         prevEl: ".swiper-button-prev",
-//     },
-
-//     autoplay: {
-//         delay: 2000,
-//         disableOnInteraction: false,
-//     },
-//     breakpoints: {
-//         640: {
-//         slidesPerView: 2,
-//         spaceBetween: 20,
-//         },
-//         1200: {
-//         slidesPerView: 3,
-//         spaceBetween: 40,
-//         },
-//         1500: {
-//             slidesPerView: 5,
-//             spaceBetween: 40,
-//         },
-//     },
-// });
-var swiper3= new Swiper(".product-thumb", {
+var swiperAlliances = new Swiper('.swiper-aliances',{
+    modules: [Navigation, Pagination],
+    spaceBetween: 50,
+});
+var swiperThumb= new Swiper(".product-thumb", {
     loop: true,
     spaceBetween: 12,
     slidesPerView: 4,
@@ -65,20 +69,20 @@ var swiper3= new Swiper(".product-thumb", {
     watchSlidesProgress: true,
    
 });
-var swiper2 = new Swiper(".product-prev", {
+var swiperPrev = new Swiper(".product-prev", {
     loop: true,
     spaceBetween: 32,
     effect: "fade",
    
     thumbs: {
-        swiper: swiper,
+        swiper: swiperThumb,
     },
     
 });
 // document.addEventListener('DOMContentLoaded', function () {
 
 //     if (window.location.pathname === '/') {
-//         return; 
+//         return;
 //     }
 
 //     const navbar = document.getElementById('navbar');
@@ -100,7 +104,7 @@ var swiper2 = new Swiper(".product-prev", {
 
 document.addEventListener('scroll', function() {
     // if (window.location.pathname !== '/') {
-    //     return; 
+    //     return;
     // }
 
     const navbar = document.getElementById('navbar');

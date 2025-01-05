@@ -16,12 +16,12 @@ class Header extends Component
     {
         $pages = [
             ['name' => 'Nosotros', 'to' => '/about'],
-            ['name' => 'Alianzas', 'to' => '/alliances'],
             ['name' => 'Catálogo', 'to' => '/catalogs'],
-            ['name' => 'Servicios', 'sublinks' => [
-                ['name' => 'Instalación y Re-instalación',          'to' => '/services'],
-                ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
-                ]],
+            // ['name' => 'Servicios', 'sublinks' => [
+                //     ['name' => 'Instalación y Re-instalación',          'to' => '/services'],
+                //     ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
+                //     ]],
+            ['name' => 'Servicios', 'to' => '/services'],
             ['name' => 'Contáctenos', 'to' => '/contact'],
         ];
         return view('components.header', compact('pages'));
