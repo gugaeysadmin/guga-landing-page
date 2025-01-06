@@ -4,7 +4,7 @@
     <div class="block relative">
         <!-- Imagen de cabecera -->
         <img src="{{ asset('img/catalog_img_header.jpg') }}" alt="services_img" class="w-full max-h-[35rem] object-cover" style="object-position: 0 10%;"/>
-        
+
         <!-- Capa de opacidad -->
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
         <!-- Título -->
@@ -12,25 +12,25 @@
             <h1 class="text-white text-[3.5vw] font-sans">Todos nuestros equipos</h1>
         </div>
     </div>
-    <div class="flex">
+    <div class="flex max-w-[80rem] m-auto">
         <!-- Sidebar -->
         <aside class="w-1/4 bg-gray-100 p-4 mt-12 sticky">
             <div class="w-full bg-sky-600 p-4 flex items-center font-sans font-semibold text-sky-50">
                 <h2 class="text-lg font-bold">Categorías de Producto</h2>
             </div>
 
-            <div id="categoriasFilter">
-                <div class="rounded-t-lg border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-body-dark">
+            <div id="categoriasFilter" class="mt-4">
+                <div class="border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-body-dark gap-4">
                     <h2 class="mb-0" id="headingOne">
                     <button
-                        class="group relative flex w-full items-center rounded-t-lg border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white [&:not([data-twe-collapse-collapsed])]:bg-white [&:not([data-twe-collapse-collapsed])]:text-primary [&:not([data-twe-collapse-collapsed])]:shadow-border-b dark:[&:not([data-twe-collapse-collapsed])]:bg-surface-dark dark:[&:not([data-twe-collapse-collapsed])]:text-primary dark:[&:not([data-twe-collapse-collapsed])]:shadow-white/10 "
+                        class="group relative flex w-full items-center border-0 bg-slate-200 px-5 py-4 text-left font-semibold text-lg text-blue-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white [&:not([data-twe-collapse-collapsed])]:bg-sky-400 [&:not([data-twe-collapse-collapsed])]:text-sky-50 [&:not([data-twe-collapse-collapsed])]:shadow-border-b dark:[&:not([data-twe-collapse-collapsed])]:bg-surface-dark dark:[&:not([data-twe-collapse-collapsed])]:text-primary dark:[&:not([data-twe-collapse-collapsed])]:shadow-white/10 "
                         type="button"
                         data-twe-collapse-init
                         data-twe-target="#collapseOne"
                         aria-expanded="true"
                         aria-controls="collapseOne"
                     >
-                        Accordion Item #1
+                        Marcas
                         <span class="-me-1 ms-auto h-5 w-5 shrink-0 rotate-[90deg] transition-transform duration-200 ease-in-out group-data-[twe-collapse-collapsed]:me-0 group-data-[twe-collapse-collapsed]:rotate-0 motion-reduce:transition-none [&>svg]:h-6 [&>svg]:w-6">
                             <i class="bi bi-caret-right-fill text-xl"></i>
                         </span>
@@ -98,7 +98,7 @@
         </aside>
 
         <!-- Sección principal -->
-        <main class="w-3/4 p-4" x-data="{ isGrid: false  }">
+        <main class="w-3/4 p-4" x-data="{ isGrid: true  }">
             <!-- Botón de cambio de modo -->
             <div class="flex justify-end mb-4">
                 <button id="gridView" @click="isGrid = true" class="mr-2 px-4 py-2 bg-sky-600 rounded hover:bg-sky-500" id="gridView">
@@ -109,27 +109,29 @@
                 </button>
             </div>
             <!-- Contenedor de productos -->
-            <div   id="productsContainer" class="grid grid-cols-4 gap-6">
-                @foreach($products as $product)
-                    <template x-if="isGrid">
-                        <div class="productCard bg-white rounded p-4 text-center shadow-lg hover:shadow-xl hover:shadow-blue-100">
-                            <img src="https://via.placeholder.com/150" alt="Producto" class="w-full h-40 object-cover rounded mb-4">
-                            <h3 class="font-sans text-md text-sky-700">{{ $product->name }}</h3>
-                        </div>
-                    </template>
-                    <template x-if="!isGrid">
-                        <div class="productCard bg-white rounded p-4 text-center shadow-lg hover:shadow-xl hover:shadow-blue-100">
-                            <img src="https://via.placeholder.com/150" alt="Producto" class="w-full h-40 object-cover rounded mb-4">
-                            <h3 class="font-sans text-md text-sky-700">{{ $product->name}}</h3>
-                            <h3 class="font-sans text-md text-sky-700">asfjlskdafjl</h3>
-                        </div>
-                    </template>
-                
-                @endforeach
-                
-            </div>
-            <div class="mt-4 m-auto">
-                {{ $products->links() }}
+                <div   id="productsContainer" class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 ">
+                    @foreach($products as $product)
+                        <template x-if="isGrid">
+                            <div class="productCard bg-white rounded-xl p-4 text-center shadow-lg hover:shadow-xl hover:shadow-blue-100 w-full aspect-w-9 aspect-h-16">
+                                <img src="https://via.placeholder.com/150" alt="Producto" class="w-full h-[85%] object-cover rounded mb-4">
+                                <h3 class="font-sans font-semibold xs:text-md md:text-lg text-slate-500">{{ $product->name }}</h3>
+                            </div>
+                        </template>
+                        <template x-if="!isGrid">
+                            <div class="productCard bg-white rounded-xl p-4 shadow-lg hover:shadow-xl hover:shadow-blue-100 flex">
+                                <img src="https://via.placeholder.com/150" alt="Producto" class="w-40 h-40 object-cover rounded mb-4">
+                                <div class="p-4">
+                                    <h3 class="font-sans font-semibold text-2xl text-blue-800">{{ $product->name}}</h3>
+                                    <h3 class="font-sans text-md text-slate-900 mt-2">{{ $product->description}}</h3>
+                                </div>
+                            </div>
+                        </template>
+
+                    @endforeach
+                </div>
+                <div class="mt-4 m-auto">
+                    {{ $products->links() }}
+                </div>
             </div>
         </main>
     </div>
@@ -140,7 +142,7 @@
      <script>
         const gridView = document.getElementById('gridView');
         const listView = document.getElementById('listView');
-    
+
         gridView.addEventListener('click', () => {
             productsContainer.className = 'grid grid-cols-4 gap-4'; // Cambia a modo mosaico
         });

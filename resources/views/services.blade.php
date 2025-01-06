@@ -89,6 +89,48 @@
             </div>
         </div>
     </div>
+
+    {{-- Entregables --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-4 font-body text-center my-24">
+        <div class="p-8 flex justify-center bg-sky-300 text-sky-800">
+            <div class="block">
+                <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-800 mx-auto flex justify-center items-center">
+                    <i class="bi bi-book-half text-[3.4rem]"></i>
+                </div>
+                <h1 class="font-semibold mt-8 text-lg">PÓLIZA DE MANTENIMIENTO</h1>
+                <p class="text-sm mt-4">Durante el período de vigencia de la póliza, el equipo puede recibir servicios de mantenimiento correctivo y / o preventivo y estos pueden diferirse a mensuales, bimestrales, semestrales o anuales según aplique el tipo de equipo y como sea requerido.</p>
+            </div>
+        </div>
+        <div class="p-8 flex justify-center bg-sky-500 text-sky-50">
+            <div class="block">
+                <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-200 mx-auto flex justify-center items-center">
+                    <i class="bi bi-calendar2-event text-[3.4rem]"></i>
+                </div>
+                <h1 class="font-semibold mt-8 text-lg">SERVICIO POR EVENTO</h1>
+                <p class="text-sm mt-4">Servicio que puede ser en carácter de urgencia  en modalidad  correctiva.</p>
+            </div>
+        </div>
+        <div class="p-8 flex justify-center bg-sky-700 text-sky-50">
+            <div class="block">
+                <div class="h-24 w-24 rounded-full border-solid border-4 mx-auto flex justify-center items-center">
+                    <i class="bi bi-gear text-[3.4rem]"></i>
+                </div>
+                <h1 class="font-semibold mt-8 text-lg">CALIBRACIONES</h1>
+                <p class="text-sm mt-4">Algunos equipos médicos en los que se realizan mediciones de entrada y/o salida de energía requieren de calibración periódica. Toda la instrumentación utilizada cuenta con Certificado de Calibración Vigente, con trazabilidad a patrones Pruebas de Funcionamiento.</p>
+
+            </div>
+        </div>
+        <div class="p-8 flex justify-center bg-sky-200 text-sky-800">
+            <div class="block">
+                <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-800 mx-auto flex justify-center items-center">
+                    <i class="bi bi-graph-up text-[3.4rem]"></i>
+                </div>
+                <h1 class="font-semibold mt-8 text-lg">DIAGNÓSTICOS</h1>
+                <p class="text-sm mt-4">Utilizamos analizadores y tecnología de ingeniería para diagnosticar fallas y ubicaciones de errores en los equipos para resolver los errores. Todo se hace según la orden de servicio.</p>
+            </div>
+        </div>
+    </div>
+
     {{-- Servicios de mantenimiento --}}
     <div class="flex justify-center">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-[70rem] gap-4 font-sans">
@@ -169,52 +211,11 @@
             </div>
 
         </div>
-        
-    </div>
 
-    {{-- Entregables --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-4 font-body text-center my-24">
-        <div class="p-8 flex justify-center bg-sky-300 text-sky-800">
-            <div class="block">
-                <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-800 mx-auto flex justify-center items-center">
-                    <i class="bi bi-book-half text-[3.4rem]"></i>
-                </div>
-                <h1 class="font-semibold mt-8 text-lg">PÓLIZA DE MANTENIMIENTO</h1>
-                <p class="text-sm mt-4">Durante el período de vigencia de la póliza, el equipo puede recibir servicios de mantenimiento correctivo y / o preventivo y estos pueden diferirse a mensuales, bimestrales, semestrales o anuales según aplique el tipo de equipo y como sea requerido.</p>
-            </div>
-        </div>
-        <div class="p-8 flex justify-center bg-sky-500 text-sky-50">
-            <div class="block">
-                <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-200 mx-auto flex justify-center items-center">
-                    <i class="bi bi-calendar2-event text-[3.4rem]"></i>
-                </div>
-                <h1 class="font-semibold mt-8 text-lg">SERVICIO POR EVENTO</h1>
-                <p class="text-sm mt-4">Servicio que puede ser en carácter de urgencia  en modalidad  correctiva.</p>
-            </div>
-        </div>
-        <div class="p-8 flex justify-center bg-sky-700 text-sky-50">
-            <div class="block">
-                <div class="h-24 w-24 rounded-full border-solid border-4 mx-auto flex justify-center items-center">
-                    <i class="bi bi-gear text-[3.4rem]"></i>
-                </div>
-                <h1 class="font-semibold mt-8 text-lg">CALIBRACIONES</h1>
-                <p class="text-sm mt-4">Algunos equipos médicos en los que se realizan mediciones de entrada y/o salida de energía requieren de calibración periódica. Toda la instrumentación utilizada cuenta con Certificado de Calibración Vigente, con trazabilidad a patrones Pruebas de Funcionamiento.</p>
-
-            </div>
-        </div>
-        <div class="p-8 flex justify-center bg-sky-200 text-sky-800">
-            <div class="block">
-                <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-800 mx-auto flex justify-center items-center">
-                    <i class="bi bi-graph-up text-[3.4rem]"></i>
-                </div>
-                <h1 class="font-semibold mt-8 text-lg">DIAGNÓSTICOS</h1>
-                <p class="text-sm mt-4">Utilizamos analizadores y tecnología de ingeniería para diagnosticar fallas y ubicaciones de errores en los equipos para resolver los errores. Todo se hace según la orden de servicio.</p>
-            </div>
-        </div>
     </div>
 
     {{-- Equipos --}}
-    <div class="bg-sky-600 py-12 md:px-24 flex justify-center">
+    <div class="bg-sky-600 py-12 md:px-24 flex justify-center mt-24">
         <div class="w-[100%] max-w-[70rem] flex flex-wrap items-center xs:justify-center lg:justify-between ">
             <div class="px-12 py-12  rounded-3xl h-[20rem] w-[25rem] border-solid border-[3px] border-sky-50 font-sans">
                 <h1 class="font-semibold text-3xl text-sky-50">Nuestros Equipos</h1>
@@ -233,7 +234,7 @@
                         <div class="h-full flex flex-col justify-between px-24 py-16">
                             <h1 class="font-sans font-bold text-[2.5rem] text-sky-50">EQUIPO 1</h1>
                             <div class= " flex justify-between items-center w-[17rem] px-4 rounded-full border-solid border-4 border-sky-50 ">
-                                <h1 class="font-sans font-bold text-xl text-sky-50">MÁS INFORMACIÓN</h1> 
+                                <h1 class="font-sans font-bold text-xl text-sky-50">MÁS INFORMACIÓN</h1>
                                 <i class="bi bi-arrow-right-short text-[2rem] text-sky-50"></i>
                             </div>
                         </div>
@@ -245,7 +246,7 @@
                         <div class="h-full flex flex-col justify-between px-24 py-16">
                             <h1 class="font-sans font-bold text-[2.5rem] text-sky-50">EQUIPO 2</h1>
                             <div class= " flex justify-between items-center w-[17rem] px-4 rounded-full border-solid border-4 border-sky-50 ">
-                                <h1 class="font-sans font-bold text-xl text-sky-50">MÁS INFORMACIÓN</h1> 
+                                <h1 class="font-sans font-bold text-xl text-sky-50">MÁS INFORMACIÓN</h1>
                                 <i class="bi bi-arrow-right-short text-[2rem] text-sky-50"></i>
                             </div>
                         </div>
@@ -257,7 +258,7 @@
                         <div class="h-full flex flex-col justify-between px-24 py-16">
                             <h1 class="font-sans font-bold text-[2.5rem] text-sky-50">EQUIPO 3</h1>
                             <div class= " flex justify-between items-center w-[17rem] px-4 rounded-full border-solid border-4 border-sky-50 ">
-                                <h1 class="font-sans font-bold text-xl text-sky-50">MÁS INFORMACIÓN</h1> 
+                                <h1 class="font-sans font-bold text-xl text-sky-50">MÁS INFORMACIÓN</h1>
                                 <i class="bi bi-arrow-right-short text-[2rem] text-sky-50"></i>
                             </div>
                         </div>
@@ -269,7 +270,7 @@
                         <div class="h-full flex flex-col justify-between px-24 py-16">
                             <h1 class="font-sans font-bold text-[2.5rem] text-sky-50">EQUIPO 4</h1>
                             <div class= " flex justify-between items-center w-[17rem] px-4 rounded-full border-solid border-4 border-sky-50 ">
-                                <h1 class="font-sans font-bold text-xl text-sky-50">MÁS INFORMACIÓN</h1> 
+                                <h1 class="font-sans font-bold text-xl text-sky-50">MÁS INFORMACIÓN</h1>
                                 <i class="bi bi-arrow-right-short text-[2rem] text-sky-50"></i>
                             </div>
                         </div>
