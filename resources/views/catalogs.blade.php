@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="flex max-w-[80rem] m-auto">
-        <!-- Sidebar -->
+        <!-- Filtros -->
         <aside class="w-1/4 bg-gray-100 p-4 mt-12 sticky">
             <div class="w-full bg-sky-600 p-4 flex items-center font-sans font-semibold text-sky-50">
                 <h2 class="text-lg font-bold">Categorías de Producto</h2>
@@ -97,7 +97,7 @@
             </div>
         </aside>
 
-        <!-- Sección principal -->
+        <!-- Contenido -->
         <main class="w-3/4 p-4" x-data="{ isGrid: true  }">
             <!-- Botón de cambio de modo -->
             <div class="flex justify-end mb-4">

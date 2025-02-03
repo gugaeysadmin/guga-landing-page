@@ -19,8 +19,17 @@ class SpecialityAreaController extends Controller
             'imageneology' => 'Imageneologia'
         ];
 
+        $contentData = [
+            ['name'=> 'priducto 1', 'img' => 'https://pagedone.io/asset/uploads/1700471851.png'],
+            ['name'=> 'priducto 2', 'img' => 'https://pagedone.io/asset/uploads/1711514857.png'],
+            ['name'=> 'priducto 3', 'img' => 'https://pagedone.io/asset/uploads/1711514875.png'],
+            ['name'=> 'priducto 4', 'img' => 'https://pagedone.io/asset/uploads/1711514892.png'],
+            ['name'=> 'priducto 5', 'img' => 'https://pagedone.io/asset/uploads/1711514857.png'],
+            ['name'=> 'priducto 6', 'img' => 'https://pagedone.io/asset/uploads/1711514875.png'],
+        ];
+
         if (array_key_exists($specialty, $data)) {
-            return view('speciality-area', ['info' => $data[$specialty]]);
+            return view('speciality-area', ['info' => $data[$specialty], 'content'=>$contentData]);
         }
 
         // Si no se encuentra, puedes redirigir o mostrar un error

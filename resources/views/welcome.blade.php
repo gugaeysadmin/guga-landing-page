@@ -13,29 +13,28 @@
     </section>
     
     {{-- Alianzas --}}
-
     <section class="bg-slate-700 block px-4 sm:p-16 text-center">
         <h1 class="px-5 sm:px-5 md:px-32 mb-12 text-[3rem] font-sans font-semibold text-slate-50">{{ __('Alianzas') }}</h1>
-        <div class="w-full px-4 md:px-24 flex flex-wrap justify-around">
-            <div class="bg-white mt-6 rounded-2xl p-6 w-[17rem] h-[17rem] flex justify-center items-center">
+        <div class="w-full max-w-[80rem] mx-auto px-4 flex flex-wrap justify-around">
+            <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
                <a href="" class="my-auto" >
                   <img src={{ asset("img/cisa.png") }} alt="..." class="object-contain" />
                 </a>
             </div>
 
-            <div class="bg-white mt-6 rounded-2xl p-6 w-[17rem] h-[17rem] flex justify-center items-center">
+            <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
                <a href="" class="my-auto" >
                   <img src={{ asset("img/amtai.png") }} alt="..." class="object-contain" />
                 </a>
             </div>
 
-            <div class="bg-white mt-6 rounded-2xl p-6 w-[17rem] h-[17rem] flex justify-center items-center">
+            <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
                <a href="" class="my-auto" >
                   <img src={{ asset("img/biodex.jpg") }} alt="..." class="object-contain" />
                 </a>
             </div>
 
-            <div class="bg-white mt-6 rounded-2xl p-6 w-[17rem] h-[17rem] flex justify-center items-center">
+            <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
                <a href="" class="my-auto" >
                   <img src={{ asset("img/fiochetti.jpg") }} alt="..." class="object-contain" />
                 </a>
@@ -105,8 +104,64 @@
         </div>
     </section>
 
-    <section class="bg-slate-50 h-[40rem] flex justify-center items-center">
-        <p class="font-snas font-semibold text-[#0392ceff] text-[3rem]">OFERTAS</p>
+
+    {{-- Ofertas --}}
+    <section class="bg-slate-50 flex flex-wrap flex-row gap-20 px-40 py-14 justify-center items-center ">
+        <div class="relative">
+            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                <div class="transform skew-x-[15deg]">
+                    <h4 class="font-semibold">hola mundo</h4>
+                    <p class="text-xs mt-1">contenido de la oferta</p>
+                </div>
+            </div>
+            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                <i class="bi bi-percent text-white text-3xl"></i>
+            </div>
+        </div>
+        <div class="relative">
+            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                <div class="transform skew-x-[15deg]">
+                    <h4 class="font-semibold">hola mundo</h4>
+                    <p class="text-xs mt-1">contenido de la oferta</p>
+                </div>
+            </div>
+            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                <i class="bi bi-percent text-white text-3xl"></i>
+            </div>
+        </div>
+        <div class="relative">
+            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                <div class="transform skew-x-[15deg]">
+                    <h4 class="font-semibold">hola mundo</h4>
+                    <p class="text-xs mt-1">contenido de la oferta</p>
+                </div>
+            </div>
+            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                <i class="bi bi-percent text-white text-3xl"></i>
+            </div>
+        </div>
+        <div class="relative">
+            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                <div class="transform skew-x-[15deg]">
+                    <h4 class="font-semibold">hola mundo</h4>
+                    <p class="text-xs mt-1">contenido de la oferta</p>
+                </div>
+            </div>
+            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                <i class="bi bi-percent text-white text-3xl"></i>
+            </div>
+        </div>
+        <div class="relative">
+            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                <div class="transform skew-x-[15deg]">
+                    <h4 class="font-semibold">hola mundo</h4>
+                    <p class="text-xs mt-1">contenido de la oferta</p>
+                </div>
+            </div>
+            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                <i class="bi bi-percent text-white text-3xl"></i>
+            </div>
+        </div>
     </section>
     
     {{-- Footer --}}

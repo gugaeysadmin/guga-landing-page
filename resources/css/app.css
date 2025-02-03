@@ -14,3 +14,10 @@
         @apply rounded-lg shadow-md p-4 bg-slate-400 rounded-sm  shadow-md;
     }
 }
+
+@layer utilities {
+    .clip-trapezoid {
+      @apply bg-blue-500;
+      clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+    }
+  }
