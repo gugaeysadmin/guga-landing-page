@@ -18,13 +18,13 @@
         @stack('scripts')
     </head>
     <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
-        <div class="flex flex-col min-h-screen ">
+        <div class="flex flex-col min-h-screen relative">
             {{-- @include('layouts.navigation') --}}
 
             <!-- Page Heading -->
             @isset($header)
                 {{-- <header id="navbar" class="sticky top-0 z-20 w-full dark:bg-gray-800 shadow transition-all duration-300"> --}}
-                <header id="navbar" class="fixed z-20 w-full dark:bg-gray-800 transition-all duration-300 z-50">
+                <header id="navbar" class="fixed  w-full dark:bg-gray-800 transition-all duration-300 z-50">
                         {{ $header }}
                 </header>
             @endisset
@@ -41,6 +41,12 @@
                 </footer>
             @endisset
 
+
+            @if(request()->is('/'))
+                <div id="contactBtn" class="fixed bottom-10 right-0 z-50 hidden">
+                    <x-contact-button />
+                </div>
+            @endif
         </div>
     </body>
 </html>

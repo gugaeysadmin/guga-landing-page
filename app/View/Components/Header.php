@@ -15,7 +15,7 @@ class Header extends Component
     public function render(): View|Closure|string
     {
         $pages = [
-            ['name' => 'Nosotros', 'to' => '/about'],
+            // ['name' => 'Nosotros', 'to' => '/about'],
             ['name' => 'Catálogo', 'to' => '/catalogs'],
             // ['name' => 'Servicios', 'sublinks' => [
                 //     ['name' => 'Instalación y Re-instalación',          'to' => '/services'],

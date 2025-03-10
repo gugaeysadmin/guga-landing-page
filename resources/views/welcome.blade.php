@@ -3,8 +3,14 @@
     {{-- Header --}}
     <x-slot name="header"> <x-header/></x-slot>
     
+    {{-- video --}}
     <div class="block">
         <x-landing-video/>
+    </div>
+
+    {{-- Mission vission --}}
+    <div>
+        <x-enterprise-info/>
     </div>
 
     {{-- Areas de equipamiento --}}
@@ -106,62 +112,68 @@
 
 
     {{-- Ofertas --}}
-    <section class="bg-slate-50 flex flex-wrap flex-row gap-20 px-40 py-14 justify-center items-center ">
-        <div class="relative">
-            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                <div class="transform skew-x-[15deg]">
-                    <h4 class="font-semibold">hola mundo</h4>
-                    <p class="text-xs mt-1">contenido de la oferta</p>
+    <section class="bg-slate-50">
+        <div class="mt-20">
+            <h1 class="text-center text-[2.5rem] font-sans font-semibold text-[#0392ceff]"> Nuestras ofertas</h1>
+        </div>
+        <div class=" max-w-[80rem] mx-auto flex flex-wrap flex-row gap-20 px-40 py-20 justify-center items-center">
+            <div class="relative">
+                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                    <div class="transform skew-x-[15deg]">
+                        <h4 class="font-semibold">hola mundo</h4>
+                        <p class="text-xs mt-1">contenido de la oferta</p>
+                    </div>
+                </div>
+                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                    <i class="bi bi-percent text-white text-3xl"></i>
                 </div>
             </div>
-            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                <i class="bi bi-percent text-white text-3xl"></i>
-            </div>
-        </div>
-        <div class="relative">
-            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                <div class="transform skew-x-[15deg]">
-                    <h4 class="font-semibold">hola mundo</h4>
-                    <p class="text-xs mt-1">contenido de la oferta</p>
+            <div class="relative">
+                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                    <div class="transform skew-x-[15deg]">
+                        <h4 class="font-semibold">hola mundo</h4>
+                        <p class="text-xs mt-1">contenido de la oferta</p>
+                    </div>
+                </div>
+                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                    <i class="bi bi-percent text-white text-3xl"></i>
                 </div>
             </div>
-            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                <i class="bi bi-percent text-white text-3xl"></i>
-            </div>
-        </div>
-        <div class="relative">
-            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                <div class="transform skew-x-[15deg]">
-                    <h4 class="font-semibold">hola mundo</h4>
-                    <p class="text-xs mt-1">contenido de la oferta</p>
+            <div class="relative">
+                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                    <div class="transform skew-x-[15deg]">
+                        <h4 class="font-semibold">hola mundo</h4>
+                        <p class="text-xs mt-1">contenido de la oferta</p>
+                    </div>
+                </div>
+                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                    <i class="bi bi-percent text-white text-3xl"></i>
                 </div>
             </div>
-            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                <i class="bi bi-percent text-white text-3xl"></i>
-            </div>
-        </div>
-        <div class="relative">
-            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                <div class="transform skew-x-[15deg]">
-                    <h4 class="font-semibold">hola mundo</h4>
-                    <p class="text-xs mt-1">contenido de la oferta</p>
+            <div class="relative">
+                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                    <div class="transform skew-x-[15deg]">
+                        <h4 class="font-semibold">hola mundo</h4>
+                        <p class="text-xs mt-1">contenido de la oferta</p>
+                    </div>
+                </div>
+                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                    <i class="bi bi-percent text-white text-3xl"></i>
                 </div>
             </div>
-            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                <i class="bi bi-percent text-white text-3xl"></i>
-            </div>
-        </div>
-        <div class="relative">
-            <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                <div class="transform skew-x-[15deg]">
-                    <h4 class="font-semibold">hola mundo</h4>
-                    <p class="text-xs mt-1">contenido de la oferta</p>
+            <div class="relative">
+                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
+                    <div class="transform skew-x-[15deg]">
+                        <h4 class="font-semibold">hola mundo</h4>
+                        <p class="text-xs mt-1">contenido de la oferta</p>
+                    </div>
+                </div>
+                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
+                    <i class="bi bi-percent text-white text-3xl"></i>
                 </div>
             </div>
-            <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                <i class="bi bi-percent text-white text-3xl"></i>
-            </div>
         </div>
+
     </section>
     
     {{-- Footer --}}

@@ -102,37 +102,74 @@ var swiperPrev = new Swiper(".product-prev", {
 // });
 
 
-document.addEventListener('scroll', function() {
-    // if (window.location.pathname !== '/') {
-    //     return;
-    // }
+// document.addEventListener('scroll', function() {
+//     // if (window.location.pathname !== '/') {
+//     //     return;
+//     // }
 
+//     const navbar = document.getElementById('navbar');
+//     const contactButton = document.getElementById('contactBtn');
+//     const logo = document.getElementById("hlogo");
+//     const navItems= document.querySelectorAll(".hnav-item");
+//     const scrollY = window.scrollY;
+
+//     if (scrollY > 50) { // Cambia el color cuando se haya desplazado más de 50px
+//         navItems.forEach(function(navitem) {
+//             navitem.classList.remove('text-gray-200');
+//             navitem.classList.remove('hover:text-white');
+//             navitem.classList.add('text-gray-500');
+//             navitem.classList.add('hover:text-sky-500');
+//             navitem.classList.add('font-semibold');
+//         });
+//         contactButton.classList.remove('hidden');
+//         contactButton.classList.remove("translate-x-full");
+//         contactButton.classList.add("translate-x-0");
+//         navbar.classList.add('bg-slate-50');
+//         navbar.classList.add('shadow');
+//         logo.src = "img/logo_normal.png";
+//     } else {
+//         navItems.forEach(function(navitem) {
+//             navitem.classList.remove('text-gray-500');
+//             navitem.classList.remove('hover:text-sky-500');
+//             navitem.classList.remove('font-semibold');
+//             navitem.classList.add('text-gray-200');
+//             navitem.classList.add('hover:text-white');
+//         });
+//         contactButton.classList.add('hidden');
+//         contactButton.classList.remove("translate-x-0");
+//         contactButton.classList.add("translate-x-full");
+//         navbar.classList.remove('bg-slate-50');
+//         navbar.classList.remove('shadow');
+//         logo.src = "img/logo_white.png";
+//     }
+// });
+
+document.addEventListener('scroll', function() {
     const navbar = document.getElementById('navbar');
+    const contactButton = document.getElementById('contactBtn');
     const logo = document.getElementById("hlogo");
-    const navItems= document.querySelectorAll(".hnav-item");
+    const navItems = document.querySelectorAll(".hnav-item");
     const scrollY = window.scrollY;
 
-    if (scrollY > 50) { // Cambia el color cuando se haya desplazado más de 50px
+    if (scrollY > 50) {
         navItems.forEach(function(navitem) {
-            navitem.classList.remove('text-gray-200');
-            navitem.classList.remove('hover:text-white');
-            navitem.classList.add('text-gray-500');
-            navitem.classList.add('hover:text-sky-500');
-            navitem.classList.add('font-semibold');
+            navitem.classList.remove('text-gray-200', 'hover:text-white');
+            navitem.classList.add('text-gray-500', 'hover:text-sky-500', 'font-semibold');
         });
-        navbar.classList.add('bg-slate-50');
-        navbar.classList.add('shadow');
+
+        contactButton.classList.remove("hidden");
+
+        navbar.classList.add('bg-slate-50', 'shadow');
         logo.src = "img/logo_normal.png";
     } else {
         navItems.forEach(function(navitem) {
-            navitem.classList.remove('text-gray-500');
-            navitem.classList.remove('hover:text-sky-500');
-            navitem.classList.remove('font-semibold');
-            navitem.classList.add('text-gray-200');
-            navitem.classList.add('hover:text-white');
+            navitem.classList.remove('text-gray-500', 'hover:text-sky-500', 'font-semibold');
+            navitem.classList.add('text-gray-200', 'hover:text-white');
         });
-        navbar.classList.remove('bg-slate-50');
-        navbar.classList.remove('shadow');
+
+        contactButton.classList.add("hidden");
+
+        navbar.classList.remove('bg-slate-50', 'shadow');
         logo.src = "img/logo_white.png";
     }
 });
