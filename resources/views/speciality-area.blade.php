@@ -5,7 +5,7 @@
     .swiper-wrapper {
         height: max-content !important;
         width: max-content;
-        
+
     }
 
     .swiper-button-prev:after,
@@ -23,21 +23,21 @@
         --tw-border-opacity: 1;
         border-color: rgb(79 70 229 / var(--tw-border-opacity));
     }
-</style> 
+</style>
 <x-layouts.landingpage-layout>
 
     <x-slot name="header"> <x-header/></x-slot>
     <div class="block relative">
         <!-- Imagen de cabecera -->
         <img src="{{ asset('img/catalog_img_header.jpg') }}" alt="services_img" class="w-full max-h-[35rem] object-cover" style="object-position: 0 10%;"/>
-        
+
         <!-- Capa de opacidad -->
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
         <!-- Título -->
         <div class="absolute inset-0 flex items-center justify-center ">
             <h1 class="text-white text-[3.5vw] font-sans">{{ $info }}</h1>
         </div>
-    </div>         
+    </div>
     <section class="flex max-w-[80rem] m-auto">
         {{-- Filtros --}}
         <aside class="w-1/4 bg-gray-100 p-4 mt-12 sticky">
@@ -122,132 +122,96 @@
                 </div>
             </div>
         </aside>
-        
+
         {{-- Contenido --}}
-        <main class="flex w-3/4 p-4">
-            {{-- Imagenes y servicios --}}
-            <div class="w-1/2 px-0 sm:px-8">
-                <div class="relative bg-gray-600" data-carousel="slide">
-                    <!-- Carousel wrapper -->
-                    <div class="relative h-full overflow-hidden rounded-3xl ">
-                        <!-- Item 1 -->
-                        <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('img/services-bg.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
-                        </div>
-                        <!-- Item 2 -->
-                        <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('img/services-bg-2.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
-                        </div>
-                        <!-- Item 3 -->
-                        <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('img/services-install.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
-                        </div>
-                        <!-- Item 4 -->
-                        <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('img/services-reinstall.jpg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
-                        </div>
+        <main class="flex w-3/4 mt-12">
+            @foreach ($content as $product )
+                <div class="block">
 
-                    </div>
-                    <!-- Slider indicators -->
-                    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-                    </div>
-                    <!-- Slider controls -->
-                    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                            </svg>
-                            <span class="sr-only">Previous</span>
-                        </span>
-                    </button>
-                    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                            </svg>
-                            <span class="sr-only">Next</span>
-                        </span>
-                    </button>
-                </div>
-            </div>
+                    {{-- Imagenes y servicios --}}
+                    <div class="w-2/5 px-0 sm:px-8 rounded-2xl overflow-hidden" >
+                        <div class="relative bg-gray-600" data-carousel="slide">
+                            <!-- Carousel wrapper -->
+                            <div class="relative h-full overflow-hidden">
+                                <!-- Item 1 -->
+                                <div class="hidden duration-1000 ease-in-out" data-carousel-item>
+                                    <img src="{{ asset('img/services-bg.jpg') }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
+                                </div>
+                                <!-- Item 2 -->
+                                <div class="hidden duration-1000 ease-in-out" data-carousel-item>
+                                    <img src="{{ asset('img/services-bg-2.jpg') }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
+                                </div>
+                                <!-- Item 3 -->
+                                <div class="hidden duration-1000 ease-in-out" data-carousel-item>
+                                    <img src="{{ asset('img/services-install.jpg') }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
+                                </div>
+                                <!-- Item 4 -->
+                                <div class="hidden duration-1000 ease-in-out" data-carousel-item>
+                                    <img src="{{ asset('img/services-reinstall.jpg') }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
+                                </div>
 
-            {{-- Descripcion y modelos --}}
-            <div class="pro-detail w-1/2 flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">                    
-                <h2 class="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">
-                    PRODUCTO N
-                </h2>
-                <p class="text-gray-500 text-base font-normal mb-8 mt-12">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                <div class="block w-full">
-                    <div class="text">
-                        <div class="block w-full mb-6">
-                            <p class="font-medium text-lg leading-8 text-gray-900 mb-4">Modelos</p>
-                            <div class="grid grid-cols-2 min-[400px]:grid-cols-3 gap-3">
-                                <button
-                                    class="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">56
-                                    cm (S)</button>
-                                <button
-                                    class="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">67
-                                    cm (M)</button>
-                                <button
-                                    class="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">77
-                                    cm (L)</button>
                             </div>
-                        </div>
-                        {{-- <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                            <div class="flex items-center justify-center w-full">
-                                <button
-                                    class="group py-4 px-6 border border-gray-400 rounded-l-full shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50">
-                                    <svg class="stroke-gray-700 transition-all duration-500 group-hover:stroke-black"
-                                        width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M16.5 11H5.5" stroke="" stroke-width="1.6"
-                                            stroke-linecap="round" />
-                                        <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                                            stroke-linecap="round" />
-                                        <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                                            stroke-linecap="round" />
-                                    </svg>
-                                </button>
-                                <input type="text"
-                                    class="font-semibold text-gray-900 text-lg py-[13px] px-6 w-full lg:max-w-[118px] border-y border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50 focus-within:bg-gray-50 outline-0"
-                                    placeholder="1">
-                                <button
-                                    class="group py-4 px-6 border border-gray-400 rounded-r-full shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-300 hover:bg-gray-50">
-                                    <svg class="stroke-gray-700 transition-all duration-500 group-hover:stroke-black"
-                                        width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-width="1.6"
-                                            stroke-linecap="round" />
-                                        <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-opacity="0.2"
-                                            stroke-width="1.6" stroke-linecap="round" />
-                                        <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-opacity="0.2"
-                                            stroke-width="1.6" stroke-linecap="round" />
-                                    </svg>
-                                </button>
+                            <!-- Slider indicators -->
+                            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                                <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
                             </div>
-                        
-                        </div> --}}
-                        <div class="flex items-center gap-3">
-                            <button
-                                class="text-center w-full px-5 py-4 rounded-[100px] bg-sky-500 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-sky-600 hover:shadow-sky-400">
-                                Contactanos
+                            <!-- Slider controls -->
+                            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                                    </svg>
+                                    <span class="sr-only">Previous</span>
+                                </span>
+                            </button>
+                            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                    </svg>
+                                    <span class="sr-only">Next</span>
+                                </span>
                             </button>
                         </div>
+                    </div>
 
+                    {{-- Descripcion y modelos --}}
+                    <div class="pro-detail w-1/2 flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
+                        <h2 class="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">
+                            {{ $product['name'] }}
+                        </h2>
+                        <p class="text-gray-500 text-base font-normal mb-8 mt-12">
+                            {{ $product['description'] }}
+                        </p>
+                        <div class="block w-full">
+                            <div class="text">
+                                <div class="block w-full mb-6">
+                                    <p class="font-medium text-lg leading-8 text-gray-900 mb-4">Modelos</p>
+                                    <div class="grid grid-cols-2 min-[400px]:grid-cols-3 gap-3">
+                                        <button
+                                            class="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">56
+                                            cm (S)</button>
+                                        <button
+                                            class="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">67
+                                            cm (M)</button>
+                                        <button
+                                            class="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">77
+                                            cm (L)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
         </main>
 
-    </section>                                  
+    </section>
 
-    
+
     <x-slot name="footer"><x-footer/></x-slot>
 </x-layouts.landingpage-layout>
 php a
