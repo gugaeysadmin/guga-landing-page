@@ -44,16 +44,37 @@ class SpecialityAreaController extends Controller
                         'name'=> 'priducto 1',
                         'description' => ' There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text.',
                         'img' => [
-                            'https://pagedone.io/asset/uploads/1711514875.png',
-                            'https://pagedone.io/asset/uploads/1711514857.png',
-                            'https://pagedone.io/asset/uploads/1711514892.png'
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514875.png',
+                                'position' => 0
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514857.png',
+                                'position' => 1
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514875.png',
+                                'position' => 2
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514892.png',
+                                'position' => 3
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1700471851.png',
+                                'position' => 4
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514892.png',
+                                'position' => 5
+                            ]
                         ],
-                        'tableHeaders' => ['Capacidad','Rango de temperatura','img','Controlador','Dimensiones','N Repizas','PDF'],
+                        'tableHeaders' => ['Capacidad','Rango de temperatura','Controlador','Dimensiones','N Repizas','PDF'],
                         'table' => [
                             [
                                 'Capacidad' =>"200lts",
                                 'Rango de temperatura' => "200-300grados",
-                                'img' => 'https://pagedone.io/asset/uploads/1700471851.png',
+                                'img' => 2,
                                 'Controlador' => "ControladorN",
                                 'Dimensiones' => "200x500x400",
                                 'N Repizas' => "1",
@@ -61,7 +82,7 @@ class SpecialityAreaController extends Controller
                             ],[
                                 'Capacidad' =>"200lts",
                                 'Rango de temperatura' => "200-300grados",
-                                'img' => 'https://pagedone.io/asset/uploads/1711514892.png',
+                                'img' => 3,
                                 'Controlador' => "ControladorN",
                                 'Dimensiones' => "200x500x400",
                                 'N Repizas' => "2",
@@ -69,7 +90,7 @@ class SpecialityAreaController extends Controller
                             ],[
                                 'Capacidad' =>"200lts",
                                 'Rango de temperatura' => "200-300grados",
-                                'img' => 'https://pagedone.io/asset/uploads/1700471851.png',
+                                'img' => 4,
                                 'Controlador' => "ControladorN",
                                 'Dimensiones' => "200x500x400",
                                 'N Repizas' => "3",
@@ -77,7 +98,7 @@ class SpecialityAreaController extends Controller
                             ],[
                                 'Capacidad' =>"200lts",
                                 'Rango de temperatura' => "200-300grados",
-                                'img' => 'https://pagedone.io/asset/uploads/1711514892.png',
+                                'img' => 5,
                                 'Controlador' => "ControladorN",
                                 'Dimensiones' => "200x500x400",
                                 'N Repizas' => "4",
@@ -89,16 +110,33 @@ class SpecialityAreaController extends Controller
                         'name'=> 'priducto 2',
                         'description' => 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.',
                         'img' => [
-                            'https://pagedone.io/asset/uploads/1711514875.png',
-                            'https://pagedone.io/asset/uploads/1711514857.png',
-                            'https://pagedone.io/asset/uploads/1711514892.png'
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514875.png',
+                                'position' => 0
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514857.png',
+                                'position' => 1
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514875.png',
+                                'position' => 2
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514892.png',
+                                'position' => 3
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1700471851.png',
+                                'position' => 4
+                            ]
                         ],
                         'tableHeaders' => ['Capacidad','Rango de temperatura','img','Controlador','Dimensiones','N Repizas','PDF'],
                         'table' => [
                             [
                                 'Capacidad' =>"200lts",
                                 'Rango de temperatura' => "200-300grados",
-                                'img' => 'https://pagedone.io/asset/uploads/1700471851.png',
+                                'img' => 4,
                                 'Controlador' => "ControladorN",
                                 'Dimensiones' => "200x500x400",
                                 'N Repizas' => "3",
@@ -106,7 +144,7 @@ class SpecialityAreaController extends Controller
                             ],[
                                 'Capacidad' =>"200lts",
                                 'Rango de temperatura' => "200-300grados",
-                                'img' => 'https://pagedone.io/asset/uploads/1711514892.png',
+                                'img' => 3,
                                 'Controlador' => "ControladorN",
                                 'Dimensiones' => "200x500x400",
                                 'N Repizas' => "4",
@@ -118,16 +156,41 @@ class SpecialityAreaController extends Controller
                         'name'=> 'priducto 3',
                         'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
                         'img' => [
-                            'https://pagedone.io/asset/uploads/1711514875.png',
-                            'https://pagedone.io/asset/uploads/1711514857.png',
-                            'https://pagedone.io/asset/uploads/1711514892.png'
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514875.png',
+                                'position' => 0
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514857.png',
+                                'position' => 1
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514875.png',
+                                'position' => 2
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514892.png',
+                                'position' => 3
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1700471851.png',
+                                'position' => 4
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1711514892.png',
+                                'position' => 5
+                            ],
+                            [
+                                'src' => 'https://pagedone.io/asset/uploads/1700471851.png',
+                                'position' => 6
+                            ],
                         ],
                         'tableHeaders' => ['Capacidad','Rango de temperatura','img','Controlador','Dimensiones','N Repizas','PDF'],
                         'table' => [
                             [
                                 'Capacidad' =>"200lts",
                                 'Rango de temperatura' => "200-300grados",
-                                'img' => 'https://pagedone.io/asset/uploads/1700471851.png',
+                                'img' => 0,
                                 'Controlador' => "ControladorN",
                                 'Dimensiones' => "200x500x400",
                                 'N Repizas' => "1",
@@ -135,7 +198,7 @@ class SpecialityAreaController extends Controller
                             ],[
                                 'Capacidad' =>"200lts",
                                 'Rango de temperatura' => "200-300grados",
-                                'img' => 'https://pagedone.io/asset/uploads/1711514892.png',
+                                'img' => 5,
                                 'Controlador' => "ControladorN",
                                 'Dimensiones' => "200x500x400",
                                 'N Repizas' => "2",
@@ -143,7 +206,7 @@ class SpecialityAreaController extends Controller
                             ],[
                                 'Capacidad' =>"200lts",
                                 'Rango de temperatura' => "200-300grados",
-                                'img' => 'https://pagedone.io/asset/uploads/1700471851.png',
+                                'img' => 6,
                                 'Controlador' => "ControladorN",
                                 'Dimensiones' => "200x500x400",
                                 'N Repizas' => "3",

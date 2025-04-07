@@ -21,7 +21,7 @@
     {{-- Alianzas --}}
     <section class="bg-slate-700 block px-4 sm:p-16 text-center">
         <h1 class="px-5 sm:px-5 md:px-32 mb-12 text-[3rem] font-sans font-semibold text-slate-50">{{ __('Alianzas') }}</h1>
-        <div class="w-full max-w-[80rem] mx-auto px-4 flex flex-wrap justify-around">
+        {{-- <div class="w-full max-w-[80rem] mx-auto px-4 flex flex-wrap justify-around">
             <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
                <a href="" class="my-auto" >
                   <img src={{ asset("img/cisa.png") }} alt="..." class="object-contain" />
@@ -45,7 +45,7 @@
                   <img src={{ asset("img/fiochetti.jpg") }} alt="..." class="object-contain" />
                 </a>
             </div>
-        </div>
+        </div> --}}
         <div class="w-full px-4 md:p-24 pb-12 flex">
             <x-swipper :slides="$aliances" />
         </div>

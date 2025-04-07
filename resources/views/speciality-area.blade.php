@@ -38,9 +38,9 @@
             <h1 class="text-white text-[3.5vw] font-sans">{{ $info }}</h1>
         </div>
     </div>
-    <section class="flex max-w-[80rem] m-auto">
+    <section class="flex max-w-[90rem] gap-8 m-auto ">
         {{-- Filtros --}}
-        <aside class="w-1/4 bg-gray-100 p-4 mt-12 sticky">
+        <aside class="w-2/6 bg-gray-100 p-4 mt-12 sticky">
             <div class="w-full bg-sky-600 p-4 flex items-center font-sans font-semibold text-sky-50">
                 <h2 class="text-lg font-bold">Categorías de Producto</h2>
             </div>
@@ -124,17 +124,77 @@
         </aside>
 
         {{-- Contenido --}}
-        <main class="flex w-3/4 mt-12">
-            @foreach ($content as $product )
-                <div class="block">
+        <main class="flex flex-col gap-24 w-4/6 mt-12 mb-24 ">
+            @foreach ($content as $index => $product)
 
+                {{-- Productos --}}
+                <div class="flex flex-row gap-8">
+                    {{-- Descripcion y modelos --}}
+                    @if ($index % 2 != 0)
+                        <div class="pro-detail w-1/2 flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
+                            <h2 class="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">
+                                {{ $product['name'] }}
+                            </h2>
+                            <p class="text-gray-500 text-base font-normal mb-8 mt-8">
+                                {{ $product['description'] }}
+                            </p>
+                            <div class="block w-full">
+                                <div class="text">
+                                    <div class="block w-full mb-6">
+                                        <p class="font-medium text-lg leading-8 text-gray-900 mb-4">Modelos</p>
+                                        <div class="w-full overflow-auto">
+
+                                            <div class="w-full overflow-auto">
+                                                <table class="min-w-full bg-white border border-gray-200 shadow-sm rounded-lg overflow-hidden">
+                                                    <thead class="bg-gray-50">
+                                                        <tr>
+                                                            @foreach ($product["tableHeaders"] as $header)
+                                                                @if ($header != 'img')
+                                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                        {{ $header }}
+                                                                    </th>
+                                                                @endif
+                                                            @endforeach
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-gray-200">
+                                                        @foreach ($product["table"] as $row)
+                                                            <tr class="hover:bg-gray-50 transition-colors" data-position="{{ $row['img'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['img'] }})">
+                                                                @foreach ($product["tableHeaders"] as $header)
+                                                                    @if ($header != 'img' && $header != 'PDF'  && isset($row[$header]))
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                                            {{ $row[$header] ?? 'N/A' }}
+                                                                        </td>
+                                                                    @elseif ($header === 'PDF')
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                                            <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
+                                                                            {{-- {{ $row[$header] ?? 'N/A' }} --}}
+                                                                        </td>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     {{-- Imagenes y servicios --}}
-                    <div class="w-2/5 px-0 sm:px-8 rounded-2xl overflow-hidden" >
-                        <div class="relative bg-gray-600" data-carousel="slide">
+                    <div class="w-2/6  h-[30rem] rounded-2xl overflow-hidden  shadow-2xl" >
+                        <div id="carousel-{{ $index }}" class="relative bg-gray-600 rounded-2xl  overflow-hidden" data-carousel="slide">
                             <!-- Carousel wrapper -->
                             <div class="relative h-full overflow-hidden">
+                                @foreach ($product["img"] as $img )
+                                    <div class="hidden duration-1000 ease-in-out" data-carousel-item>
+                                        <img src="{{ $img["src"] }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
+                                    </div>    
+                                @endforeach
                                 <!-- Item 1 -->
-                                <div class="hidden duration-1000 ease-in-out" data-carousel-item>
+                                {{-- <div class="hidden duration-1000 ease-in-out" data-carousel-item>
                                     <img src="{{ asset('img/services-bg.jpg') }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
                                 </div>
                                 <!-- Item 2 -->
@@ -148,15 +208,18 @@
                                 <!-- Item 4 -->
                                 <div class="hidden duration-1000 ease-in-out" data-carousel-item>
                                     <img src="{{ asset('img/services-reinstall.jpg') }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
-                                </div>
+                                </div> --}}
 
                             </div>
                             <!-- Slider indicators -->
                             <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                                <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                                @foreach ($product["img"] as $img )
+                                    <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide {{ $img["position"] }}" data-carousel-slide-to="{{ $img["position"] }}"></button>
+                                @endforeach
+                                {{-- <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
                                 <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
                                 <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
+                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button> --}}
                             </div>
                             <!-- Slider controls -->
                             <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
@@ -177,34 +240,60 @@
                             </button>
                         </div>
                     </div>
-
                     {{-- Descripcion y modelos --}}
-                    <div class="pro-detail w-1/2 flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
-                        <h2 class="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">
-                            {{ $product['name'] }}
-                        </h2>
-                        <p class="text-gray-500 text-base font-normal mb-8 mt-12">
-                            {{ $product['description'] }}
-                        </p>
-                        <div class="block w-full">
-                            <div class="text">
-                                <div class="block w-full mb-6">
-                                    <p class="font-medium text-lg leading-8 text-gray-900 mb-4">Modelos</p>
-                                    <div class="grid grid-cols-2 min-[400px]:grid-cols-3 gap-3">
-                                        <button
-                                            class="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">56
-                                            cm (S)</button>
-                                        <button
-                                            class="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">67
-                                            cm (M)</button>
-                                        <button
-                                            class="border border-gray-200 text-gray-900 text-lg py-2 rounded-full px-1.5 sm:px-6 w-full font-semibold whitespace-nowrap shadow-sm shadow-transparent transition-all duration-300 hover:shadow-gray-300 hover:bg-gray-50 hover:border-gray-300">77
-                                            cm (L)</button>
+                    @if ($index  % 2 == 0)
+                        <div class="pro-detail w-1/2 flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
+                            <h2 class="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">
+                                {{ $product['name'] }}
+                            </h2>
+                            <p class="text-gray-500 text-base font-normal mb-8 mt-12">
+                                {{ $product['description'] }}
+                            </p>
+                            <div class="block w-full">
+                                <div class="text">
+                                    <div class="block w-full mb-6">
+                                        <p class="font-medium text-lg leading-8 text-gray-900 mb-4">Modelos</p>
+                                        <div class="w-full overflow-auto">
+
+                                            <div class="w-full overflow-auto">
+                                                <table class="min-w-full bg-white border border-gray-200 shadow-sm rounded-lg overflow-hidden">
+                                                    <thead class="bg-gray-50">
+                                                        <tr>
+                                                            @foreach ($product["tableHeaders"] as $header)
+                                                                @if ($header != 'img')
+                                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                        {{ $header }}
+                                                                    </th>
+                                                                @endif
+                                                            @endforeach
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-gray-200">
+                                                        @foreach ($product["table"] as $row)
+                                                            <tr class="hover:bg-gray-50 transition-colors" data-position="{{ $row['img'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['img'] }})">
+                                                                @foreach ($product["tableHeaders"] as $header)
+                                                                    @if ($header != 'img' && $header != 'PDF'  && isset($row[$header]))
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                                            {{ $row[$header] ?? 'N/A' }}
+                                                                        </td>
+                                                                    @elseif ($header === 'PDF')
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                                            <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
+                                                                            {{-- {{ $row[$header] ?? 'N/A' }} --}}
+                                                                        </td>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             @endforeach
         </main>
@@ -214,4 +303,19 @@
 
     <x-slot name="footer"><x-footer/></x-slot>
 </x-layouts.landingpage-layout>
-php a
+
+<script>
+    function changeCarouselImage(carouselId, position) {
+        // Obtener el carrusel específico
+        const carousel = document.getElementById(carouselId);
+        if (!carousel) return;
+
+        // Obtener el botón correspondiente al indicador del carrusel
+        const button = carousel.querySelector(`button[data-carousel-slide-to="${position}"]`);
+        
+        // Simular un clic en el botón para cambiar la imagen del carrusel
+        if (button) {
+            button.click();
+        }
+    }
+</script>
