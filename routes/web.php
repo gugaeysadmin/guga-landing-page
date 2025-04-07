@@ -8,6 +8,8 @@ use App\View\Components\Pages\ContactController;
 use App\View\Components\Pages\ServicesController;
 use App\View\Components\Pages\SpecialityAreaController;
 use App\View\Components\Pages\WelcomeController;
+use App\View\Components\Pages\AdminController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/home', function () {
@@ -15,6 +17,8 @@ Route::get('/home', function () {
 })->name('home2');
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
+Route::get('/app/{any}', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->where('any', '.*');
+
 Route::get('/speciality-area/{specialty}', [SpecialityAreaController::class, 'showBySpecialty'])->name('speciality-area.show');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/catalogs', [CatalogsController::class, 'index'])->name('catalogs');

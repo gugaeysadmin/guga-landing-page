@@ -6,6 +6,10 @@ import { Tooltip,Carousel,Collapse, initTWE } from "tw-elements";
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import Swiper from 'swiper/bundle';
 
+import { createApp } from 'vue';
+import app from './components/app.vue'
+import router from './router';
+
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -18,7 +22,7 @@ initTWE({ Tooltip, Carousel, Collapse });
 window.Alpine = Alpine;
 
 Alpine.start();
-
+createApp(app).use(router).mount("#app");
 
 
 var swiperAux = new Swiper('.swiper', {
@@ -65,21 +69,21 @@ var swiperThumb= new Swiper(".product-thumb", {
     loop: true,
     spaceBetween: 12,
     slidesPerView: 4,
-    
+
     freeMode: true,
     watchSlidesProgress: true,
-   
+
 });
 
 var swiperPrev = new Swiper(".product-prev", {
     loop: true,
     spaceBetween: 32,
     effect: "fade",
-   
+
     thumbs: {
         swiper: swiperThumb,
     },
-    
+
 });
 
 document.addEventListener('scroll', function() {
