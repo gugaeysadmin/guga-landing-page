@@ -10,7 +10,9 @@ export default {
         './resources/views/**/*.blade.php',
          "./node_modules/tw-elements/js/**/*.js",
          "./node_modules/flowbite/**/*.js",
-         './resources/**/*.js'
+         './resources/**/*.js',
+         "./resources/**/*.vue",
+         
     ],
     darkMode: 'class',
     theme: {
