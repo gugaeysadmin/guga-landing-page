@@ -1,6 +1,6 @@
 <template>
     <div class="flex-row bg-blue-200 h-16 shadow-2xl">
-        <p>header</p>
+        <img :src="'/img/logo_white.png'" alt="Logo">
     </div>
 </template>
 
