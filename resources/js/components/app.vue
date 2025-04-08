@@ -1,5 +1,7 @@
 <template>
-    <h1>hola mundo</h1>
+    <header>
+        <Header></Header>
+    </header>
     <nav>
         <div>
             <router-link to="/app/homevue">Home</router-link>

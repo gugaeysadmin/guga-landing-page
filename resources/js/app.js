@@ -7,7 +7,7 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import Swiper from 'swiper/bundle';
 
 import { createApp } from 'vue';
-import app from './components/app.vue'
+import mainVue from './components/app.vue'
 import router from './router';
 
 import 'swiper/css'
@@ -22,7 +22,20 @@ initTWE({ Tooltip, Carousel, Collapse });
 window.Alpine = Alpine;
 
 Alpine.start();
-createApp(app).use(router).mount("#app");
+
+
+import header from './components/Header.vue'
+
+// createApp(app).use(router).mount("#app");
+
+const app = createApp(mainVue)
+
+app.use(router)
+
+app.component('Header', header)
+
+app.mount('#app')
+
 
 
 var swiperAux = new Swiper('.swiper', {
