@@ -1,14 +1,35 @@
 <template>
-    <header>
+    <!-- <header>
         <Header></Header>
-    </header>
-    <nav>
+    </header> -->
+    <div class="relative flex min-h-screen">
+        <aside class="inset-y-0 absolute left-0 md:relative md:-translate-x-0 transform -translate-x-full trasition duration-200 ease-in-out">
+            <SideBar/>
+        </aside>
+        <div class="flex-1">
+            <main>
+                <router-view/>
+            </main>
+        </div>
+    </div>
+
+    <!-- <nav>
         <div>
             <router-link to="/app/homevue">Home</router-link>
             <router-link to="/app/aboutvue">About</router-link>
         </div>
-        <main>
-            <router-view/>
-        </main>
-    </nav>
+    </nav> -->
 </template>
+
+<script>
+import { ref } from 'vue';
+
+export default {
+    setup(){
+        const showSidebar = ref(false);
+        return {
+            showSidebar,
+        };
+    }
+};
+</script>

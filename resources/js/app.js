@@ -25,6 +25,7 @@ Alpine.start();
 
 
 import header from './components/Header.vue'
+import sidebar from './components/SideBar.vue'
 
 // createApp(app).use(router).mount("#app");
 
@@ -33,6 +34,7 @@ const app = createApp(mainVue)
 app.use(router)
 
 app.component('Header', header)
+app.component('SideBar', sidebar)
 
 app.mount('#app')
 
