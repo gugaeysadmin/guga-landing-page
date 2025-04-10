@@ -6,6 +6,9 @@
         <aside class="inset-y-0 absolute left-0 md:relative md:-translate-x-0 transform -translate-x-full trasition duration-200 ease-in-out">
             <SideBar/>
         </aside>
+        <header class="">
+            <Header></Header>
+        </header>
         <div class="flex-1">
             <main>
                 <router-view/>
@@ -23,6 +26,7 @@
 
 <script>
 import { ref } from 'vue';
+import Header from './components/Header.vue';
 
 export default {
     setup(){

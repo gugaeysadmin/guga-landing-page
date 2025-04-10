@@ -7,7 +7,7 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import Swiper from 'swiper/bundle';
 
 import { createApp } from 'vue';
-import mainVue from './components/app.vue'
+import mainVue from './app.vue'
 import router from './router';
 
 import 'swiper/css'
