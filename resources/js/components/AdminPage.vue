@@ -1,5 +1,3 @@
 <template>
-    <div>
-        <p>admin</p>
-    </div>
+    <p>admin</p>
 </template>

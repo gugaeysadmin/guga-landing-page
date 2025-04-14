@@ -53,7 +53,16 @@ class WelcomeController extends Controller
             ['image' => asset('img/2.png'), 'to' => ''],
             ['image' => asset('img/3.png'), 'to' => ''],
         ];
+
+        $offerts = [
+            ['id'=> 1, 'title'=> 'oferta 1', 'description' => 'Descripcion de la oferta 1' ],
+            ['id'=> 2, 'title'=> 'oferta 2', 'description' => 'Descripcion de la oferta 2' ],
+            ['id'=> 3, 'title'=> 'oferta 3', 'description' => 'Descripcion de la oferta 3' ],
+            ['id'=> 4, 'title'=> 'oferta 4', 'description' => 'Descripcion de la oferta 4' ],
+            ['id'=> 5, 'title'=> 'oferta 5', 'description' => 'Descripcion de la oferta 5' ],
+
+        ];
         
-        return view('welcome', compact('imagelist', 'aliances', 'areas','services'));
+        return view('welcome', compact('imagelist', 'aliances', 'areas','services','offerts'));
     }
 }

@@ -8,63 +8,13 @@
         <x-landing-video/>
     </div>
 
-    {{-- Mission vission --}}
-    <div>
-        <x-enterprise-info/>
-    </div>
-
     {{-- Areas de equipamiento --}}
-    <section class="pt-14 pb-24 px-4 sm:px-12 bg-slate-50">
-        <x-equipment-areas/>
-    </section>
-    
-    {{-- Alianzas --}}
-    <section class="bg-slate-700 block px-4 sm:p-16 text-center">
-        <h1 class="px-5 sm:px-5 md:px-32 mb-12 text-[3rem] font-sans font-semibold text-slate-50">{{ __('Alianzas') }}</h1>
-        {{-- <div class="w-full max-w-[80rem] mx-auto px-4 flex flex-wrap justify-around">
-            <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
-               <a href="" class="my-auto" >
-                  <img src={{ asset("img/cisa.png") }} alt="..." class="object-contain" />
-                </a>
-            </div>
-
-            <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
-               <a href="" class="my-auto" >
-                  <img src={{ asset("img/amtai.png") }} alt="..." class="object-contain" />
-                </a>
-            </div>
-
-            <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
-               <a href="" class="my-auto" >
-                  <img src={{ asset("img/biodex.jpg") }} alt="..." class="object-contain" />
-                </a>
-            </div>
-
-            <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
-               <a href="" class="my-auto" >
-                  <img src={{ asset("img/fiochetti.jpg") }} alt="..." class="object-contain" />
-                </a>
-            </div>
-        </div> --}}
-        <div class="w-full px-4 md:p-24 pb-12 flex">
-            <x-swipper :slides="$aliances" />
+    <section class="py-36 px-4 sm:px-12 bg-slate-50">
+        <div class="max-w-[100rem] mx-auto">
+            <x-equipment-areas/>
         </div>
     </section>
 
-
-    {{-- <section class="bg-slate-50 flex flex-wrap md:flex-row flex-col">
-        <div class="w-full md:w-3/5 py-16">
-            <h1 class="px-5 sm:px-5 md:px-32 text-[3rem] font-sans font-semibold text-[#0392ceff]">{{ __('Alianzas') }}</h1>
-            <div class="mx-5 sm:mx-5 md:ml-32 md:mr-40 mt-4 mb-10 border-t-[3px] border-slate-400"></div>
-            <p class="px-5 sm:px-5 md:px-32 text-[1.5rem]">
-                {{ __('En Guga, las alianzas son esenciales. Nos permiten ampliar nuestra oferta, acceder a nuevos mercados, compartir conocimientos, reducir costos, fomentar la innovación y gestionar riesgos de manera efectiva, todo lo cual contribuye a nuestro éxito y crecimiento continuo.') }}
-            </p>
-        </div>
-        <div class="w-full md:w-2/5 px-4 py-12 flex bg-slate-600">
-            <x-swipper :slides="$aliances" />
-        </div>
-    </section> --}}
- 
     {{-- Servicios --}}
     <section class="bg-slate-50 flex flex-wrap md:flex-row flex-col">
         <div class="w-full md:w-1/2 py-1 bg-slate-300 flex justify-center items-center">
@@ -109,70 +59,70 @@
             </div>
         </div>
     </section>
+    
+    {{-- Alianzas --}}
+    <section class="bg-slate-50">
+        <div class="py-36">
+            <div class="block text-center">
+                <h1 class="text-[3rem] font-sans font-semibold text-[#0392ceff]">{{ __('Alianzas') }}</h1>
+            </div>
+            {{-- <div class="w-full max-w-[80rem] mx-auto px-4 flex flex-wrap justify-around">
+                <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
+                <a href="" class="my-auto" >
+                    <img src={{ asset("img/cisa.png") }} alt="..." class="object-contain" />
+                    </a>
+                </div>
+
+                <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
+                <a href="" class="my-auto" >
+                    <img src={{ asset("img/amtai.png") }} alt="..." class="object-contain" />
+                    </a>
+                </div>
+
+                <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
+                <a href="" class="my-auto" >
+                    <img src={{ asset("img/biodex.jpg") }} alt="..." class="object-contain" />
+                    </a>
+                </div>
+
+                <div class="bg-white mt-6 rounded-2xl p-6 w-[15rem] h-[15rem] flex justify-center items-center">
+                <a href="" class="my-auto" >
+                    <img src={{ asset("img/fiochetti.jpg") }} alt="..." class="object-contain" />
+                    </a>
+                </div>
+            </div> --}}
+            <div class="w-full max-w-[80rem] mx-auto flex mt-4">
+                <x-swipper :slides="$aliances" />
+            </div>
+        </div>
+    </section>
+
+    {{-- Mission vission --}}
+    <div>
+        <x-enterprise-info/>
+    </div>
+    
+
+
+    {{-- <section class="bg-slate-50 flex flex-wrap md:flex-row flex-col">
+        <div class="w-full md:w-3/5 py-16">
+            <h1 class="px-5 sm:px-5 md:px-32 text-[3rem] font-sans font-semibold text-[#0392ceff]">{{ __('Alianzas') }}</h1>
+            <div class="mx-5 sm:mx-5 md:ml-32 md:mr-40 mt-4 mb-10 border-t-[3px] border-slate-400"></div>
+            <p class="px-5 sm:px-5 md:px-32 text-[1.5rem]">
+                {{ __('En Guga, las alianzas son esenciales. Nos permiten ampliar nuestra oferta, acceder a nuevos mercados, compartir conocimientos, reducir costos, fomentar la innovación y gestionar riesgos de manera efectiva, todo lo cual contribuye a nuestro éxito y crecimiento continuo.') }}
+            </p>
+        </div>
+        <div class="w-full md:w-2/5 px-4 py-12 flex bg-slate-600">
+            <x-swipper :slides="$aliances" />
+        </div>
+    </section> --}}
+ 
 
 
     {{-- Ofertas --}}
     <section class="bg-slate-50">
-        <div class="mt-20">
-            <h1 class="text-center text-[2.5rem] font-sans font-semibold text-[#0392ceff]"> Nuestras ofertas</h1>
-        </div>
-        <div class=" max-w-[80rem] mx-auto flex flex-wrap flex-row gap-20 px-40 py-20 justify-center items-center">
-            <div class="relative">
-                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                    <div class="transform skew-x-[15deg]">
-                        <h4 class="font-semibold">hola mundo</h4>
-                        <p class="text-xs mt-1">contenido de la oferta</p>
-                    </div>
-                </div>
-                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                    <i class="bi bi-percent text-white text-3xl"></i>
-                </div>
-            </div>
-            <div class="relative">
-                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                    <div class="transform skew-x-[15deg]">
-                        <h4 class="font-semibold">hola mundo</h4>
-                        <p class="text-xs mt-1">contenido de la oferta</p>
-                    </div>
-                </div>
-                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                    <i class="bi bi-percent text-white text-3xl"></i>
-                </div>
-            </div>
-            <div class="relative">
-                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                    <div class="transform skew-x-[15deg]">
-                        <h4 class="font-semibold">hola mundo</h4>
-                        <p class="text-xs mt-1">contenido de la oferta</p>
-                    </div>
-                </div>
-                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                    <i class="bi bi-percent text-white text-3xl"></i>
-                </div>
-            </div>
-            <div class="relative">
-                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                    <div class="transform skew-x-[15deg]">
-                        <h4 class="font-semibold">hola mundo</h4>
-                        <p class="text-xs mt-1">contenido de la oferta</p>
-                    </div>
-                </div>
-                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                    <i class="bi bi-percent text-white text-3xl"></i>
-                </div>
-            </div>
-            <div class="relative">
-                <div class=" w-64 h-40 bg-slate-200 border-l-2 border-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5">
-                    <div class="transform skew-x-[15deg]">
-                        <h4 class="font-semibold">hola mundo</h4>
-                        <p class="text-xs mt-1">contenido de la oferta</p>
-                    </div>
-                </div>
-                <div class="absolute -left-10 top-1/4 bg-purple-500 rounded-full h-20 w-20 flex items-center justify-center">
-                    <i class="bi bi-percent text-white text-3xl"></i>
-                </div>
-            </div>
-        </div>
+
+        <x-offerts :offerts="$offerts"/>
 
     </section>
     

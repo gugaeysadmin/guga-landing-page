@@ -40,102 +40,26 @@
     </div>
     <section class="flex max-w-[90rem] gap-8 m-auto ">
         {{-- Filtros --}}
-        <aside class="w-2/6 bg-gray-100 p-4 mt-12 sticky">
-            <div class="w-full bg-sky-600 p-4 flex items-center font-sans font-semibold text-sky-50">
-                <h2 class="text-lg font-bold">Categorías de Producto</h2>
-            </div>
-
-            <div id="categoriasFilter" class="mt-4">
-                <div class="border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-body-dark gap-4">
-                    <h2 class="mb-0" id="headingOne">
-                    <button
-                        class="group relative flex w-full items-center border-0 bg-slate-200 px-5 py-4 text-left font-semibold text-lg text-blue-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white [&:not([data-twe-collapse-collapsed])]:bg-sky-400 [&:not([data-twe-collapse-collapsed])]:text-sky-50 [&:not([data-twe-collapse-collapsed])]:shadow-border-b dark:[&:not([data-twe-collapse-collapsed])]:bg-surface-dark dark:[&:not([data-twe-collapse-collapsed])]:text-primary dark:[&:not([data-twe-collapse-collapsed])]:shadow-white/10 "
-                        type="button"
-                        data-twe-collapse-init
-                        data-twe-target="#collapseOne"
-                        aria-expanded="true"
-                        aria-controls="collapseOne"
-                    >
-                        Marcas
-                        <span class="-me-1 ms-auto h-5 w-5 shrink-0 rotate-[90deg] transition-transform duration-200 ease-in-out group-data-[twe-collapse-collapsed]:me-0 group-data-[twe-collapse-collapsed]:rotate-0 motion-reduce:transition-none [&>svg]:h-6 [&>svg]:w-6">
-                            <i class="bi bi-caret-right-fill text-xl"></i>
-                        </span>
-                    </button>
-                    </h2>
-                    <div
-                        id="collapseOne"
-                        class="!visible"
-                        data-twe-collapse-item
-                        data-twe-collapse-show
-                        aria-labelledby="headingOne"
-                        data-twe-parent="#accordionExample"
-                    >
-                        <div class="px-5 py-4">
-                            <ul class="pl-4 mt-2 space-y-2">
-                                <li>
-                                    <label class="flex items-center space-x-3 text-sky-600 hover:text-sky-900 cursor-pointer">
-                                        <input type="checkbox" class="hidden peer" />
-                                        <span class="w-5 h-5 border-2 border-sky-500 rounded-md flex items-center justify-center peer-checked:bg-sky-600 peer-checked:border-sky-600 transition">
-                                            <svg
-                                                class="w-4 h-4 text-white hidden peer-checked:block"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M5 13l4 4L19 7"
-                                                />
-                                            </svg>
-                                        </span>
-                                        <span>Portátiles</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="flex items-center space-x-3 text-sky-700 hover:text-sky-900 cursor-pointer">
-                                        <input type="checkbox" class="hidden peer" />
-                                        <span class="w-5 h-5 border-2 border-sky-500 rounded-md flex items-center justify-center peer-checked:bg-sky-600 peer-checked:border-sky-600 transition">
-                                            <svg
-                                                class="w-4 h-4 text-white hidden peer-checked:block"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M5 13l4 4L19 7"
-                                                />
-                                            </svg>
-                                        </span>
-                                        <span>Sobremesa</span>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <aside class="w-[27%] bg-gray-100 p-4 mt-12">
+                <x-filters  :title="'Categorias de producto'" :filters="$filters"/>
         </aside>
 
         {{-- Contenido --}}
-        <main class="flex flex-col gap-24 w-4/6 mt-12 mb-24 ">
+        <main class="flex flex-col gap-24 w-[73%] mt-12 mb-24 ">
             @foreach ($content as $index => $product)
 
                 {{-- Productos --}}
                 <div class="flex flex-row gap-8">
                     {{-- Descripcion y modelos --}}
                     @if ($index % 2 != 0)
-                        <div class="pro-detail w-1/2 flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
+                        <div class="pro-detail w-7/12 flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
                             <h2 class="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">
                                 {{ $product['name'] }}
                             </h2>
-                            <p class="text-gray-500 text-base font-normal mb-8 mt-8">
+                            <h3 class="mb-2 font-manrope font-semibold text-xl leading-10 text-sky-600">
+                                {{ $product['brand'] }}
+                            </h3>
+                            <p class="text-gray-500 text-base font-normal min-h-44 mb-8 mt-12">
                                 {{ $product['description'] }}
                             </p>
                             <div class="block w-full">
@@ -145,12 +69,12 @@
                                         <div class="w-full overflow-auto">
 
                                             <div class="w-full overflow-auto">
-                                                <table class="min-w-full bg-white border border-gray-200 shadow-sm rounded-lg overflow-hidden">
-                                                    <thead class="bg-gray-50">
+                                                <table class="min-w-full  border border-white  shadow-sm overflow-hidden border-separate" style="border-spacing: 0 0.6rem;">
+                                                    <thead>
                                                         <tr>
                                                             @foreach ($product["tableHeaders"] as $header)
                                                                 @if ($header != 'img')
-                                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                    <th class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider first:rounded-l-lg last:rounded-r-lg bg-[#4180ab] ">
                                                                         {{ $header }}
                                                                     </th>
                                                                 @endif
@@ -159,14 +83,14 @@
                                                     </thead>
                                                     <tbody class="divide-y divide-gray-200">
                                                         @foreach ($product["table"] as $row)
-                                                            <tr class="hover:bg-gray-50 transition-colors" data-position="{{ $row['img'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['img'] }})">
+                                                            <tr class="cursor-pointer group" data-position="{{ $row['img'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['img'] }})">
                                                                 @foreach ($product["tableHeaders"] as $header)
                                                                     @if ($header != 'img' && $header != 'PDF'  && isset($row[$header]))
-                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
                                                                             {{ $row[$header] ?? 'N/A' }}
                                                                         </td>
                                                                     @elseif ($header === 'PDF')
-                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
                                                                             <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
                                                                             {{-- {{ $row[$header] ?? 'N/A' }} --}}
                                                                         </td>
@@ -184,7 +108,7 @@
                         </div>
                     @endif
                     {{-- Imagenes y servicios --}}
-                    <div class="w-2/6  h-[30rem] rounded-2xl overflow-hidden  shadow-2xl" >
+                    <div class="w-5/12  h-[30rem] rounded-2xl overflow-hidden  shadow-2xl" >
                         <div id="carousel-{{ $index }}" class="relative bg-gray-600 rounded-2xl  overflow-hidden" data-carousel="slide">
                             <!-- Carousel wrapper -->
                             <div class="relative h-full overflow-hidden">
@@ -242,11 +166,14 @@
                     </div>
                     {{-- Descripcion y modelos --}}
                     @if ($index  % 2 == 0)
-                        <div class="pro-detail w-1/2 flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
+                        <div class="pro-detail w-7/12 flex flex-col justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
                             <h2 class="mb-2 font-manrope font-bold text-3xl leading-10 text-gray-900">
                                 {{ $product['name'] }}
                             </h2>
-                            <p class="text-gray-500 text-base font-normal mb-8 mt-12">
+                            <h3 class="mb-2 font-manrope font-semibold text-xl leading-10 text-sky-600">
+                                {{ $product['brand'] }}
+                            </h3>
+                            <p class="text-gray-500 text-base font-normal min-h-44 mb-8 mt-12">
                                 {{ $product['description'] }}
                             </p>
                             <div class="block w-full">
@@ -256,12 +183,12 @@
                                         <div class="w-full overflow-auto">
 
                                             <div class="w-full overflow-auto">
-                                                <table class="min-w-full bg-white border border-gray-200 shadow-sm rounded-lg overflow-hidden">
-                                                    <thead class="bg-gray-50">
+                                                <table class="min-w-full  border border-white  shadow-sm overflow-hidden border-separate" style="border-spacing: 0 0.6rem;">
+                                                    <thead>
                                                         <tr>
                                                             @foreach ($product["tableHeaders"] as $header)
                                                                 @if ($header != 'img')
-                                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                    <th class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider first:rounded-l-lg last:rounded-r-lg bg-[#4180ab] ">
                                                                         {{ $header }}
                                                                     </th>
                                                                 @endif
@@ -270,14 +197,14 @@
                                                     </thead>
                                                     <tbody class="divide-y divide-gray-200">
                                                         @foreach ($product["table"] as $row)
-                                                            <tr class="hover:bg-gray-50 transition-colors" data-position="{{ $row['img'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['img'] }})">
+                                                            <tr class="cursor-pointer group" data-position="{{ $row['img'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['img'] }})">
                                                                 @foreach ($product["tableHeaders"] as $header)
                                                                     @if ($header != 'img' && $header != 'PDF'  && isset($row[$header]))
-                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
                                                                             {{ $row[$header] ?? 'N/A' }}
                                                                         </td>
                                                                     @elseif ($header === 'PDF')
-                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
                                                                             <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
                                                                             {{-- {{ $row[$header] ?? 'N/A' }} --}}
                                                                         </td>

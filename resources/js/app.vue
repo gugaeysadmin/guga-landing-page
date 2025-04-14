@@ -6,13 +6,18 @@
         <aside class="inset-y-0 absolute left-0 md:relative md:-translate-x-0 transform -translate-x-full trasition duration-200 ease-in-out">
             <SideBar/>
         </aside>
-        <header class="">
-            <Header></Header>
-        </header>
-        <div class="flex-1">
-            <main>
-                <router-view/>
-            </main>
+        <div class="block  w-full">
+            <header class="w-full">
+                <Header></Header>
+            </header>
+            <div class="flex-1">
+                <main>
+                    <div class="max-w-[80rem] px-14 mx-auto">
+                        <router-view/>
+                    </div>
+                </main>
+            </div>
+
         </div>
     </div>
 

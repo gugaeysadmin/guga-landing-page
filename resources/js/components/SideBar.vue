@@ -35,12 +35,12 @@
                     <h5 class="font-mono  text-xl text-gray-400">CATÁLOGOS</h5>
 
 
-                    <div class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-lg transition duration-200 group">
+                    <router-link to="/app/product" class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-lg transition duration-200 group">
                         <i class="bi bi-box2-fill group-hover:text-black group-acitve:text-black text-2xl text-gray-400 transition duration-200"></i>
                         <p class="group-hover:font-bold group-hover:text-black group-active:font-bold group-active:text-black font-medium text-gray-500 font-sans text-xl transition duration-200">
                             Productos
                         </p>
-                    </div>
+                    </router-link>
 
                     <div class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-lg transition duration-200 group">
                         <i class="bi bi-tags-fill group-hover:text-black group-acitve:text-black text-2xl text-gray-400 transition duration-200"></i>

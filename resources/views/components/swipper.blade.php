@@ -2,7 +2,7 @@
 
 
 <!-- Slider main container -->
-<div class="swiper px-10 my-10">
+<div class="swiper px-10 ">
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
     <!-- Slides -->
