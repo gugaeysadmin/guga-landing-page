@@ -10,7 +10,7 @@
 
     @foreach ($filters as $filter)
         <button
-            class="group relative flex w-full rounded-xl items-center border-0 bg-slate-300 px-5 py-4 text-left font-semibold text-lg text-blue-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white [&:not([data-twe-collapse-collapsed])]:bg-[#8ab3cf] [&:not([data-twe-collapse-collapsed])]:text-sky-50 [&:not([data-twe-collapse-collapsed])]:shadow-border-b dark:[&:not([data-twe-collapse-collapsed])]:bg-surface-dark dark:[&:not([data-twe-collapse-collapsed])]:text-primary dark:[&:not([data-twe-collapse-collapsed])]:shadow-white/10 "
+            class="group relative flex w-full rounded-xl items-center border-0 bg-slate-300 px-5 py-4 text-left font-semibold text-md text-blue-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white [&:not([data-twe-collapse-collapsed])]:bg-[#8ab3cf] [&:not([data-twe-collapse-collapsed])]:text-sky-50 [&:not([data-twe-collapse-collapsed])]:shadow-border-b dark:[&:not([data-twe-collapse-collapsed])]:bg-surface-dark dark:[&:not([data-twe-collapse-collapsed])]:text-primary dark:[&:not([data-twe-collapse-collapsed])]:shadow-white/10 "
             type="button"
             data-twe-collapse-init
             data-twe-target="#collapseOne{{ $filter['tag'] }}"
@@ -19,7 +19,7 @@
         >
             {{ $filter['name'] }}
             <span class="-me-1 ms-auto h-5 w-5 shrink-0 rotate-[90deg] transition-transform duration-200 ease-in-out group-data-[twe-collapse-collapsed]:me-0 group-data-[twe-collapse-collapsed]:rotate-0 motion-reduce:transition-none [&>svg]:h-6 [&>svg]:w-6">
-                <i class="bi bi-caret-right-fill text-xl"></i>
+                <i class="bi bi-caret-right-fill text-md"></i>
             </span>
         </button>
         <div
@@ -52,7 +52,7 @@
                                         />
                                     </svg>
                                 </span>
-                                <span>{{ $subcategory['name'] }}</span>
+                                <span class="text-sm">{{ $subcategory['name'] }}</span>
                             </label>
                         </li>
                     @endforeach

@@ -15,8 +15,9 @@
             </div>
         </div>
     </div>
+    
     {{-- Instalacion y reinstalacion --}}
-    <div class="flex justify-center my-12 px-4 lg:px-0">
+    {{-- <div class="flex justify-center my-12 px-4 lg:px-0">
         <div class=" w-full grid grid-flow-row xs:grid-cols-1 md:grid-cols-2 max-w-[70rem]">
 
             <div class="relative overflow-hidden w-full min-h-[24rem] flex justify-center items-center">
@@ -70,10 +71,56 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+    <div class="flex justify-center my-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem]">
+            <div class="flex items-center justify-center">
+                <img src="{{ asset('img/services-install.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
+            </div>
+            <div class="font-sans px-8 md:px-12">
+                <h1 class="text-2xl font-semibold text-sky-700 mt-6 mb-4">Instalación</h1>
+                <p class="text-sky-700">
+                    Para la instalación de equipos médicos se cuenta con ingenieros especializados en la tecnología médica de los equipos para brindar a los usuarios la confianza de un correcto uso y mantenimiento.
+                </p>
+                <ul class="mt-4 font-sans text-sm list-disc px-4 text-sky-700 ">
+                    <li class="py-1 rounded-md"><b>Desinstalación</b> (desensamble, desconexión)</li>
+                    <li class="py-1 rounded-md mt-1"><b>Empaque</b> (embalaje de equipos)</li>
+                    <li class="py-1 rounded-md mt-1"><b>Traslado</b> (maniobras, reordenamiento y traslado)</li>
+                    <li class="py-1 rounded-md mt-1"><b>Instalación</b> (conexión, calibración y ajustes)</li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+    <div class="flex justify-center my-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem]">
+            <div class="font-sans px-8 md:px-12">
+                <h1 class="text-2xl font-semibold text-sky-700 mt-6 mb-4">Reinstalación</h1>
+                <p class="text-sky-700">
+                    Para la instalación y desinstalación de equipos médicos se cuenta con ingenieros especializados en la tecnología médica de los equipos para brindar a los usuarios la confianza de un correcto uso y mantenimiento.
+                </p>
+                <ul class="mt-4 font-sans text-sm list-disc px-4 text-sky-700 ">
+                    <li class="py-1 rounded-md"><b>Desinstalación</b> (desensamble, desconexión)</li>
+                    <li class="py-1 rounded-md mt-1"><b>Empaque</b> (embalaje de equipos)</li>
+                    <li class="py-1 rounded-md mt-1"><b>Traslado</b> (maniobras, reordenamiento y traslado)</li>
+                    <li class="py-1 rounded-md mt-1"><b>Reinstalación</b> (conexión, calibración y ajustes)</li>
+                </ul>
+            </div>
+            <div class="flex items-center justify-center">
+                <img src="{{ asset('img/services-reinstall.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
+            </div>
+        </div>
+    </div>
+
+    
+
     {{-- Mantenimientos correctivo y preventivo --}}
     <div class="flex justify-center my-24">
         <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem]">
+            <div class="flex items-center justify-center">
+                <img src="{{ asset('img/services-maintenance.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
+            </div>
             <div class="font-sans px-8 md:px-12">
                 <h1 class="text-2xl font-semibold text-sky-700 mt-12 mb-4">Mantenimiento correctivo</h1>
                 <p class="text-sky-700">
@@ -83,9 +130,6 @@
                 <p class="text-sky-700">
                     Una actividad programada para asegurar que el equipo médico funcione normalmente y continúe desempeñando su función.
                 </p>
-            </div>
-            <div class="flex items-center justify-center">
-                <img src="{{ asset('img/services-maintenance.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
             </div>
         </div>
     </div>
@@ -132,7 +176,7 @@
     </div>
 
     {{-- Servicios de mantenimiento --}}
-    <div class="flex justify-center">
+    <div class="flex justify-center mb-24">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-[70rem] gap-4 font-sans">
             <div class="flex w-[20rem] h-[7rem] bg-sky-700 rounded-xl shadow-xl border-solid border-4">
                 <div class="w-[35%] flex items-center justify-center bg-sky-100 text-sky-800 ">
@@ -215,7 +259,7 @@
     </div>
 
     {{-- Equipos --}}
-    <div class="bg-sky-600 py-12 md:px-24 flex justify-center mt-24">
+    {{-- <div class="bg-sky-600 py-12 md:px-24 flex justify-center mt-24">
         <div class="w-[100%] max-w-[70rem] flex flex-wrap items-center xs:justify-center lg:justify-between ">
             <div class="px-12 py-12  rounded-3xl h-[20rem] w-[25rem] border-solid border-[3px] border-sky-50 font-sans">
                 <h1 class="font-semibold text-3xl text-sky-50">Nuestros Equipos</h1>
@@ -303,6 +347,6 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> --}}
     <x-slot name="footer"><x-footer/></x-slot>
 </x-layouts.landingpage-layout>

@@ -38,14 +38,14 @@
             <h1 class="text-white text-[3.5vw] font-sans">{{ $info }}</h1>
         </div>
     </div>
-    <section class="flex max-w-[90rem] gap-8 m-auto ">
+    <section class="flex max-w-[70rem] gap-8 m-auto ">
         {{-- Filtros --}}
-        <aside class="w-[27%] bg-gray-100 p-4 mt-12">
+        <aside class="w-[30%] bg-gray-100 p-4 mt-12">
                 <x-filters  :title="'Categorias de producto'" :filters="$filters"/>
         </aside>
 
         {{-- Contenido --}}
-        <main class="flex flex-col gap-24 w-[73%] mt-12 mb-24 ">
+        <main class="flex flex-col gap-24 w-[70%] mt-12 mb-24 ">
             @foreach ($content as $index => $product)
 
                 {{-- Productos --}}

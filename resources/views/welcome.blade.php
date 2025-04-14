@@ -42,7 +42,7 @@
                         <img src="{{ asset('icons/mant-preventive.png') }}" alt="esterilization_icon" class="w-24 h-24 my-0 py-0"/>
                     </a>
                     <div class="text-center mx-7 mt-4">
-                        <p class="text-[1.3rem] text-[#0392ceff] font-sans font-semibold group-hover:text-blue-600">Mantenimiento<br>Preventivo</p>
+                        <p class="text-[1.1rem] text-[#0392ceff] font-sans font-semibold group-hover:text-blue-600">Mantenimiento<br>Preventivo</p>
                         <i class="bi bi-caret-down-fill text-[#0392ceff] group-hover:text-blue-600"></i>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                         <img src="{{ asset('icons/mant-corrective.png') }}" alt="esterillization_icon" class="w-24 h-24 my-0 py-0"/>
                     </a>
                     <div class="text-center mx-7 mt-4">
-                        <p class="text-[1.3rem] text-[#0392ceff] font-sans font-semibold group-hover:text-blue-600">Mantenimiento<br>Correctivo</p>
+                        <p class="text-[1.1rem] text-[#0392ceff] font-sans font-semibold group-hover:text-blue-600">Mantenimiento<br>Correctivo</p>
                         <i class="bi bi-caret-down-fill text-[#0392ceff] group-hover:text-blue-600"></i>
                     </div>
                 </div>
