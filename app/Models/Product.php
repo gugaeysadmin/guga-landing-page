@@ -12,7 +12,42 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
-        'price',
-        'image',
+        'has_table',
+        'product_services',
+        'optional1',
+        'optional2',
+        'optional3',
+        'brand_id',
+        'table_id',
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function productTableConfiguration()
+    {
+        return $this->belongsTo(ProductTableConfiguration::class);
+    }
+
+    public function productImages()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function  accesories()
+    {
+        return $this->hasMany(Accesory::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Categories::class);
+    }
+
+    public function  productSpecArea()
+    {
+        return $this->hasMany(ProductSpecArea::class);
+    }
 }

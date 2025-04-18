@@ -9,4 +9,9 @@ class CatalogSections extends Model
     protected $fillable = [
         'section_name'
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Categories::class); 
+    }
 }

@@ -10,4 +10,9 @@ class ProductTableConfiguration extends Model
         'name',
         'table_json'
     ];
+    
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

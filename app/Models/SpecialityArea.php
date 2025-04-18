@@ -11,4 +11,13 @@ class SpecialityArea extends Model
         'description',
         'icon_file_url'
     ];
+
+    public function SpecialityAreaSections()
+    {
+        return $this->hasMany(SpecialityAreaSection::class);
+    }
+    public function  productSpecArea()
+    {
+        return $this->hasMany(ProductSpecArea::class);
+    }
 }
