@@ -17,7 +17,7 @@ Route::get('/home', function () {
 })->name('home2');
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
-Route::get('/app/{any}', [AdminController::class, 'index'])->where('any', '.*');
+Route::get('/app/{any}', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->where('any', '.*');
 
 Route::get('/speciality-area/{specialty}', [SpecialityAreaController::class, 'showBySpecialty'])->name('speciality-area.show');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
