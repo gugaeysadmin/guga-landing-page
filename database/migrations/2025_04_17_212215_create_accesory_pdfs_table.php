@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('accesory_pdfs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name', 100);
-            $table->text('description');
-            $table->string('img_url', 300);
-            $table->integer('index')->default(0);
+            $table->string('name',100);
+            $table->string('pdf_url',300); 
         });
     }
 
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('accesory_pdfs');
     }
 };

@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\AccesoryPdfController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\OffertController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SpecAreaController;
 use App\View\Components\Pages\AboutController;
 use App\View\Components\Pages\AlliancesController;
 use App\View\Components\Pages\CatalogsController;
@@ -18,7 +22,7 @@ Route::get('/home', function () {
 })->name('home2');
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
-Route::get('/app/{any}', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->where('any', '.*');
+Route::get('/app/{any}', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->where('any', '.*')->name('app.admin');
 
 Route::get('/speciality-area/{specialty}', [SpecialityAreaController::class, 'showBySpecialty'])->name('speciality-area.show');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -30,14 +34,65 @@ Route::get('/alliances', [AlliancesController::class, 'index'])->name('catalogs'
 
 
 // APIS
+
+// Ofertas
 Route::post('/api/offerts/create', [OffertController::class, 'store']);
 Route::post('/api/offerts/reorder', [OffertController::class, 'reorderIndexes']);
 Route::post('/api/offerts/reorder-table', [OffertController::class, 'reorder']);
-
 Route::get('/api/offerts', [OffertController::class, 'index']);
 Route::get('/api/offerts/{id}', [OffertController::class, 'show']);
 Route::put('/api/offerts/{id}', [OffertController::class, 'update']);
 Route::delete('/api/offerts/{id}', [OffertController::class, 'destroy']);
+
+// Alianzas
+Route::post('/api/alliances/create', [AlliancesController::class, 'store']);
+Route::post('/api/alliances/reorder', [AlliancesController::class, 'reorderIndexes']);
+Route::post('/api/alliances/reorder-table', [AlliancesController::class, 'reorder']);
+Route::get('/api/alliances', [AlliancesController::class, 'index']);
+Route::get('/api/alliances/{id}', [AlliancesController::class, 'show']);
+Route::put('/api/alliances/{id}', [AlliancesController::class, 'update']);
+Route::delete('/api/alliances/{id}', [AlliancesController::class, 'destroy']);
+
+//Areas de especialidad
+Route::post('/api/speciality-areas/create', [SpecAreaController::class, 'store']);
+Route::post('/api/speciality-areas/reorder', [SpecAreaController::class, 'reorderIndexes']);
+Route::post('/api/speciality-areas/reorder-table', [SpecAreaController::class, 'reorder']);
+Route::get('/api/speciality-areas', [SpecAreaController::class, 'index']);
+Route::get('/api/speciality-areas/{id}', [SpecAreaController::class, 'show']);
+Route::put('/api/speciality-areas/{id}', [SpecAreaController::class, 'update']);
+Route::delete('/api/speciality-areas/{id}', [SpecAreaController::class, 'destroy']);
+
+//Servicios
+Route::post('/api/services/create', [ServicesController::class, 'store']);
+Route::post('/api/services/reorder', [ServicesController::class, 'reorderIndexes']);
+Route::post('/api/services/reorder-table', [ServicesController::class, 'reorder']);
+Route::get('/api/services', [ServicesController::class, 'index']);
+Route::get('/api/services/{id}', [ServicesController::class, 'show']);
+Route::put('/api/services/{id}', [ServicesController::class, 'update']);
+Route::delete('/api/services/{id}', [ServicesController::class, 'destroy']);
+
+
+//Marcas
+Route::post('/api/brand/create', [BrandController::class, 'store']);
+Route::get('/api/brand', [BrandController::class, 'index']);
+Route::get('/api/brand/{id}', [BrandController::class, 'show']);
+Route::put('/api/brand/{id}', [BrandController::class, 'update']);
+Route::delete('/api/brand/{id}', [BrandController::class, 'destroy']);
+
+//PDF Accesorios
+Route::post('/api/accesory-pdf/create', [AccesoryPdfController::class, 'store']);
+Route::get('/api/accesory-pdf', [AccesoryPdfController::class, 'index']);
+Route::get('/api/accesory-pdf/{id}', [AccesoryPdfController::class, 'show']);
+Route::put('/api/accesory-pdf/{id}', [AccesoryPdfController::class, 'update']);
+Route::delete('/api/accesory-pdf/{id}', [AccesoryPdfController::class, 'destroy']);
+
+
+//Categorias
+Route::post('/api/category/create', [CategoriesController::class, 'store']);
+Route::get('/api/category', [CategoriesController::class, 'index']);
+Route::get('/api/category/{id}', [CategoriesController::class, 'show']);
+Route::put('/api/category/{id}', [CategoriesController::class, 'update']);
+Route::delete('/api/category/{id}', [CategoriesController::class, 'destroy']);
 
 
 Route::get('/dashboard', function () {

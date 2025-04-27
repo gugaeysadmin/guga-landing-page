@@ -9,7 +9,8 @@ class SpecialityArea extends Model
     protected $fillable = [
         'name',
         'description',
-        'icon_file_url'
+        'icon_file_url',
+        'index'
     ];
 
     public function SpecialityAreaSections()

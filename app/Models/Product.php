@@ -19,12 +19,21 @@ class Product extends Model
         'optional3',
         'brand_id',
         'table_id',
+        'table_data',
+        'has_accesrorypdf',
+        'pdf_page',
+        'has_services',
+        'services_description',
+        'accesorypdf_id'
+        
     ];
 
     public function brand()
     {
         return $this->belongsTo(Brand::class);
     }
+
+
 
     public function productTableConfiguration()
     {
@@ -49,5 +58,10 @@ class Product extends Model
     public function  productSpecArea()
     {
         return $this->hasMany(ProductSpecArea::class);
+    }
+
+    public function  accesoryPdf()
+    {
+        return $this->belongsTo(AccesoryPdf::class);
     }
 }

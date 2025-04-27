@@ -13,9 +13,14 @@ class LandingPageConfig extends Model
         'services_description',
         'main_description',
         'main_video_url',
+        'about_us',
+        'special_ofert',
         'contact_phone',
         'contact_phone_alternative',
         'contact_email',
-        'address'
+        'address',
+        'optional1',
+        'optional2',
+        'optional3'
     ];
 }

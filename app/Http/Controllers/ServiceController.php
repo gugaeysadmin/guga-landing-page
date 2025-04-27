@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Offert;
-use Exception;
+use App\Models\Service;
 use Illuminate\Http\Request;
+use Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Log;
+use Exception;
 
-class OffertController extends Controller
+
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,17 +19,17 @@ class OffertController extends Controller
     public function index()
     {
         try {
-            $offerts = Offert::orderBy('index')->get();
+            $specareas = Service::orderBy('index')->get();
             
             return response()->json([
                 'success' => true,
-                'data' => $offerts
+                'data' => $specareas
             ]);
         } catch (Exception $e) {
-            Log::error('Error al obtener ofertas: ' . $e->getMessage());
+            Log::error('Error al obtener servicio: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al obtener las ofertas'
+                'message' => 'Error al obtener servicios'
             ], 500);
         }
     }
@@ -38,42 +39,32 @@ class OffertController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'title' => 'required|string|max:100',
-        //     'details' => 'nullable|string',
-        //     // 'image' => 'required|image|mimes:jpeg,png|max:500',
-        //     'active' => 'boolean'
-        // ]);
-
-        // // Calcular el próximo índice (máximo actual + 1)
-        $nextIndex = (Offert::max('index') ?? 0) + 1;
+        $nextIndex = (Service::max('index') ?? 0) + 1;
 
         // // Guardar la imagen
-        $imagePath = $request->file('image')->store('offerts', 'public');
+        $imagePath = $request->file('image')->store('services', 'public');
 
         
-        $offert = Offert::create([
+        $service = Service::create([
             'name' => $request['title'],
             'description' => $request['details'],
             'img_url' => $imagePath,
-            'active' => $request['active'] ? 1 : 0,
             'index' => $nextIndex
         ]);
 
         return response()->json([
-            'message' => 'Oferta creada exitosamente',
-            'data' => $offert
+            'message' => 'Servicio creada exitosamente',
+            'data' => $service
         ], 201);
 
-        // return response()->json(['message'=> 'eeee'], 201);
     }
 
     public function reorderIndexes()
     {
-        $offerts = Offert::orderBy('index')->get();
+        $services = Service::orderBy('index')->get();
         
-        foreach ($offerts as $index => $offert) {
-            $offert->update(['index' => $index + 1]);
+        foreach ($services as $index => $service) {
+            $service->update(['index' => $index + 1]);
         }
         
         return response()->json(['message' => 'Índices reordenados']);
@@ -92,14 +83,14 @@ class OffertController extends Controller
             DB::beginTransaction();
             
             foreach ($request->updates as $update) {
-                Offert::where('id', $update['id'])
+                Service::where('id', $update['id'])
                      ->update(['index' => $update['index']]);
             }
             
             DB::commit();
             return response()->json(['success' => true]);
             
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -108,20 +99,20 @@ class OffertController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(string $id)
     {
         try {
-            $offert = Offert::findOrFail($id);
+            $service = Service::findOrFail($id);
             
             return response()->json([
                 'success' => true,
-                'data' => $offert
+                'data' => $service
             ]);
-        } catch (\Exception $e) {
-            Log::error('Error al obtener oferta: ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error('Error al obtener servicio: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Oferta no encontrada'
+                'message' => 'servicio no encontrada'
             ], 404);
         }
     }
@@ -129,61 +120,56 @@ class OffertController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         try {
-            $offert = Offert::findOrFail($id);
+            $service = Service::findOrFail($id);
             
             $validated = $request->validate([
                 'title' => 'sometimes|string|max:100',
                 'details' => 'nullable|string',
                 'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:500',
-                'active' => 'sometimes|boolean',
                 'index' => 'sometimes|integer'
             ]);
 
             // Actualizar campos básicos
             if (isset($validated['title'])) {
-                $offert->name = $validated['title'];
+                $service->name = $validated['title'];
             }
             if (isset($validated['details'])) {
-                $offert->description = $validated['details'];
+                $service->description = $validated['details'];
             }
-            if (isset($validated['active'])) {
-                $offert->active = $validated['active'];
-            }
-            
             // Manejar la imagen si se proporciona
             if ($request->hasFile('image')) {
                 // Eliminar la imagen anterior si existe
-                if ($offert->img_url) {
-                    Storage::disk('public')->delete($offert->img_url);
+                if ($service->img_url) {
+                    Storage::disk('public')->delete($service->img_url);
                 }
                 
                 // Guardar la nueva imagen
-                $imageName = time().'_'.Str::slug($validated['title'] ?? $offert->name).'.'.$request->image->extension();
-                $imagePath = $request->image->storeAs('offerts', $imageName, 'public');
-                $offert->img_url = $imagePath;
+                $imageName = time().'_'.Str::slug($validated['title'] ?? $service->name).'.'.$request->image->extension();
+                $imagePath = $request->image->storeAs('specarea', $imageName, 'public');
+                $service->icon_file_url = $imagePath;
             }
             
             // Manejar el índice si se proporciona
             if (isset($validated['index'])) {
-                $this->reorderOfferts($offert, $validated['index']);
+                $this->reorderSpecAreas($service, $validated['index']);
             }
             
-            $offert->save();
+            $service->save();
             
             return response()->json([
                 'success' => true,
                 'message' => 'Oferta actualizada exitosamente',
-                'data' => $offert
+                'data' => $service
             ]);
             
-        } catch (\Exception $e) {
-            Log::error('Error al actualizar oferta: ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error('Error al actualizar área de especialidad: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al actualizar la oferta'
+                'message' => 'Error al actualizar la área de especialidad'
             ], 500);
         }
     }
@@ -191,54 +177,54 @@ class OffertController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         try {
-            $offert = Offert::findOrFail($id);
+            $service = Service::findOrFail($id);
             
             // Eliminar la imagen asociada
-            if ($offert->img_url) {
-                Storage::disk('public')->delete($offert->img_url);
+            if ($service->img_url) {
+                Storage::disk('public')->delete($service->img_url);
             }
             
-            $offert->delete();
+            $service->delete();
             
             // Reordenar los índices restantes
-            $this->reorderAllOfferts();
+            $this->reorderAllSpecAreas();
             
             return response()->json([
                 'success' => true,
-                'message' => 'Oferta eliminada exitosamente'
+                'message' => 'Servicio eliminado exitosamente'
             ]);
             
-        } catch (\Exception $e) {
-            Log::error('Error al eliminar oferta: ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error('Error al eliminar servicio: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al eliminar la oferta'
+                'message' => 'Error al eliminar el servicio'
             ], 500);
         }
     }
 
     /**
-     * Reordenar ofertas cuando se cambia el índice de una
+     * Reordenar áreas de especialidad cuando se cambia el índice de una
      */
-    private function reorderOfferts(Offert $movedOffert, $newIndex)
+    private function reorderSpecAreas(Service $movedOffert, $newIndex)
     {
         $currentIndex = $movedOffert->index;
-        $maxIndex = Offert::max('index');
+        $maxIndex = Service::max('index');
         
         // Asegurar que el nuevo índice esté dentro de los límites
         $newIndex = max(1, min($newIndex, $maxIndex));
         
         if ($newIndex > $currentIndex) {
             // Mover hacia abajo en la lista
-            Offert::where('index', '>', $currentIndex)
+            Service::where('index', '>', $currentIndex)
                   ->where('index', '<=', $newIndex)
                   ->decrement('index');
         } elseif ($newIndex < $currentIndex) {
             // Mover hacia arriba en la lista
-            Offert::where('index', '>=', $newIndex)
+            Service::where('index', '>=', $newIndex)
                   ->where('index', '<', $currentIndex)
                   ->increment('index');
         }
@@ -247,15 +233,15 @@ class OffertController extends Controller
     }
 
     /**
-     * Reordenar todas las ofertas (después de eliminar)
+     * Reordenar todas las áreas de especialidad (después de eliminar)
      */
-    private function reorderAllOfferts()
+    private function reorderAllSpecAreas()
     {
-        $offerts = Offert::orderBy('index')->get();
+        $services = Service::orderBy('index')->get();
         
-        foreach ($offerts as $index => $offert) {
-            $offert->index = $index + 1;
-            $offert->save();
+        foreach ($services as $index => $service) {
+            $service->index = $index + 1;
+            $service->save();
         }
     }
 }

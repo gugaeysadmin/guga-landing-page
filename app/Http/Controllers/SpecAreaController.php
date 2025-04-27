@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Offert;
+use App\Models\SpecialityArea;
 use Exception;
 use Illuminate\Http\Request;
+use Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Log;
-
-class OffertController extends Controller
+class SpecAreaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,17 +17,17 @@ class OffertController extends Controller
     public function index()
     {
         try {
-            $offerts = Offert::orderBy('index')->get();
+            $specareas = SpecialityArea::orderBy('index')->get();
             
             return response()->json([
                 'success' => true,
-                'data' => $offerts
+                'data' => $specareas
             ]);
         } catch (Exception $e) {
-            Log::error('Error al obtener ofertas: ' . $e->getMessage());
+            Log::error('Error al obtener áreas de especialidad: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al obtener las ofertas'
+                'message' => 'Error al obtener las áreas de especialidad'
             ], 500);
         }
     }
@@ -46,23 +45,23 @@ class OffertController extends Controller
         // ]);
 
         // // Calcular el próximo índice (máximo actual + 1)
-        $nextIndex = (Offert::max('index') ?? 0) + 1;
+        $nextIndex = (SpecialityArea::max('index') ?? 0) + 1;
 
         // // Guardar la imagen
-        $imagePath = $request->file('image')->store('offerts', 'public');
+        $imagePath = $request->file('image')->store('specarea', 'public');
 
         
-        $offert = Offert::create([
+        $specarea = SpecialityArea::create([
             'name' => $request['title'],
             'description' => $request['details'],
-            'img_url' => $imagePath,
-            'active' => $request['active'] ? 1 : 0,
+            'icon_file_url' => $imagePath,
+            // 'active' => $request['active'] ? 1 : 0,
             'index' => $nextIndex
         ]);
 
         return response()->json([
-            'message' => 'Oferta creada exitosamente',
-            'data' => $offert
+            'message' => 'Area de especialidad creada exitosamente',
+            'data' => $specarea
         ], 201);
 
         // return response()->json(['message'=> 'eeee'], 201);
@@ -70,10 +69,10 @@ class OffertController extends Controller
 
     public function reorderIndexes()
     {
-        $offerts = Offert::orderBy('index')->get();
+        $specareas = SpecialityArea::orderBy('index')->get();
         
-        foreach ($offerts as $index => $offert) {
-            $offert->update(['index' => $index + 1]);
+        foreach ($specareas as $index => $specarea) {
+            $specarea->update(['index' => $index + 1]);
         }
         
         return response()->json(['message' => 'Índices reordenados']);
@@ -92,14 +91,14 @@ class OffertController extends Controller
             DB::beginTransaction();
             
             foreach ($request->updates as $update) {
-                Offert::where('id', $update['id'])
+                SpecialityArea::where('id', $update['id'])
                      ->update(['index' => $update['index']]);
             }
             
             DB::commit();
             return response()->json(['success' => true]);
             
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -111,14 +110,14 @@ class OffertController extends Controller
     public function show($id)
     {
         try {
-            $offert = Offert::findOrFail($id);
+            $specarea = SpecialityArea::findOrFail($id);
             
             return response()->json([
                 'success' => true,
-                'data' => $offert
+                'data' => $specarea
             ]);
-        } catch (\Exception $e) {
-            Log::error('Error al obtener oferta: ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error('Error al obtener área de especialidad: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
                 'message' => 'Oferta no encontrada'
@@ -132,58 +131,53 @@ class OffertController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $offert = Offert::findOrFail($id);
+            $specarea = SpecialityArea::findOrFail($id);
             
             $validated = $request->validate([
                 'title' => 'sometimes|string|max:100',
                 'details' => 'nullable|string',
                 'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:500',
-                'active' => 'sometimes|boolean',
                 'index' => 'sometimes|integer'
             ]);
 
             // Actualizar campos básicos
             if (isset($validated['title'])) {
-                $offert->name = $validated['title'];
+                $specarea->name = $validated['title'];
             }
             if (isset($validated['details'])) {
-                $offert->description = $validated['details'];
+                $specarea->description = $validated['details'];
             }
-            if (isset($validated['active'])) {
-                $offert->active = $validated['active'];
-            }
-            
             // Manejar la imagen si se proporciona
             if ($request->hasFile('image')) {
                 // Eliminar la imagen anterior si existe
-                if ($offert->img_url) {
-                    Storage::disk('public')->delete($offert->img_url);
+                if ($specarea->img_url) {
+                    Storage::disk('public')->delete($specarea->img_url);
                 }
                 
                 // Guardar la nueva imagen
-                $imageName = time().'_'.Str::slug($validated['title'] ?? $offert->name).'.'.$request->image->extension();
-                $imagePath = $request->image->storeAs('offerts', $imageName, 'public');
-                $offert->img_url = $imagePath;
+                $imageName = time().'_'.Str::slug($validated['title'] ?? $specarea->name).'.'.$request->image->extension();
+                $imagePath = $request->image->storeAs('specarea', $imageName, 'public');
+                $specarea->icon_file_url = $imagePath;
             }
             
             // Manejar el índice si se proporciona
             if (isset($validated['index'])) {
-                $this->reorderOfferts($offert, $validated['index']);
+                $this->reorderSpecAreas($specarea, $validated['index']);
             }
             
-            $offert->save();
+            $specarea->save();
             
             return response()->json([
                 'success' => true,
                 'message' => 'Oferta actualizada exitosamente',
-                'data' => $offert
+                'data' => $specarea
             ]);
             
-        } catch (\Exception $e) {
-            Log::error('Error al actualizar oferta: ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error('Error al actualizar área de especialidad: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al actualizar la oferta'
+                'message' => 'Error al actualizar la área de especialidad'
             ], 500);
         }
     }
@@ -194,51 +188,51 @@ class OffertController extends Controller
     public function destroy($id)
     {
         try {
-            $offert = Offert::findOrFail($id);
+            $specarea = SpecialityArea::findOrFail($id);
             
             // Eliminar la imagen asociada
-            if ($offert->img_url) {
-                Storage::disk('public')->delete($offert->img_url);
+            if ($specarea->img_url) {
+                Storage::disk('public')->delete($specarea->img_url);
             }
             
-            $offert->delete();
+            $specarea->delete();
             
             // Reordenar los índices restantes
-            $this->reorderAllOfferts();
+            $this->reorderAllSpecAreas();
             
             return response()->json([
                 'success' => true,
-                'message' => 'Oferta eliminada exitosamente'
+                'message' => 'área de especialidad eliminada exitosamente'
             ]);
             
-        } catch (\Exception $e) {
-            Log::error('Error al eliminar oferta: ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error('Error al eliminar área de especialidad: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al eliminar la oferta'
+                'message' => 'Error al eliminar la área de especialidad'
             ], 500);
         }
     }
 
     /**
-     * Reordenar ofertas cuando se cambia el índice de una
+     * Reordenar áreas de especialidad cuando se cambia el índice de una
      */
-    private function reorderOfferts(Offert $movedOffert, $newIndex)
+    private function reorderSpecAreas(SpecialityArea $movedOffert, $newIndex)
     {
         $currentIndex = $movedOffert->index;
-        $maxIndex = Offert::max('index');
+        $maxIndex = SpecialityArea::max('index');
         
         // Asegurar que el nuevo índice esté dentro de los límites
         $newIndex = max(1, min($newIndex, $maxIndex));
         
         if ($newIndex > $currentIndex) {
             // Mover hacia abajo en la lista
-            Offert::where('index', '>', $currentIndex)
+            SpecialityArea::where('index', '>', $currentIndex)
                   ->where('index', '<=', $newIndex)
                   ->decrement('index');
         } elseif ($newIndex < $currentIndex) {
             // Mover hacia arriba en la lista
-            Offert::where('index', '>=', $newIndex)
+            SpecialityArea::where('index', '>=', $newIndex)
                   ->where('index', '<', $currentIndex)
                   ->increment('index');
         }
@@ -247,15 +241,15 @@ class OffertController extends Controller
     }
 
     /**
-     * Reordenar todas las ofertas (después de eliminar)
+     * Reordenar todas las áreas de especialidad (después de eliminar)
      */
-    private function reorderAllOfferts()
+    private function reorderAllSpecAreas()
     {
-        $offerts = Offert::orderBy('index')->get();
+        $specareas = SpecialityArea::orderBy('index')->get();
         
-        foreach ($offerts as $index => $offert) {
-            $offert->index = $index + 1;
-            $offert->save();
+        foreach ($specareas as $index => $specarea) {
+            $specarea->index = $index + 1;
+            $specarea->save();
         }
     }
 }

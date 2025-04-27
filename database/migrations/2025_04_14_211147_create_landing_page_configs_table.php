@@ -19,11 +19,17 @@ return new class extends Migration
             $table->text('values')->nullable();
             $table->text('services_description')->nullable();
             $table->text('main_description')->nullable();
+            $table->text('about_us')->nullable();
+            $table->text('special_ofert')->nullable();
             $table->string('main_video_url',300)->nullable();
             $table->string('contact_phone', 20)->nullable();
             $table->string('contact_phone_alternative', 20)->nullable();
             $table->string('contact_email', 50)->nullable();
             $table->text('address')->nullable();
+            $table->text('optional1')->nullable();
+            $table->text('optional2')->nullable();
+            $table->text('optional3')->nullable();
+
 
         });
     }

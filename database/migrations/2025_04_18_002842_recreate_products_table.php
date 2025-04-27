@@ -21,8 +21,21 @@ return new class extends Migration
             $table->json('optional1')->nullable();
             $table->json('optional2')->nullable();
             $table->json('optional3')->nullable();
-            $table->unsignedBigInteger('brand_id');
-            $table->unsignedBigInteger('table_id');
+            $table->json('table_data')->nullable();
+
+            $table->boolean('has_accesrorypdf')->nullable();
+            $table->integer('pdf_page')->nullable();
+            $table->boolean('has_services')->nullable();
+            $table->text('services_description')->nullable();
+
+            $table->unsignedBigInteger('accesorypdf_id')->nullable();
+            $table->unsignedBigInteger('brand_id')->nullable();
+            $table->unsignedBigInteger('table_id')->nullable();
+
+            $table->foreign('accesorypdf_id')
+                  ->references('id')
+                  ->on('accesory_pdfs')
+                  ->onDelete('cascade');
 
             $table->foreign('brand_id')
                   ->references('id')
