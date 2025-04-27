@@ -17,45 +17,45 @@
                             </p>
                         </router-link>
 
-                        <div class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-md transition duration-200 group">
+                        <router-link to="/app/admin/enterprise" class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-md transition duration-200 group">
                             <i class="bi bi-buildings-fill group-hover:text-black group-acitve:text-black text-md text-gray-400 transition duration-200"></i>
                             <p class="group-hover:font-bold group-hover:text-black group-active:font-bold group-active:text-black font-medium text-gray-500 font-sans text-md transition duration-200">
                                 Empresa
                             </p>
-                        </div>
+                        </router-link>
 
-                        <div class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-md transition duration-200 group">
+                        <router-link to="/app/admin/promotions" class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-md transition duration-200 group">
                             <i class="bi bi-percent group-hover:text-black group-acitve:text-black text-md text-gray-400 transition duration-200"></i>
                             <p class="group-hover:font-bold group-hover:text-black group-active:font-bold group-active:text-black font-medium text-gray-500 font-sans text-md transition duration-200">
                                 Promociones
                             </p>
-                        </div>
+                        </router-link>
                     </div>
                 </div>
                 <div class="space-y-4">
                     <h5 class="font-mono  text-lg text-gray-400">CATÁLOGOS</h5>
 
 
-                    <router-link to="/app/product" class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-md transition duration-200 group">
+                    <router-link to="/app/admin/product" class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-md transition duration-200 group">
                         <i class="bi bi-box2-fill group-hover:text-black group-acitve:text-black text-md text-gray-400 transition duration-200"></i>
                         <p class="group-hover:font-bold group-hover:text-black group-active:font-bold group-active:text-black font-medium text-gray-500 font-sans text-md transition duration-200">
                             Productos
                         </p>
                     </router-link>
 
-                    <div class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-lg transition duration-200 group">
+                    <router-link to="/app/admin/categories" class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-lg transition duration-200 group">
                         <i class="bi bi-tags-fill group-hover:text-black group-acitve:text-black text-md text-gray-400 transition duration-200"></i>
                         <p class="group-hover:font-bold group-hover:text-black group-active:font-bold group-active:text-black font-medium text-gray-500 font-sans text-md transition duration-200">
                             Categorías
                         </p>
-                    </div>
+                    </router-link>
 
-                    <div class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-lg transition duration-200 group">
+                    <router-link to="/app/admin/speciality-areas" class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-lg transition duration-200 group">
                         <i class="bi bi-grid-1x2-fill group-hover:text-black group-acitve:text-black text-md text-gray-400 transition duration-200"></i>
                         <p class="group-hover:font-bold group-hover:text-black group-active:font-bold group-active:text-black font-medium text-gray-500 font-sans text-md transition duration-200">
                             Áreas de Esp.
                         </p>
-                    </div>
+                    </router-link>
                 </div>
 
             </nav>

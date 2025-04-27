@@ -233,7 +233,6 @@
 
 <script>
 import { ref } from 'vue';
-import DynamicTable from './DynamicTable.vue';
 export default {
 
 

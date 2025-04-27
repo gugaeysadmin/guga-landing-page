@@ -10,6 +10,7 @@ class Offert extends Model
         'name',
         'description',
         'img_url',
-        'active'
+        'active',
+        'index'
     ];
 }

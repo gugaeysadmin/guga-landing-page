@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('name', 100);
             $table->text('description')->nullable();
             $table->string('img_url', 300)->nullable();
-            $table->boolean('active');
+            $table->boolean(column: 'active');
+            $table->integer('index')->default(0);
         });
     }
 

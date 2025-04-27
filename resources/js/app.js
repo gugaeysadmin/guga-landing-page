@@ -28,6 +28,9 @@ import header from './components/Header.vue'
 import sidebar from './components/SideBar.vue'
 import title from './components/Title.vue'
 import dinamictable from './components/DynamicTable.vue'
+import modal from './components/Modal.vue';
+import promotionform from './forms/PromotionForm.vue';
+import offerttable from './components/OffertTable.vue';
 // createApp(app).use(router).mount("#app");
 
 const app = createApp(mainVue)
@@ -38,7 +41,9 @@ app.component('Header', header)
 app.component('SideBar', sidebar)
 app.component('Title', title)
 app.component('DynamicTable', dinamictable)
-
+app.component('Modal', modal);
+app.component('PromotionForm', promotionform)
+app.component('OffertTable', offerttable)
 
 
 app.mount('#app')

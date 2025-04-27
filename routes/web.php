@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OffertController;
 use App\Http\Controllers\ProfileController;
 use App\View\Components\Pages\AboutController;
 use App\View\Components\Pages\AlliancesController;
@@ -27,6 +28,16 @@ Route::get('/services', [ServicesController::class, 'index'])->name('services');
 Route::get('/alliances', [AlliancesController::class, 'index'])->name('catalogs');
 
 
+
+// APIS
+Route::post('/api/offerts/create', [OffertController::class, 'store']);
+Route::post('/api/offerts/reorder', [OffertController::class, 'reorderIndexes']);
+Route::post('/api/offerts/reorder-table', [OffertController::class, 'reorder']);
+
+Route::get('/api/offerts', [OffertController::class, 'index']);
+Route::get('/api/offerts/{id}', [OffertController::class, 'show']);
+Route::put('/api/offerts/{id}', [OffertController::class, 'update']);
+Route::delete('/api/offerts/{id}', [OffertController::class, 'destroy']);
 
 
 Route::get('/dashboard', function () {

@@ -1,0 +1,1 @@
+<img id="hlogo" src="{{ asset('img/logo_normal.png') }}"  alt="Icono" {{ $attributes }}>

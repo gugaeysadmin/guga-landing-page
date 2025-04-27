@@ -6,7 +6,7 @@
             <input id="search" placeholder="Buscar" class="px-12 py-3 text-2xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
         </div>
         <div>
-            <router-link to="/app/product/add" class="px-3 py-2 flex flex-row items-center gap-3">
+            <router-link to="/app/admin/product/add" class="px-3 py-2 flex flex-row items-center gap-3">
                 <i class="bi bi-plus-square-fill text-[#4180ab] text-3xl"></i>
                 <P class="text-2xl text-[#4180ab] align-middle ">Agregar</P>
             </router-link>

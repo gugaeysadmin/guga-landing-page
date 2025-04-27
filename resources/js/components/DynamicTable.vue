@@ -127,135 +127,135 @@
   </template>
   
   <script>
-  export default {
-    props: {
-      modelValue: {
-        type: Object,
-        default: () => ({})
-      }
-    },
+    export default {
+      props: {
+        modelValue: {
+          type: Object,
+          default: () => ({})
+        }
+      },
 
-    name: 'DynamicTable',
-  
-    emits: ['update:modelValue'],
-  
-    data() {
-      return {
-        enabled: false,
-        newHeaderName: '',
-        defaultHeaders: [
-          { id: 'capacity', name: 'Capacidad', removable: true },
-          { id: 'dimensions', name: 'Dimensiones', removable: true }
-        ],
-        headers: [],
-        rows: []
-      }
-    },
-  
-    watch: {
-      modelValue: {
-        immediate: true,
-        handler(newVal) {
-          if (newVal && newVal.enabled) {
-            this.enabled = newVal.enabled;
-            this.headers = newVal.headers || [...this.defaultHeaders];
-            this.rows = newVal.rows || [this.newEmptyRow()];
+      name: 'DynamicTable',
+    
+      emits: ['update:modelValue'],
+    
+      data() {
+        return {
+          enabled: false,
+          newHeaderName: '',
+          defaultHeaders: [
+            { id: 'capacity', name: 'Capacidad', removable: true },
+            { id: 'dimensions', name: 'Dimensiones', removable: true }
+          ],
+          headers: [],
+          rows: []
+        }
+      },
+    
+      watch: {
+        modelValue: {
+          immediate: true,
+          handler(newVal) {
+            if (newVal && newVal.enabled) {
+              this.enabled = newVal.enabled;
+              this.headers = newVal.headers || [...this.defaultHeaders];
+              this.rows = newVal.rows || [this.newEmptyRow()];
+            }
+          }
+        },
+        
+        deepData: {
+          deep: true,
+          handler() {
+            this.emitUpdate();
           }
         }
       },
-      
-      deepData: {
-        deep: true,
-        handler() {
+    
+      computed: {
+        deepData() {
+          return {
+            enabled: this.enabled,
+            headers: this.headers,
+            rows: this.rows
+          };
+        }
+      },
+    
+      methods: {
+        toggleTable() {
+          if (this.enabled && this.rows.length === 0) {
+            this.rows = [this.newEmptyRow()];
+          }
           this.emitUpdate();
-        }
-      }
-    },
-  
-    computed: {
-      deepData() {
-        return {
-          enabled: this.enabled,
-          headers: this.headers,
-          rows: this.rows
-        };
-      }
-    },
-  
-    methods: {
-      toggleTable() {
-        if (this.enabled && this.rows.length === 0) {
-          this.rows = [this.newEmptyRow()];
-        }
-        this.emitUpdate();
-      },
-  
-      addHeader() {
-        if (this.newHeaderName.trim()) {
-          const newId = 'custom-' + Date.now();
-          this.headers.push({
-            id: newId,
-            name: this.newHeaderName.trim(),
-            removable: true
-          });
-          this.newHeaderName = '';
+        },
+    
+        addHeader() {
+          if (this.newHeaderName.trim()) {
+            const newId = 'custom-' + Date.now();
+            this.headers.push({
+              id: newId,
+              name: this.newHeaderName.trim(),
+              removable: true
+            });
+            this.newHeaderName = '';
+            
+            // Asegurar que todas las filas tengan el nuevo campo
+            this.rows.forEach(row => {
+              this.$set(row.values, newId, '');
+            });
+          }
+        },
+    
+        removeHeader(index) {
+          const headerId = this.headers[index].id;
+          this.headers.splice(index, 1);
           
-          // Asegurar que todas las filas tengan el nuevo campo
+          // Eliminar el campo de todas las filas
           this.rows.forEach(row => {
-            this.$set(row.values, newId, '');
+            delete row.values[headerId];
+          });
+        },
+    
+        addRow() {
+          this.rows.push(this.newEmptyRow());
+        },
+    
+        removeLastRow() {
+          if (this.rows.length > 0) {
+            this.rows.pop();
+          }
+        },
+    
+        newEmptyRow() {
+          const values = {};
+          this.headers.forEach(header => {
+            values[header.id] = '';
+          });
+          
+          return {
+            id: Date.now() + Math.random(),
+            values,
+            pdf: null
+          };
+        },
+    
+        handlePdfUpload(event, rowIndex) {
+          const file = event.target.files[0];
+          if (file) {
+            this.rows[rowIndex].pdf = file;
+          }
+        },
+    
+        emitUpdate() {
+          this.$emit('update:modelValue', {
+            enabled: this.enabled,
+            headers: this.headers,
+            rows: this.rows
           });
         }
-      },
-  
-      removeHeader(index) {
-        const headerId = this.headers[index].id;
-        this.headers.splice(index, 1);
-        
-        // Eliminar el campo de todas las filas
-        this.rows.forEach(row => {
-          delete row.values[headerId];
-        });
-      },
-  
-      addRow() {
-        this.rows.push(this.newEmptyRow());
-      },
-  
-      removeLastRow() {
-        if (this.rows.length > 0) {
-          this.rows.pop();
-        }
-      },
-  
-      newEmptyRow() {
-        const values = {};
-        this.headers.forEach(header => {
-          values[header.id] = '';
-        });
-        
-        return {
-          id: Date.now() + Math.random(),
-          values,
-          pdf: null
-        };
-      },
-  
-      handlePdfUpload(event, rowIndex) {
-        const file = event.target.files[0];
-        if (file) {
-          this.rows[rowIndex].pdf = file;
-        }
-      },
-  
-      emitUpdate() {
-        this.$emit('update:modelValue', {
-          enabled: this.enabled,
-          headers: this.headers,
-          rows: this.rows
-        });
       }
     }
-  }
   </script>
   
   <style scoped>

@@ -1,0 +1,308 @@
+<template>
+    <Title content="PROMOCIONES"  />
+
+    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+        <div>
+            <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
+        </div>
+        <div>
+            <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
+                <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
+                <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+            </button>
+        </div>
+
+    </div>
+
+
+    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+      <OffertTable
+        :offerts="filteredOfferts"
+        @search="handleSearch"
+        @status-change="updateOffertStatus"
+        @edit="handleEdit"
+        @delete="confirmDelete"
+        @reorder="handleReorder"
+      />
+        
+    </div>
+
+    <!-- <Modal :visible="showModal" title="Mi Modal Personalizado" @close="showModal = false">
+        <PromotionForm
+          :onSubmit="handleSubmit"
+          :onCancel="handleCancel"
+          submitText="Enviar"
+        />
+    </Modal> -->
+
+    <!-- <Modal :visible="showModal" @close="showModal = false">
+      <PromotionForm
+        :onSubmit="currentOffert ? updateOffert : createOffert"
+        :initialData="currentOffert || emptyOffert"
+        :onCancel="() => { showModal = false; currentOffert = null; }"
+        :submitText="currentOffert ? 'Actualizar' : 'Crear'"
+      />
+    </Modal> -->
+
+    <Modal :visible="showModal" @close="showModal = false" title="Nueva oferta">
+      <PromotionForm
+        :onSubmit="createOffert"
+        :initialData="emptyOffert"
+        :onCancel="() => { showModal = false; currentOffert = null; }"
+        :submitText="Crear"
+        :loading="loading"
+      />
+    </Modal>
+
+    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+      <div>
+        <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta oferta?</h2>
+        <div class="flex justify-end space-x-4">
+          <button
+            @click="showDeleteModal = false"
+            :disabled="loading"
+            class="px-4 py-2 border rounded-md"
+          >
+            Cancelar
+          </button>
+          <button
+            @click="deleteOffert"
+            :disabled="loading"
+            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-red-400"
+          >
+            {{ loading? "...Eliminando" :"Eliminar" }}
+          </button>
+        </div>
+      </div>
+    </Modal>
+</template>
+
+<!-- <script setup>
+  import { FwbAlert } from 'flowbite-vue'
+  import { ref, emit } from 'vue';
+  const showModal = ref(false);
+
+  // Para nuevo formulario
+  const handleSubmit = async (formData) => {
+    console.log(formData)
+    try {
+      const form = new FormData();
+      form.append('title', formData.title);
+      form.append('details', formData.details);
+      form.append('image', formData.image);
+      form.append('active', true);
+
+      const response = await fetch('/api/offerts/create', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+
+      if (!response.ok) throw new Error('Error al guardar');
+
+      const data = await response.json();
+      console.log('Oferta guardada:', data);
+      showModal.value = false;
+      
+    } catch (error) {
+      console.error('Error:', error);
+      // Mostrar error al usuario
+      errors.value.submit = 'Error al guardar la oferta';
+    }
+  };
+  // Para edición
+  const editData = ref({
+    title: '',
+    details: '',
+    image: '', // URL de la imagen existente
+  });
+
+const handleCancel = () => {
+  console.log('Formulario cancelado');
+  showModal.value = false
+};
+
+</script> -->
+
+
+<script setup>
+  import { ref, computed, onMounted } from 'vue';
+
+  const showModal = ref(false);
+  const showDeleteModal = ref(false);
+  const currentOffert = ref(null);
+  const offerts = ref([]);
+  const searchTerm = ref('');
+  const deleteId = ref(null);
+  const loading = ref(false);
+
+  const emptyOffert = {
+    title: '',
+    details: '',
+    image: null,
+    active: true
+  };
+
+
+  onMounted(async () => {
+    await fetchOfferts();
+  });
+
+  const filteredOfferts = computed(() => {
+    if (!searchTerm.value) return offerts.value;
+    const term = searchTerm.value.toLowerCase();
+    return offerts.value.filter(offert => 
+      offert.name.toLowerCase().includes(term) || 
+      (offert.description && offert.description.toLowerCase().includes(term))
+    )
+  });
+
+  const fetchOfferts = async () => {
+    try {
+      const response = await fetch('/api/offerts');
+      const data = await response.json();
+      if (data.success) {
+        offerts.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching offerts:', error);
+    }
+  };
+
+  const handleSearch = (term) => {
+    searchTerm.value = term;
+  };
+
+  const updateOffertStatus = async ({ id, active }) => {
+    try {
+      const response = await fetch(`/api/offerts/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ active })
+      });
+      
+      if (response.ok) {
+        await fetchOfferts(); // Refrescar la lista
+      }
+    } catch (error) {
+      console.error('Error updating offert status:', error);
+    }
+  };
+
+  const handleEdit = (offert) => {
+    currentOffert.value = {
+      ...offert,
+      title: offert.name,
+      details: offert.description
+    };
+    showModal.value = true;
+  };
+
+  const confirmDelete = (id) => {
+    deleteId.value = id;
+    showDeleteModal.value = true;
+  };
+
+  const deleteOffert = async () => {
+    loading.value=true
+
+    try {
+      const response = await fetch(`/api/offerts/${deleteId.value}`, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+      });
+      
+      if (response.ok) {
+        await fetchOfferts(); // Refrescar la lista
+        showDeleteModal.value = false;
+      }
+    } catch (error) {
+      console.error('Error deleting offert:', error);
+    }
+    loading.value=false
+
+  };
+
+  const createOffert = async (formData) => {
+    loading.value=true
+    try {
+      const form = new FormData();
+      form.append('title', formData.title);
+      form.append('details', formData.details);
+      form.append('image', formData.image);
+      form.append('active', true);
+
+      const response = await fetch('/api/offerts/create', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+
+      if (!response.ok) throw new Error('Error al guardar');
+
+      const data = await response.json();
+      showModal.value = false;
+      await fetchOfferts();
+      
+    } catch (error) {
+      console.error('Error:', error);
+      // Mostrar error al usuario
+      errors.value.submit = 'Error al guardar la oferta';
+    }
+    loading.value=false
+
+  };
+
+  const updateOffert = async (formData) => {
+    try {
+      const response = await fetch(`/api/offerts/${currentOffert.value.id}`, {
+        method: 'PUT',
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: formData
+      });
+      
+      if (response.ok) {
+        await fetchOfferts();
+        showModal.value = false;
+        currentOffert.value = null;
+      }
+    } catch (error) {
+      console.error('Error updating offert:', error);
+    }
+  };
+
+  const handleReorder = (newOrder) => {
+      updateBackendOrder(newOrder);
+      offerts.value = newOrder;
+  };
+
+  const updateBackendOrder = async (orderedOfferts) => {
+
+    try {
+      const response = await fetch(`/api/offerts/reorder-table`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify( {updates: orderedOfferts} )
+      });
+
+    } catch (error) {
+      console.error('Error updating offert status:', error);
+    }
+  };
+</script>
