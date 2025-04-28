@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
+use App\Models\CatalogSections;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Log;
 use Exception;
-class CategoriesController extends Controller
+
+
+class CatalogCatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,17 +19,17 @@ class CategoriesController extends Controller
     public function index()
     {
         try {
-            $categories = Categories::orderBy('name')->get();
+            $categories = CatalogSections::orderBy('section_name')->get();
             
             return response()->json([
                 'success' => true,
                 'data' => $categories
             ]);
         } catch (Exception $e) {
-            Log::error('Error al obtener categoria: ' . $e->getMessage());
+            Log::error('Error al obtener las secciones de catalogos: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al obtener las categorias'
+                'message' => 'Error al obtener las secciones de catalogos'
             ], 500);
         }
     }
@@ -37,14 +39,12 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-
-        // // Guardar la imagen
-        $category = Categories::create([
-            'name' => $request['title'],
+        $category = CatalogSections::create([
+            'section_name' => $request['title'],
         ]);
 
         return response()->json([
-            'message' => 'Categoria creada exitosamente',
+            'message' => 'Seccion de catalogos creada exitosamente',
             'data' => $category
         ], 201);
     }
@@ -55,17 +55,17 @@ class CategoriesController extends Controller
     public function show(string $id)
     {
         try {
-            $category = Categories::findOrFail($id);
+            $category = CatalogSections::findOrFail($id);
             
             return response()->json([
                 'success' => true,
                 'data' => $category
             ]);
         } catch (Exception $e) {
-            Log::error('Error al obtener categorias: ' . $e->getMessage());
+            Log::error('Error al obtener las secciones de los catalogos: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Categoria no encontrada'
+                'message' => 'Seccion de catalogo no encontrado'
             ], 404);
         }
     }
@@ -75,33 +75,7 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        try {
-            $category = Categories::findOrFail($id);
-            
-            $validated = $request->validate([
-                'title' => 'sometimes|string|max:100'
-            ]);
-
-            // Actualizar campos básicos
-            if (isset($validated['title'])) {
-                $category->name = $validated['title'];
-            }
-            
-            $category->save();
-            
-            return response()->json([
-                'success' => true,
-                'message' => 'Categoria actualizada exitosamente',
-                'data' => $category
-            ]);
-            
-        } catch (Exception $e) {
-            Log::error('Error al actualizar categoria: ' . $e->getMessage());
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al actualizar la categoria'
-            ], 500);
-        }
+        //
     }
 
     /**
@@ -110,7 +84,7 @@ class CategoriesController extends Controller
     public function destroy(string $id)
     {
         try {
-            $category = Categories::findOrFail($id);
+            $category = CatalogSections::findOrFail($id);
             
             $category->delete();
             
@@ -118,14 +92,14 @@ class CategoriesController extends Controller
             
             return response()->json([
                 'success' => true,
-                'message' => 'Categoria eliminada exitosamente'
+                'message' => 'Seccion del catalogo eliminado exitosamente'
             ]);
             
         } catch (Exception $e) {
-            Log::error('Error al eliminar categoria: ' . $e->getMessage());
+            Log::error('Error al eliminar la seccion del catalogo: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al eliminar la categoria'
+                'message' => 'Error al eliminar la seccion del catálogo'
             ], 500);
         }
     }

@@ -2,8 +2,17 @@
     <Title content="PROMOCIONES"  />
 
     <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
-        <div>
+        <!-- <div>
             <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
+        </div> -->
+        <div class="relative">
+            <i class="bi bi-search absolute left-3 top-3 text-slate-500"></i>
+            <input 
+                v-model="searchTerm" 
+                id="search" 
+                placeholder="Buscar" 
+                class="pl-10 pr-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full w-full"
+            />
         </div>
         <div>
             <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
@@ -57,18 +66,18 @@
     <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
       <div>
         <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta oferta?</h2>
-        <div class="flex justify-end space-x-4">
+        <div class="flex justify-center space-x-8">
           <button
             @click="showDeleteModal = false"
             :disabled="loading"
-            class="px-4 py-2 border rounded-md"
+            class="px-4 py-2 border-2 rounded-md w-32"
           >
             Cancelar
           </button>
           <button
             @click="deleteOffert"
             :disabled="loading"
-            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-red-400"
+            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-red-400 w-32"
           >
             {{ loading? "...Eliminando" :"Eliminar" }}
           </button>

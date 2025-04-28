@@ -84,7 +84,7 @@ class AllianceController extends Controller
         Log::info($request);
         $request->validate([
             'updates' => 'required|array',
-            'updates.*.id' => 'required|exists:offerts,id',
+            'updates.*.id' => 'required|exists:alliances,id',
             'updates.*.index' => 'required|integer|min:1'
         ]);
         
@@ -158,7 +158,7 @@ class AllianceController extends Controller
             }
 
             if (isset($validated['url'])) {
-                $alliance->externalImage = $validated['url'];
+                $alliance->url = $validated['url'];
             }
             
             // Manejar la imagen si se proporciona

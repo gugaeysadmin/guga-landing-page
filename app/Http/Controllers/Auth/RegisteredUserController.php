@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-        return redirect()->route('adminhome', ['admin' => 'admin']);
+        return redirect()->route('app.admin', ['any' => 'admin']);
         // return redirect(to: route('app/admin', absolute: false));
     }
 }

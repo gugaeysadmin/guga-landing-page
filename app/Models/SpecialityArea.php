@@ -13,12 +13,12 @@ class SpecialityArea extends Model
         'index'
     ];
 
-    public function SpecialityAreaSections()
-    {
-        return $this->hasMany(SpecialityAreaSection::class);
-    }
-    public function  productSpecArea()
-    {
-        return $this->hasMany(ProductSpecArea::class);
-    }
+    // public function SpecialityAreaSections()
+    // {
+    //     return $this->hasMany(SpecialityAreaSection::class);
+    // }
+    // public function  productSpecArea()
+    // {
+    //     return $this->hasMany(ProductSpecArea::class);
+    // }
 }

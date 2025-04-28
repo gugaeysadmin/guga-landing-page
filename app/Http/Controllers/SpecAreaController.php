@@ -17,17 +17,17 @@ class SpecAreaController extends Controller
     public function index()
     {
         try {
-            $specareas = SpecialityArea::orderBy('index')->get();
+            $speca = SpecialityArea::orderBy('index')->get();
             
             return response()->json([
                 'success' => true,
-                'data' => $specareas
+                'data' => $speca
             ]);
         } catch (Exception $e) {
-            Log::error('Error al obtener áreas de especialidad: ' . $e->getMessage());
+            Log::error('Error al obtener categoria: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al obtener las áreas de especialidad'
+                'message' => 'Error al obtener las categorias'
             ], 500);
         }
     }
@@ -83,7 +83,7 @@ class SpecAreaController extends Controller
         Log::info($request);
         $request->validate([
             'updates' => 'required|array',
-            'updates.*.id' => 'required|exists:offerts,id',
+            'updates.*.id' => 'required|exists:speciality_areas,id',
             'updates.*.index' => 'required|integer|min:1'
         ]);
         
@@ -150,8 +150,8 @@ class SpecAreaController extends Controller
             // Manejar la imagen si se proporciona
             if ($request->hasFile('image')) {
                 // Eliminar la imagen anterior si existe
-                if ($specarea->img_url) {
-                    Storage::disk('public')->delete($specarea->img_url);
+                if ($specarea->icon_file_url) {
+                    Storage::disk('public')->delete($specarea->icon_file_url);
                 }
                 
                 // Guardar la nueva imagen

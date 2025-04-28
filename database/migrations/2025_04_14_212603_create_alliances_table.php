@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('img_url');
             $table->boolean('active');
-            $table->boolean('externalImage');
+            $table->string('url')->nullable();
         });
     }
 

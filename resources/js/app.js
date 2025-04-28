@@ -31,19 +31,66 @@ import dinamictable from './components/DynamicTable.vue'
 import modal from './components/Modal.vue';
 import promotionform from './forms/PromotionForm.vue';
 import offerttable from './components/OffertTable.vue';
+import mainstatistics from './components/home/MainStatistics.vue';
+import specareaform from './forms/SpecAreaForm.vue';
+import specareatable from './components/specarea/SpecAreaTable.vue';
+import categoryform from './forms/CategoryForm.vue';
+import categoriestable from './components/category/CategoriesTable.vue';
+import categoriessection from './components/category/CategoriesSection.vue';
+import catalogsection from './components/category/CatalogSection.vue';
+import catalogsectionform from './forms/CatalogSectionForm.vue';
+import navsections from './components/enterprise/NavSections.vue';
+import alliancestable from './components/enterprise/AlliancesTable.vue';
+import brandtable from './components/enterprise/BrandTable.vue';
+import pdfaccesorytable from './components/enterprise/PdfAccesoryTable.vue';
+import servicestable from './components/enterprise/ServicesTable.vue';
+import allianceform from './forms/AllianceForm.vue';
+import brandform from './forms/BrandForm.vue';
+import serviceform from './forms/ServiceForm.vue';
+import accesorypdfform from './forms/AccesoryPdfForm.vue';
+import enterpriseform from './forms/EnterpriseForm.vue';
+
+
 // createApp(app).use(router).mount("#app");
 
 const app = createApp(mainVue)
 
 app.use(router)
 
-app.component('Header', header)
-app.component('SideBar', sidebar)
-app.component('Title', title)
-app.component('DynamicTable', dinamictable)
+app.component('Header', header);
+app.component('SideBar', sidebar);
+app.component('Title', title);
+app.component('DynamicTable', dinamictable);
 app.component('Modal', modal);
-app.component('PromotionForm', promotionform)
-app.component('OffertTable', offerttable)
+app.component('PromotionForm', promotionform);
+app.component('OffertTable', offerttable);
+app.component('MainStatistics', mainstatistics);
+app.component('SpecAreaForm', specareaform);
+app.component('SpecAreaTable', specareatable);
+app.component('CategoryForm', categoryform);
+app.component('CategoriesTable', categoriestable);
+app.component('CategoriesSection', categoriessection);
+app.component('CatalogSection', catalogsection);
+app.component('CatalogSectionForm', catalogsectionform);
+app.component('NavSections', navsections);
+app.component('AlliancesTable', alliancestable);
+app.component('BrandTable', brandtable);
+app.component('PdfAccesoryTable', pdfaccesorytable);
+app.component('ServicesTable', servicestable);
+
+app.component('AllianceForm', allianceform);
+app.component('BrandForm', brandform);
+app.component('ServiceForm', serviceform);
+app.component('AccesoryPdfForm', accesorypdfform);
+app.component('EnterpriseForm', enterpriseform);
+
+
+
+
+
+
+
+
 
 
 app.mount('#app')
@@ -181,12 +228,14 @@ function updateNavbar() {
 
 // Ejecutar al cargar la página y al hacer scroll
 document.addEventListener('DOMContentLoaded', function() {
-    // Ejecutar inmediatamente al cargar
-    updateNavbar();
-    
-    // También ejecutar después de un pequeño delay para asegurarse
-    // de que todo está completamente cargado
-    setTimeout(updateNavbar, 100);
+    // Verificar si no estamos en la ruta /app
+    if (!window.location.pathname.startsWith('/app')) {
+        // Ejecutar inmediatamente al cargar
+        updateNavbar();
+        
+        // También ejecutar después de un pequeño delay
+        setTimeout(updateNavbar, 300);
+    }
 });
 
 // Escuchar eventos de scroll

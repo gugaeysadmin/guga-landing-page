@@ -1,3 +1,4 @@
+
 <template>
-    <p>admin</p>
+    <MainStatistics/>
 </template>

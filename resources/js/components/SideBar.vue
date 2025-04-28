@@ -3,11 +3,11 @@
         <div class="h-full space-y-20 ">
             <div>
                 <!-- <img :src="'/img/logo_normal.png'" alt="Logo" class="w-[13rem] mx-auto"> -->
-                 <p class="text-2xl font-bold">Administrador </p>
+                 <p class="text-2xl font-bold text-[#4180ab]">Administrador </p>
             </div>
             <nav class="space-y-14">
                 <div class="space-y-4">
-                    <h5 class="font-mono  text-lg text-gray-400">LANDING PAGE</h5>
+                    <h5 class="font-mono  text-lg text-[#4180ab]">LANDING PAGE</h5>
                     <div class="space-y-2">
 
                         <router-link to="/app/admin" class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-md transition duration-200 group">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="space-y-4">
-                    <h5 class="font-mono  text-lg text-gray-400">CATÁLOGOS</h5>
+                    <h5 class="font-mono  text-lg text-[#4180ab]">CATÁLOGOS</h5>
 
 
                     <router-link to="/app/admin/product" class="flex flex-row items-center gap-4 px-5 py-4 bg-white hover:bg-gray-100 active:bg-gray-200 rounded-md transition duration-200 group">

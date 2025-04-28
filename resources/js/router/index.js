@@ -10,6 +10,10 @@ import promotionpage from '../pages/PromotionsPage.vue'
 import enterprisepage from "../pages/EnterprisePage.vue";
 import specialityareapage from "../pages/SpecialityAreaPage.vue";
 import categoriespage from "../pages/CategoriesPage.vue";
+import accesoriespdfpage from "../pages/AccesoriesPdfPage.vue";
+import alliancespage from "../pages/AlliancesPage.vue";
+import brandspage from "../pages/BrandsPage.vue";
+import servicespage from "../pages/ServicesPage.vue";
 
 const routes = [
     {
@@ -51,6 +55,22 @@ const routes = [
     {
         path: '/app/admin/speciality-areas',
         component: specialityareapage
+    },
+    {
+        path: '/app/admin/enterprise/accesories-pdf',
+        component: accesoriespdfpage
+    },
+    {
+        path: '/app/admin/enterprise/alliances',
+        component: alliancespage
+    },
+    {
+        path: '/app/admin/enterprise/brands',
+        component: brandspage
+    },
+    {
+        path: '/app/admin/enterprise/services',
+        component: servicespage
     },
 ]
 

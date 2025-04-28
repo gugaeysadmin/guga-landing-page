@@ -12,6 +12,6 @@ class Alliance extends Model
         'description',
         'img_url',
         'active',
-        'externalImage'
+        'url'
     ];
 }

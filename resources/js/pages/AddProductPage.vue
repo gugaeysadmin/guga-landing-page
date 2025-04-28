@@ -234,143 +234,141 @@
 <script>
 import { ref } from 'vue';
 export default {
+    data() {
+      return {
+        nuevaUrl: '',
+        form: {
+          nombre: '',
+          descripcion: '',
+          marca: '',
+          categorias: [],
+          multimedia: [],
+          detalles: {
+            enabled: false, // true si el usuario decide añadirla
+            headers: [
+              { id: 1, nombre: 'Capacidad', visible: true },
+              { id: 2, nombre: 'Dimensiones', visible: true },
+              // ...otros headers agregados por el usuario
+            ],
+            rows: [
+              {
+                id: 1,
+                valores: {
+                  1: '100 unidades', // Capacidad
+                  2: '20x30x40 cm', // Dimensiones
+                  // ...otros valores
+                },
+                pdf: null // Puede ser File object o URL string
+              }
+              // ...otras filas
+            ]
+          }
+        },
+        errors: {
+          nombre: '',
+          descripcion: '',
+          marca: ''
+        },
+        categoriaSeleccionada: '',
+        marcas: [
+          { id: 1, nombre: 'Nike' },
+          { id: 2, nombre: 'Adidas' },
+          { id: 3, nombre: 'Puma' }
+        ],
+        categorias: [
+          { id: 1, nombre: 'Electrónica' },
+          { id: 2, nombre: 'Ropa' },
+          { id: 3, nombre: 'Hogar' },
+          { id: 4, nombre: 'Deportes' }
+        ],
+        showMarcaModal: false,
+        nuevaMarca: {
+          nombre: ''
+        }
+      }
+    },
+    methods: {
+      goBack() {
+        this.$router.go(-1); // Regresa a la página anterior en el historial
+      },
+      submitForm() {
+        // Validación simple
+        this.errors = {
+          nombre: !this.form.nombre ? 'El nombre es requerido' : '',
+          descripcion: !this.form.descripcion ? 'La descripción es requerida' : '',
+          marca: !this.form.marca ? 'La marca es requerida' : ''
+        };
 
+        // Verificar si hay errores
+        const hasErrors = Object.values(this.errors).some(error => error !== '');
+        if (hasErrors) return;
 
-  data() {
-    return {
-      nuevaUrl: '',
-      form: {
-        nombre: '',
-        descripcion: '',
-        marca: '',
-        categorias: [],
-        multimedia: [],
-        detalles: {
-          enabled: false, // true si el usuario decide añadirla
-          headers: [
-            { id: 1, nombre: 'Capacidad', visible: true },
-            { id: 2, nombre: 'Dimensiones', visible: true },
-            // ...otros headers agregados por el usuario
-          ],
-          rows: [
-            {
-              id: 1,
-              valores: {
-                1: '100 unidades', // Capacidad
-                2: '20x30x40 cm', // Dimensiones
-                // ...otros valores
-              },
-              pdf: null // Puede ser File object o URL string
-            }
-            // ...otras filas
-          ]
+        // Enviar formulario (aquí iría tu lógica para enviar a API)
+        console.log('Formulario enviado:', this.form);
+        alert('Formulario enviado con éxito!');
+      },
+      agregarCategoria() {
+        if (this.categoriaSeleccionada && !this.form.categorias.includes(this.categoriaSeleccionada)) {
+          this.form.categorias.push(this.categoriaSeleccionada);
+          this.categoriaSeleccionada = '';
         }
       },
-      errors: {
-        nombre: '',
-        descripcion: '',
-        marca: ''
+      eliminarCategoria(index) {
+        this.form.categorias.splice(index, 1);
       },
-      categoriaSeleccionada: '',
-      marcas: [
-        { id: 1, nombre: 'Nike' },
-        { id: 2, nombre: 'Adidas' },
-        { id: 3, nombre: 'Puma' }
-      ],
-      categorias: [
-        { id: 1, nombre: 'Electrónica' },
-        { id: 2, nombre: 'Ropa' },
-        { id: 3, nombre: 'Hogar' },
-        { id: 4, nombre: 'Deportes' }
-      ],
-      showMarcaModal: false,
-      nuevaMarca: {
-        nombre: ''
-      }
-    }
-  },
-  methods: {
-    goBack() {
-      this.$router.go(-1); // Regresa a la página anterior en el historial
-    },
-    submitForm() {
-      // Validación simple
-      this.errors = {
-        nombre: !this.form.nombre ? 'El nombre es requerido' : '',
-        descripcion: !this.form.descripcion ? 'La descripción es requerida' : '',
-        marca: !this.form.marca ? 'La marca es requerida' : ''
-      };
+      obtenerNombreCategoria(id) {
+        const categoria = this.categorias.find(c => c.id == id);
+        return categoria ? categoria.nombre : '';
+      },
+      agregarMarca() {
+        if (!this.nuevaMarca.nombre) return;
 
-      // Verificar si hay errores
-      const hasErrors = Object.values(this.errors).some(error => error !== '');
-      if (hasErrors) return;
+        // Generar un nuevo ID (en una app real esto lo haría el backend)
+        const newId = Math.max(...this.marcas.map(m => m.id)) + 1;
 
-      // Enviar formulario (aquí iría tu lógica para enviar a API)
-      console.log('Formulario enviado:', this.form);
-      alert('Formulario enviado con éxito!');
-    },
-    agregarCategoria() {
-      if (this.categoriaSeleccionada && !this.form.categorias.includes(this.categoriaSeleccionada)) {
-        this.form.categorias.push(this.categoriaSeleccionada);
-        this.categoriaSeleccionada = '';
-      }
-    },
-    eliminarCategoria(index) {
-      this.form.categorias.splice(index, 1);
-    },
-    obtenerNombreCategoria(id) {
-      const categoria = this.categorias.find(c => c.id == id);
-      return categoria ? categoria.nombre : '';
-    },
-    agregarMarca() {
-      if (!this.nuevaMarca.nombre) return;
+        // Agregar la nueva marca
+        this.marcas.push({
+          id: newId,
+          nombre: this.nuevaMarca.nombre
+        });
 
-      // Generar un nuevo ID (en una app real esto lo haría el backend)
-      const newId = Math.max(...this.marcas.map(m => m.id)) + 1;
+        // Seleccionar la nueva marca automáticamente
+        this.form.marca = newId;
 
-      // Agregar la nueva marca
-      this.marcas.push({
-        id: newId,
-        nombre: this.nuevaMarca.nombre
-      });
-
-      // Seleccionar la nueva marca automáticamente
-      this.form.marca = newId;
-
-      // Resetear y cerrar modal
-      this.nuevaMarca.nombre = '';
-      this.showMarcaModal = false;
-    },
-    handleFileUpload(event) {
-      const files = event.target.files;
-      Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
+        // Resetear y cerrar modal
+        this.nuevaMarca.nombre = '';
+        this.showMarcaModal = false;
+      },
+      handleFileUpload(event) {
+        const files = event.target.files;
+        Array.from(files).forEach(file => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.form.multimedia.push({
+              id: Date.now() + Math.random(),
+              file,
+              type: file.type,
+              preview: e.target.result
+            });
+          };
+          reader.readAsDataURL(file);
+        });
+      },
+      agregarUrl() {
+        if (this.nuevaUrl) {
           this.form.multimedia.push({
             id: Date.now() + Math.random(),
-            file,
-            type: file.type,
-            preview: e.target.result
+            url: this.nuevaUrl,
+            type: null
           });
-        };
-        reader.readAsDataURL(file);
-      });
-    },
-    agregarUrl() {
-      if (this.nuevaUrl) {
-        this.form.multimedia.push({
-          id: Date.now() + Math.random(),
-          url: this.nuevaUrl,
-          type: null
-        });
-        this.nuevaUrl = '';
+          this.nuevaUrl = '';
+        }
+      },
+      eliminarMultimedia(index) {
+        this.form.multimedia.splice(index, 1);
       }
-    },
-    eliminarMultimedia(index) {
-      this.form.multimedia.splice(index, 1);
     }
   }
-}
 </script>
 
 <!-- 

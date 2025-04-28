@@ -75,7 +75,7 @@ class ServiceController extends Controller
         Log::info($request);
         $request->validate([
             'updates' => 'required|array',
-            'updates.*.id' => 'required|exists:offerts,id',
+            'updates.*.id' => 'required|exists:services,id',
             'updates.*.index' => 'required|integer|min:1'
         ]);
         

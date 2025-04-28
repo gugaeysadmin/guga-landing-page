@@ -1,0 +1,45 @@
+<template>
+    <div class="flex flex-row justify-between flex-wrap ">
+        <div class="mt-8 bg-white py-5 px-5 rounded-xl shadow-sm w-60 pr-9">
+            <p class="text-2xl font-semibold">Productos</p>
+            <div class="flex flex-row justify-between items-end">
+                <router-link to="/app/admin/product">
+                    <p class="text-sky-500 underline text-xs`">Ver</p>
+                </router-link>
+                <p class="text-3xl font-bold text-sky-500 text-end">{{ productsNumber }}</p>
+            </div>
+        </div>
+        <div class="mt-8 bg-white py-5 px-5 rounded-xl shadow-sm w-60 pr-9">
+            <p class="text-2xl font-semibold">Promociones</p>
+            <div class="flex flex-row justify-between items-end">
+                <router-link to="/app/admin/promotions">
+                    <p class="text-sky-500 underline text-xs`">Ver</p>
+                </router-link>
+                <p class="text-3xl font-bold text-sky-500 text-end">{{ promotionsNumber }}</p>
+            </div>
+        </div>
+        <div class="mt-8 bg-white py-5 px-5 rounded-xl shadow-sm w-60 pr-9">
+            <p class="text-2xl font-semibold">Alianzas</p>
+            <div class="flex flex-row justify-between items-end">
+                <router-link to="/app/admin/enterprise">
+                    <p class="text-sky-500 underline text-xs`">Ver</p>
+                </router-link>
+                <p class="text-3xl font-bold text-sky-500 text-end">{{ alliancesNumber }}</p>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+    import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
+    const productsNumber = ref(0)
+    const promotionsNumber = ref(0) 
+    const alliancesNumber = ref(0) 
+
+</script>
+<script>
+    export default {
+        name: "Main Statistics"
+    }
+</script>

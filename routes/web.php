@@ -1,13 +1,17 @@
 <?php
 
 use App\Http\Controllers\AccesoryPdfController;
+use App\Http\Controllers\AllianceController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CatalogCatController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\OffertController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpecAreaController;
 use App\View\Components\Pages\AboutController;
 use App\View\Components\Pages\AlliancesController;
+
 use App\View\Components\Pages\CatalogsController;
 use App\View\Components\Pages\ContactController;
 use App\View\Components\Pages\ServicesController;
@@ -45,13 +49,13 @@ Route::put('/api/offerts/{id}', [OffertController::class, 'update']);
 Route::delete('/api/offerts/{id}', [OffertController::class, 'destroy']);
 
 // Alianzas
-Route::post('/api/alliances/create', [AlliancesController::class, 'store']);
-Route::post('/api/alliances/reorder', [AlliancesController::class, 'reorderIndexes']);
-Route::post('/api/alliances/reorder-table', [AlliancesController::class, 'reorder']);
-Route::get('/api/alliances', [AlliancesController::class, 'index']);
-Route::get('/api/alliances/{id}', [AlliancesController::class, 'show']);
-Route::put('/api/alliances/{id}', [AlliancesController::class, 'update']);
-Route::delete('/api/alliances/{id}', [AlliancesController::class, 'destroy']);
+Route::post('/api/alliances/create', [AllianceController::class, 'store']);
+Route::post('/api/alliances/reorder', [AllianceController::class, 'reorderIndexes']);
+Route::post('/api/alliances/reorder-table', [AllianceController::class, 'reorder']);
+Route::get('/api/alliances', [AllianceController::class, 'index']);
+Route::get('/api/alliances/{id}', [AllianceController::class, 'show']);
+Route::put('/api/alliances/{id}', [AllianceController::class, 'update']);
+Route::delete('/api/alliances/{id}', [AllianceController::class, 'destroy']);
 
 //Areas de especialidad
 Route::post('/api/speciality-areas/create', [SpecAreaController::class, 'store']);
@@ -63,13 +67,13 @@ Route::put('/api/speciality-areas/{id}', [SpecAreaController::class, 'update']);
 Route::delete('/api/speciality-areas/{id}', [SpecAreaController::class, 'destroy']);
 
 //Servicios
-Route::post('/api/services/create', [ServicesController::class, 'store']);
-Route::post('/api/services/reorder', [ServicesController::class, 'reorderIndexes']);
-Route::post('/api/services/reorder-table', [ServicesController::class, 'reorder']);
-Route::get('/api/services', [ServicesController::class, 'index']);
-Route::get('/api/services/{id}', [ServicesController::class, 'show']);
-Route::put('/api/services/{id}', [ServicesController::class, 'update']);
-Route::delete('/api/services/{id}', [ServicesController::class, 'destroy']);
+Route::post('/api/services/create', [ServiceController::class, 'store']);
+Route::post('/api/services/reorder', [ServiceController::class, 'reorderIndexes']);
+Route::post('/api/services/reorder-table', [ServiceController::class, 'reorder']);
+Route::get('/api/services', [ServiceController::class, 'index']);
+Route::get('/api/services/{id}', [ServiceController::class, 'show']);
+Route::put('/api/services/{id}', [ServiceController::class, 'update']);
+Route::delete('/api/services/{id}', [ServiceController::class, 'destroy']);
 
 
 //Marcas
@@ -93,6 +97,13 @@ Route::get('/api/category', [CategoriesController::class, 'index']);
 Route::get('/api/category/{id}', [CategoriesController::class, 'show']);
 Route::put('/api/category/{id}', [CategoriesController::class, 'update']);
 Route::delete('/api/category/{id}', [CategoriesController::class, 'destroy']);
+
+//Seccion de catálogos
+Route::post('/api/catalog-section/create', [CatalogCatController::class, 'store']);
+Route::get('/api/catalog-section', [CatalogCatController::class, 'index']);
+Route::get('/api/catalog-section/{id}', [CatalogCatController::class, 'show']);
+Route::put('/api/catalog-section/{id}', [CatalogCatController::class, 'update']);
+Route::delete('/api/catalog-section/{id}', [CatalogCatController::class, 'destroy']);
 
 
 Route::get('/dashboard', function () {
