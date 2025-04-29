@@ -49,7 +49,7 @@ import brandform from './forms/BrandForm.vue';
 import serviceform from './forms/ServiceForm.vue';
 import accesorypdfform from './forms/AccesoryPdfForm.vue';
 import enterpriseform from './forms/EnterpriseForm.vue';
-
+import producttable from './components/product/ProductTable.vue';
 
 // createApp(app).use(router).mount("#app");
 
@@ -83,7 +83,7 @@ app.component('BrandForm', brandform);
 app.component('ServiceForm', serviceform);
 app.component('AccesoryPdfForm', accesorypdfform);
 app.component('EnterpriseForm', enterpriseform);
-
+app.component('ProductTable',producttable);
 
 
 

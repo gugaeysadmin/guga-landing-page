@@ -6,6 +6,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CatalogCatController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\OffertController;
+use App\Http\Controllers\PageConfigController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpecAreaController;
@@ -105,6 +106,20 @@ Route::get('/api/catalog-section/{id}', [CatalogCatController::class, 'show']);
 Route::put('/api/catalog-section/{id}', [CatalogCatController::class, 'update']);
 Route::delete('/api/catalog-section/{id}', [CatalogCatController::class, 'destroy']);
 
+//Seccion de catálogos
+Route::post('/api/lp-config/create', [PageConfigController::class, 'store']);
+Route::post('/api/lp-config/update', [PageConfigController::class, 'update']);
+Route::get('/api/lp-config', [PageConfigController::class, 'index']);
+Route::get('/api/lp-config/{id}', [PageConfigController::class, 'show']);
+
+
+//Productos
+Route::post('/api/product/create', [CatalogCatController::class, 'store']);
+Route::get('/api/products', [CatalogCatController::class, 'index']);
+Route::get('/api/product/{id}', [CatalogCatController::class, 'show']);
+Route::post('/api/product/{id}', [CatalogCatController::class, 'update']);
+Route::delete('/api/product/{id}', [CatalogCatController::class, 'destroy']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -115,5 +130,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';

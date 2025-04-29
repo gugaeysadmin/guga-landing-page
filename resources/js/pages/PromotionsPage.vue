@@ -31,6 +31,7 @@
         @status-change="updateOffertStatus"
         @edit="handleEdit"
         @delete="confirmDelete"
+        @promote= "confirmPromote"
         @reorder="handleReorder"
       />
         
@@ -80,6 +81,28 @@
             class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-red-400 w-32"
           >
             {{ loading? "...Eliminando" :"Eliminar" }}
+          </button>
+        </div>
+      </div>
+    </Modal>
+
+    <Modal :visible="showPromoteModal" @close="showPromoteModal = false" title="">
+      <div>
+        <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de promover esta oferta?</h2>
+        <div class="flex justify-center space-x-8">
+          <button
+            @click="showPromoteModal = false"
+            :disabled="loading"
+            class="px-4 py-2 border-2 rounded-md w-32"
+          >
+            Cancelar
+          </button>
+          <button
+            @click="promote"
+            :disabled="loading"
+            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500 disabled:bg-indigo-500 w-32"
+          >
+            {{ loading? "...Promoviendo" :"Promover" }}
           </button>
         </div>
       </div>
@@ -142,10 +165,13 @@ const handleCancel = () => {
 
   const showModal = ref(false);
   const showDeleteModal = ref(false);
+  const showPromoteModal = ref(false);
+
   const currentOffert = ref(null);
   const offerts = ref([]);
   const searchTerm = ref('');
   const deleteId = ref(null);
+  const promoteUrl = ref(null);
   const loading = ref(false);
 
   const emptyOffert = {
@@ -217,6 +243,39 @@ const handleCancel = () => {
     deleteId.value = id;
     showDeleteModal.value = true;
   };
+
+  const confirmPromote = (url) => {
+    promoteUrl.value = url
+    showPromoteModal.value = true
+  }
+
+  const promote = async () => {
+    loading.value = true;
+    try {
+      const form = new FormData();
+      form.append('special_ofert', promoteUrl.value);
+
+      const response = await fetch(`/api/lp-config/update`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+      
+      if (response.ok) {
+        showPromoteModal.value = false;
+        promoteUrl.value = null;
+        // showModal.value = false;
+        // currentOffert.value = null;
+      }
+    } catch (error) {
+      console.error('Error updating offert:', error);
+      loading.value = false;
+    }
+    loading.value = false;
+  }
 
   const deleteOffert = async () => {
     loading.value=true

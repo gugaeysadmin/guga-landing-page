@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     
     <Title content="PRODUCTOS"  />
     <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
@@ -106,72 +106,156 @@ export default {
     }
   }
 }
+</script> -->
+
+
+<template>
+  <Title content="TODOS LOS PRODUCTOS"  />
+
+  <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+      <!-- <div>
+          <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
+      </div> -->
+      <div class="relative">
+          <i class="bi bi-search absolute left-3 top-3 text-slate-500"></i>
+          <input 
+              v-model="searchTerm" 
+              id="search" 
+              placeholder="Buscar" 
+              class="pl-10 pr-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full w-full"
+          />
+      </div>
+      <div>
+          <router-link to="/app/admin/product/add" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
+              <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
+              <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+          </router-link>
+      </div>
+
+  </div>
+  
+
+  <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+    <ProductTable
+      :products="filteredProducts"
+      @search="handleSearch"
+      @edit="handleEdit"
+      @delete="confirmDelete"
+    />
+      
+  </div>
+
+
+  <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+    <div>
+      <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar este producto?</h2>
+      <div class="flex justify-center space-x-8">
+        <button
+          @click="showDeleteModal = false"
+          :disabled="loading"
+          class="px-4 py-2 border-2 rounded-md w-32"
+        >
+          Cancelar
+        </button>
+        <button
+          @click="deleteProduct"
+          :disabled="loading"
+          class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-red-400 w-32"
+        >
+          {{ loading? "...Eliminando" :"Eliminar" }}
+        </button>
+      </div>
+    </div>
+  </Modal>
+
+</template>
+
+<script setup>
+  import { ref, computed, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
+
+  const showModal = ref(false);
+  const showDeleteModal = ref(false);
+  const currentOffert = ref(null);
+  const products = ref([]);
+  const searchTerm = ref('');
+  const deleteId = ref(null);
+  const loading = ref(false);
+
+
+  const router = useRouter();
+
+  const emptyOffert = {
+    title: '',
+    details: '',
+    image: null,
+  };
+
+
+  onMounted(async () => {
+    await fetchProducts();
+  });
+
+  const filteredProducts = computed(() => {
+    if (!searchTerm.value) return products.value;
+    const term = searchTerm.value.toLowerCase();
+    return products.value.filter(product => 
+      product.name.toLowerCase().includes(term) || 
+      (product.description && product.description.toLowerCase().includes(term))
+    )
+  });
+
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/product');
+      const data = await response.json();
+      if (data.success) {
+        products.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching product:', error);
+    }
+  };
+
+  const handleSearch = (term) => {
+    searchTerm.value = term;
+  };
+
+  const handleEdit = (product) => {
+    currentOffert.value = {
+      ...product
+    };
+    showModal.value = true;
+  };
+
+  const confirmDelete = (id) => {
+    deleteId.value = id;
+    showDeleteModal.value = true;
+  };
+
+  const deleteProduct = async () => {
+    loading.value=true
+
+    try {
+      const response = await fetch(`/api/product/${deleteId.value}`, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+      });
+      
+      if (response.ok) {
+        await fetchProducts(); // Refrescar la lista
+        showDeleteModal.value = false;
+      }
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
+    loading.value=false
+
+  };
+
+
+
 </script>
-
-<style scoped>
-.product-table-container {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.product-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1rem;
-}
-
-.product-table th, .product-table td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.product-table th {
-  background-color: #f8f9fa;
-  font-weight: 600;
-}
-
-.actions {
-  display: flex;
-  gap: 8px;
-}
-
-.edit-btn, .delete-btn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.edit-btn {
-  background-color: #4e73df;
-  color: white;
-}
-
-.delete-btn {
-  background-color: #e74a3b;
-  color: white;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.pagination-btn {
-  padding: 6px 12px;
-  border: 1px solid #ddd;
-  background-color: white;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.pagination-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-</style>
