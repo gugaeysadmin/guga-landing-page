@@ -50,8 +50,9 @@ import serviceform from './forms/ServiceForm.vue';
 import accesorypdfform from './forms/AccesoryPdfForm.vue';
 import enterpriseform from './forms/EnterpriseForm.vue';
 import producttable from './components/product/ProductTable.vue';
-
-// createApp(app).use(router).mount("#app");
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 
 const app = createApp(mainVue)
 
@@ -86,6 +87,7 @@ app.component('EnterpriseForm', enterpriseform);
 app.component('ProductTable',producttable);
 
 
+app.component('QuillEditor', QuillEditor);
 
 
 
@@ -97,19 +99,19 @@ app.mount('#app')
 
 
 
-var swiperAux = new Swiper('.swiper', {
+var swiperAux = new Swiper('.swiper1', {
     modules: [Navigation, Pagination, Autoplay],
     slidesPerView: "4",
     centeredSlides: true,
     spaceBetween: 50,
     pagination: {
-        el: ".swiper-pagination",
+        el: ".swiper-pagination1",
         dynamicBullets:true,
         clickable:true,
     },
     navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+        nextEl: ".swiper-button-next1",
+        prevEl: ".swiper-button-prev1",
     },
 
     autoplay: {
@@ -140,31 +142,62 @@ var swiperAux = new Swiper('.swiper', {
     },
 });
 
-var swiperAlliances = new Swiper('.swiper-aliances',{
-    modules: [Navigation, Pagination],
-    spaceBetween: 50,
-});
-
-var swiperThumb= new Swiper(".product-thumb", {
-    loop: true,
-    spaceBetween: 12,
-    slidesPerView: 4,
-
-    freeMode: true,
-    watchSlidesProgress: true,
-
-});
-
-var swiperPrev = new Swiper(".product-prev", {
-    loop: true,
-    spaceBetween: 32,
-    effect: "fade",
-
-    thumbs: {
-        swiper: swiperThumb,
+var swiper2 = new Swiper('.swiper2', {
+    modules: [Navigation, Pagination, Autoplay],
+    slidesPerView: 3,  // Sin comillas
+    centeredSlides: true,  // Cambiado a false para mejor visualización
+    spaceBetween: 0,
+    loop: true,  // Agregado para mejor experiencia
+    pagination: {
+        el: ".swiper-pagination2",
+        dynamicBullets:false,
+        clickable:true,
+    },
+    navigation: {
+        nextEl: ".swiper-button-next2",
+        prevEl: ".swiper-button-prev2",
+    },
+    scrollbar: {
+        el: ".swiper-scrollbar1"
     },
 
+    autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+    },
+    breakpoints: {
+        200: {
+            slidesPerView: 3,
+            spaceBetween: 0,
+        }
+    }
 });
+
+// var swiperAlliances = new Swiper('.swiper-aliances',{
+//     modules: [Navigation, Pagination],
+//     spaceBetween: 50,
+// });
+
+// var swiperThumb= new Swiper(".product-thumb", {
+//     loop: true,
+//     spaceBetween: 12,
+//     slidesPerView: 4,
+
+//     freeMode: true,
+//     watchSlidesProgress: true,
+
+// });
+
+// var swiperPrev = new Swiper(".product-prev", {
+//     loop: true,
+//     spaceBetween: 32,
+//     effect: "fade",
+
+//     thumbs: {
+//         swiper: swiperThumb,
+//     },
+
+// });
 
 // document.addEventListener('scroll', function() {
 //     const navbar = document.getElementById('navbar');

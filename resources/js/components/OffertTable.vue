@@ -76,7 +76,7 @@
                         <select
                             :value="offert.active == 1? true: false"
                             @change="emit('status-change', { id: offert.id, active: $event.target.value === 'true' })"
-                            class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                            class="block min-w-20 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                         >
                             <option :value="true">Activo</option>
                             <option :value="false">Inactivo</option>

@@ -3,7 +3,7 @@
     {{-- Titulo --}}
     <div class="block relative">
         <!-- Imagen de cabecera -->
-        <img src="{{ asset('img/catalog_img_header.jpg') }}" alt="services_img" class="w-full max-h-[35rem] object-cover" style="object-position: 0 10%;"/>
+        <img src="{{ asset('img/servicesbg.webp') }}" alt="services_img" class="w-full max-h-[35rem] object-cover" style="object-position: 0 10%;"/>
 
         <!-- Capa de opacidad -->
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>

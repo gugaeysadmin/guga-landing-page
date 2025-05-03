@@ -39,7 +39,7 @@
     </div>
 
 
-    <Modal :visible="showModal" @close="showModal = false" title="Nueva oferta">
+    <Modal :visible="showModal" @close="showModal = false" title="Nueva marca">
       <PromotionForm
         :onSubmit="createBrand"
         :initialData="emptyOffert"
@@ -51,7 +51,7 @@
 
     <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
       <div>
-        <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta oferta?</h2>
+        <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta marca?</h2>
         <div class="flex justify-center space-x-8">
           <button
             @click="showDeleteModal = false"

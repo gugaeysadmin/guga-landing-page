@@ -42,11 +42,6 @@ return new class extends Migration
                   ->on('brands')
                   ->onDelete('cascade');
             
-            $table->foreign('table_id')
-                  ->references('id')
-                  ->on('product_table_configurations')
-                  ->onDelete('cascade');
-
             $table->timestamps();
         });
     }

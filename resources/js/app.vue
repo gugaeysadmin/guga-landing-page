@@ -12,7 +12,7 @@
             </header>
             <div class="flex-1">
                 <main>
-                    <div class="max-w-[80rem] px-14 mx-auto">
+                    <div class="max-w-[56rem] px-14 mx-auto">
                         <router-view/>
                     </div>
                 </main>

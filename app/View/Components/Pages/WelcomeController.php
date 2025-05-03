@@ -3,8 +3,14 @@
 namespace App\View\Components\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alliance;
+use App\Models\LandingPageConfig;
+use App\Models\Service;
+use App\Models\SpecialityArea;
+use Exception;
 use Illuminate\View\View;
 use Illuminate\View\Component;
+use Log;
 
 class WelcomeController extends Controller
 {
@@ -29,40 +35,79 @@ class WelcomeController extends Controller
         //         ]],
         //     ['name' => 'Contáctenos', 'to' => '/contact'],
         // ];
-        $aliances = [
-            ['image' => asset('img/amtai.png'),     'to' => 'https://www.amtai.com'],
-            ['image' => asset('img/biobase.png'),   'to' => 'https://www.biobase.cc/'],
-            ['image' => asset('img/cisa.png'),      'to' => 'https://www.cisabrasile.com.br/es/?lang=es'],
-            ['image' => asset('img/biodex.jpg'),    'to' => 'https://www.biodex.com/'],
-            ['image' => asset('img/fiochetti.jpg'), 'to' => 'https://www.fiocchetti.it/en/'],
-            ['image' => asset('img/genoray.png'),   'to' => 'https://www.genoray.com/?ckattempt=1'],
-            ['image' => asset('img/guerbet.png'),   'to' => 'https://www.guerbet.com/es-mx'],
-            ['image' => asset('img/lf.jpg'),        'to' => 'https://www.linkedin.com/company/liebel-flarsheim-company-llc'],
+        $alliances = $this->getAlliancees();
 
-        ];
+        $areas = $this->getSpecAreas();
 
-        $areas =[
-            ['title' => 'Esterilización', 'image' => asset('img/esterilizador.png'),    'equipments'=> ['Autoclaves','Indicadores biológicos','Indicadores químicos']],
-            ['title' => 'Quirófano',      'image' => asset('img/mesa.png'),             'equipments'=> ['Mesas de cirugía','Luces de cirugía LED']],
-            ['title' => 'Imagenología',   'image' => asset('img/acrc.png'),             'equipments'=> ['Brazo en C','Tomosíntesis Mamaria Digital']],
-            ['title' => 'Refrigeración',  'image' => asset('img/refri.png'),            'equipments'=> ['Refrigeradores','Congeladores'.'Almacenamiento de sangre']],
-        ];
+        $entepriseInfo = $this->getEnterpriseInformation();
 
-        $services = [
-            ['image' => asset('img/1.png'), 'to' => ''],
-            ['image' => asset('img/2.png'), 'to' => ''],
-            ['image' => asset('img/3.png'), 'to' => ''],
-        ];
+        $services = $this->getServices();
+
 
         $offerts = [
-            ['id'=> 1, 'title'=> 'oferta 1', 'description' => 'Descripcion de la oferta 1' ],
-            ['id'=> 2, 'title'=> 'oferta 2', 'description' => 'Descripcion de la oferta 2' ],
-            ['id'=> 3, 'title'=> 'oferta 3', 'description' => 'Descripcion de la oferta 3' ],
-            ['id'=> 4, 'title'=> 'oferta 4', 'description' => 'Descripcion de la oferta 4' ],
-            ['id'=> 5, 'title'=> 'oferta 5', 'description' => 'Descripcion de la oferta 5' ],
+            ['id'=> 1, 'title'=> 'Silla de transporte no magnética', 'description' => 'Descripcion de la oferta 1', 'url'=>'offerts/1EuzCOmQSPkpYbUFlMEDggPnJyZeU9wHB1zeUvqr.jpg'],
+            ['id'=> 2, 'title'=> 'Jeringa CT 9000', 'description' => 'Descripcion de la oferta 2', 'url'=>'offerts/cx5rlibsdrIpztGTya6GrxVbNRfw3asvWWbq4qYO.jpg'],
+            ['id'=> 3, 'title'=> 'Esterilizador de mesa', 'description' => 'Descripcion de la oferta 3', 'url'=>'offerts/mZJaIkoLDyxng3f26jTPXKu2qZVS0KsacouCyaxT.jpg'],
+            ['id'=> 4, 'title'=> 'OPTIRAY 350/50', 'description' => 'Descripcion de la oferta 4', 'url'=>'offerts/dQQLp6Rf9ySdPU9uTyklxcwEq3QPgc9ww5P1lzJI.jpg'],
+            ['id'=> 5, 'title'=> 'CALENTADOR DE MEDIO DE CONTRASTE', 'description' => 'Descripcion de la oferta 5', 'url'=>'offerts/lF9V17WSBHLg9iuBmVWYM0iednCZdXdU6LETzvyG.jpg'],
 
         ];
         
-        return view('welcome', compact('imagelist', 'aliances', 'areas','services','offerts'));
+        return view('welcome', compact('imagelist', 'alliances', 'areas','services','offerts','entepriseInfo'));
+    }
+
+    public function getSpecAreas(){
+        try {
+            $speca = SpecialityArea::orderBy('index')->get();
+            return $speca;
+        } catch (Exception $e) {
+            Log::error('Error al obtener categoria: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener las categorias'
+            ], 500);
+        }
+    }
+
+    public function getEnterpriseInformation(){
+        try {
+            $lpconfig = LandingPageConfig::findOrFail(1);
+            return $lpconfig;
+        } catch (Exception $e) {
+            Log::error('Error al obtener la configuracion de la página: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener la configuracion de la página'
+            ], 404);
+        }
+    }
+
+    public function getServices(){
+        try {
+            $services = Service::orderBy('index')->get();
+            
+            return $services;
+        } catch (Exception $e) {
+            Log::error('Error al obtener servicio: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener servicios'
+            ], 500);
+        }
+    }
+
+    public function getAlliancees() {
+        try {
+            $alliances = Alliance::where('active','=',1)->orderBy('index')->get();
+            Log::info($alliances);
+            return $alliances;
+        } catch (Exception $e) {
+            Log::error('Error al obtener alianzas: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener las alianzas'
+            ], 500);
+        }
+    
     }
 }

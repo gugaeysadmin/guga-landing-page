@@ -18,7 +18,6 @@ class Product extends Model
         'optional2',
         'optional3',
         'brand_id',
-        'table_id',
         'table_data',
         'has_accesrorypdf',
         'pdf_page',

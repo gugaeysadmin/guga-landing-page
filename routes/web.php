@@ -10,6 +10,7 @@ use App\Http\Controllers\PageConfigController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpecAreaController;
+use App\Http\Controllers\TableHeaderController;
 use App\View\Components\Pages\AboutController;
 use App\View\Components\Pages\AlliancesController;
 
@@ -34,7 +35,7 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/catalogs', [CatalogsController::class, 'index'])->name('catalogs');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/services', [ServicesController::class, 'index'])->name('services');
-Route::get('/alliances', [AlliancesController::class, 'index'])->name('catalogs');
+Route::get('/alliances', [AlliancesController::class, 'index'])->name('alliances');
 
 
 
@@ -83,6 +84,7 @@ Route::get('/api/brand', [BrandController::class, 'index']);
 Route::get('/api/brand/{id}', [BrandController::class, 'show']);
 Route::put('/api/brand/{id}', [BrandController::class, 'update']);
 Route::delete('/api/brand/{id}', [BrandController::class, 'destroy']);
+Route::post('/api/brand/create-on', [BrandController::class, 'onlyname']);
 
 //PDF Accesorios
 Route::post('/api/accesory-pdf/create', [AccesoryPdfController::class, 'store']);
@@ -112,13 +114,19 @@ Route::post('/api/lp-config/update', [PageConfigController::class, 'update']);
 Route::get('/api/lp-config', [PageConfigController::class, 'index']);
 Route::get('/api/lp-config/{id}', [PageConfigController::class, 'show']);
 
-
 //Productos
 Route::post('/api/product/create', [CatalogCatController::class, 'store']);
 Route::get('/api/products', [CatalogCatController::class, 'index']);
 Route::get('/api/product/{id}', [CatalogCatController::class, 'show']);
 Route::post('/api/product/{id}', [CatalogCatController::class, 'update']);
 Route::delete('/api/product/{id}', [CatalogCatController::class, 'destroy']);
+
+//Table Headers
+Route::post('/api/th-conf/create', [TableHeaderController::class, 'store']);
+Route::get('/api/th-conf', [TableHeaderController::class, 'index']);
+Route::get('/api/th-conf/{id}', [TableHeaderController::class, 'show']);
+Route::post('/api/th-conf/{id}', [TableHeaderController::class, 'update']);
+Route::delete('/api/th-conf/{id}', [TableHeaderController::class, 'destroy']);
 
 
 Route::get('/dashboard', function () {

@@ -135,9 +135,11 @@ class SpecAreaController extends Controller
             
             $validated = $request->validate([
                 'title' => 'sometimes|string|max:100',
-                'details' => 'nullable|string',
+                'details' => 'sometimes|string',
                 'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:500',
-                'index' => 'sometimes|integer'
+                'index' => 'sometimes|integer',
+                'filters' => 'sometimes|string',
+
             ]);
 
             // Actualizar campos básicos
@@ -146,6 +148,10 @@ class SpecAreaController extends Controller
             }
             if (isset($validated['details'])) {
                 $specarea->description = $validated['details'];
+            }
+
+            if (isset($validated['filters'])) {
+                $specarea->filters = $validated['filters'];
             }
             // Manejar la imagen si se proporciona
             if ($request->hasFile('image')) {

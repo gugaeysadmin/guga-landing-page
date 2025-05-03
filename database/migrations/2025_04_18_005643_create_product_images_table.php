@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
             $table->string('url',300);
+            $table->json('type')->nullable();
             $table->json('optional1')->nullable();
             $table->json('optional2')->nullable();
-            $table->json('optional3')->nullable();
+            $table->integer('index')->default(0);
             $table->unsignedBigInteger('product_id');
 
             $table->foreign('product_id')

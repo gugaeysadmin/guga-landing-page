@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('catalog_sections', function (Blueprint $table) {
+        Schema::create('spec_area_images', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('section_name',100);
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('catalog_sections');
+        Schema::dropIfExists('spec_area_images');
     }
 };

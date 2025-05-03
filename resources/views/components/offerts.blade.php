@@ -1,33 +1,74 @@
 @props(['offerts'])
 
 <div>
-    <div class="pt-20">
-        <h1 class="text-center text-[2.5rem] font-sans font-semibold text-[#0392ceff]"> Nuestras ofertas</h1>
+    <div class="pt-20 ">
+        <h1 class="text-center text-[2.2rem] font-sans font-extralight text-[#0392ceff]"> Nuestras ofertas</h1>
     </div>
-    <div class=" max-w-[80rem] mx-auto flex flex-wrap flex-row gap-20 px-40 py-20 justify-center items-center">
-        @foreach ($offerts as $offert )
-            <button class="relative transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group" 
+    <div class=" max-w-[80rem] mx-auto  gap-20 mt-10 pb-32 justify-center items-center">
+        {{-- @foreach ($offerts as $offert ) --}}
+            {{-- <button class="relative transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group" 
                 type="button"
-                onclick="showOfertModal('{{ $offert['title'] }}', '{{ $offert['description'] }}', '{{ $offert['description'] ?? '' }}')"
+                onclick="showOfertModal('{{ $offert['title'] }}', '{{ $offert['description'] }}', '{{ $offert['url']}}')"
                 data-twe-toggle="modal"
                 data-twe-target="#offertModal"
                 data-twe-ripple-init
                 data-twe-ripple-color="light"
             >
                 <!-- Tarjeta -->
-                <div class="w-64 h-40 bg-slate-200 border-l-2 border-[#0392ceff] group-hover:bg-purple-500 transform skew-x-[-15deg] flex justify-center pt-10 pl-11 pr-5   group transition duration-300">
+                <div class="w-64 h-40 bg-slate-200 border-l-2 border-[#0392ceff] group-hover:bg-[#0392ceff] transform skew-x-[-15deg] flex justify-center items-center pl-11 pr-5   group transition duration-300">
                     <div class="transform skew-x-[15deg] group-hover:text-white">
                         <h4 class="font-semibold text-lg group-hover:font-bold">{{ $offert['title'] }}</h4>
-                        <p class="text-xs mt-1 group-hover:font-semibold">{{ $offert['description'] }}</p>
+                        <p class="text-xs mt-1 group-hover:font-semibold text-sky-600 underline">VER</p>
                     </div>
                 </div>
                 
                 <!-- Círculo -->
-                <div class="absolute -left-10 top-1/4 bg-[#0392ceff] rounded-full h-20 w-20 flex items-center justify-center group-hover:bg-purple-700 border-4 border-white transition  duration-300">
+                <div class="absolute -left-10 top-1/4 bg-[#0392ceff] rounded-full h-20 w-20 flex items-center justify-center group-hover:bg-[#0392ceff] border-4 border-white transition  duration-300">
                     <i class="bi bi-percent text-white text-3xl"></i>
                 </div>
                 
-            </button>
+            </button> --}}
+
+
+            <!-- Slider main container -->
+
+                <div class=" swiper swiper2">  <!-- Cambiado de swiper-container a swiper -->
+                    <div class="swiper-wrapper">
+                        @foreach($offerts as $offert)
+                            <div class="swiper-slide py-9">  
+                                <div class="flex justify-center items-center h-full">  
+                                    <button class="relative transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group" 
+                                        type="button"
+                                        onclick="showOfertModal('{{ $offert['title'] }}', '{{ $offert['description'] }}', '{{ $offert['url']}}')"
+                                        data-twe-toggle="modal"
+                                        data-twe-target="#offertModal"
+                                        data-twe-ripple-init
+                                        data-twe-ripple-color="light"
+                                    >
+                                        <!-- Tu contenido del slide aquí -->
+                                        <div class="w-64 h-40 bg-slate-200 border-l-2 border-[#0392ceff] group-hover:bg-[#0392ceff] transform skew-x-[-15deg] flex justify-center items-center pl-11 pr-5 group transition duration-300">
+                                            <div class="transform skew-x-[15deg] group-hover:text-white">
+                                                <h4 class="font-semibold text-lg group-hover:font-bold">{{ $offert['title'] }}</h4>
+                                                <p class="text-xs mt-1 group-hover:font-semibold text-sky-600 underline">VER</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="absolute -left-10 top-1/4 bg-[#0392ceff] rounded-full h-20 w-20 flex items-center justify-center group-hover:bg-[#0392ceff] border-4 border-white transition duration-300">
+                                            <i class="bi bi-percent text-white text-3xl"></i>
+                                        </div>
+                                    </button> 
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+    
+                    <!-- Paginación -->
+                    <div class="swiper-pagination swiper-pagination2"></div>
+                    
+                    <!-- Botones de navegación (opcional) -->
+                    {{-- <div class="swiper-button-prev swiper-button-prev2"></div>
+                    <div class="swiper-button-next swiper-button-next2"></div> --}}
+                </div>
 
             {{-- <div class="relative transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group" 
 
@@ -46,7 +87,7 @@
 
             </div> --}}
 
-        @endforeach
+        {{-- @endforeach --}}
     </div>
 </div>
 
@@ -168,29 +209,30 @@
 
             <!-- Modal body -->
             <div class="relative p-4">
-                <p class="text-gray-800" id="offertModalShortDesc"></p>
+                <div>
+                    <img
+                        id="offertImage"
+                        alt="Oferta"
+                        class="w-full h-full"
+                    />
+                </div>
             </div>
 
             <!-- Modal footer -->
-            <div class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 p-4">
-                <button
-                    type="button"
-                    class="px-4 py-2 bg-[#0392ceff] text-white rounded hover:bg-[#037aafff] transition-colors"
-                    data-twe-modal-dismiss
-                    data-twe-ripple-init
-                    data-twe-ripple-color="light">
-                    Cerrar
-                </button>
-            </div>
         </div>
     </div>
 </div>
 
 <script>
-function showOfertModal(title, shortDesc, longDesc) {
+function showOfertModal(title, shortDesc, imgurl) {
+    document.getElementById('offertImage').src = "";
     // Actualizar el contenido del modal
     document.getElementById('offertModalTitle').textContent = title;
-    document.getElementById('offertModalShortDesc').textContent = shortDesc;
+    console.log(imgurl)
+    const fullImageUrl = '/storage/' + imgurl;
+
+    document.getElementById('offertImage').src = fullImageUrl;
+
     document.getElementById('offertModalLongDesc').textContent = shortDesc;
     
     // Si necesitas manejar condiciones dinámicas:

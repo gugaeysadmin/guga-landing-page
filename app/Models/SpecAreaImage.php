@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductImage extends Model
+class SpecAreaImage extends Model
 {
     use HasFactory;
 
@@ -15,11 +15,11 @@ class ProductImage extends Model
         'type',
         'optional2',
         'optional3',
-        'product_id',
+        'spec_area_id',
     ];
 
-    public function product()
+    public function SpecialityArea()
     {
-        $this->belongsTo(Product::class);
+        $this->belongsTo(SpecialityArea::class);
     }
 }

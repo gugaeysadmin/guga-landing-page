@@ -21,6 +21,7 @@ class LandingPageConfig extends Model
         'address',
         'optional1',
         'optional2',
-        'optional3'
+        'optional3',
+        'catalogs_filters'
     ];
 }

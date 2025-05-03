@@ -56,16 +56,16 @@
                         {{ truncateDescription(alliance.description) }}
                     </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4 whitespace-nowrap min-w-14">
                     <a 
                         v-if="alliance.img_url" 
                         :href="`/storage/${alliance.img_url}`" 
                         target="_blank"
-                        class="inline-block"
+                        class="inline-block w-24 h-14 "
                     >
                         <img 
                         :src="`/storage/${alliance.img_url}`" 
-                        class="h-10 w-15 rounded-xl object-cover"
+                        class="h-10 min-w-14 rounded-xl object-contain"
                         :alt="`Imagen de ${alliance.name}`"
                         >
                     </a>
@@ -75,7 +75,7 @@
                     <select
                         :value="alliance.active == 1? true: false"
                         @change="emit('status-change', { id: alliance.id, active: $event.target.value === 'true' })"
-                        class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        class="block min-w-24 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                     >
                         <option :value="true">Activo</option>
                         <option :value="false">Inactivo</option>

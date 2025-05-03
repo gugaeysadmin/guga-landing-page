@@ -124,15 +124,15 @@
   });
 
   const fetchData = async () => {
-    try {
-      const response = await fetch('/api/catalog-section');
-      const data = await response.json();
-      if (data.success) {
-        dataset.value = data.data;
-      }
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
+    // try {
+    //   const response = await fetch('/api/catalog-section');
+    //   const data = await response.json();
+    //   if (data.success) {
+    //     dataset.value = data.data;
+    //   }
+    // } catch (error) {
+    //   console.error('Error fetching categories:', error);
+    // }
   };
 
   const fetchCategories = async () => {

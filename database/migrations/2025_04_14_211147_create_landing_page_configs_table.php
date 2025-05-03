@@ -29,6 +29,7 @@ return new class extends Migration
             $table->text('optional1')->nullable();
             $table->text('optional2')->nullable();
             $table->text('optional3')->nullable();
+            $table->json('catalogs_filters')->nullable();
 
 
         });

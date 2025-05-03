@@ -1,26 +1,73 @@
-<h1 class="text-center text-[3rem] font-sans font-semibold text-[#0392ceff]">{{ __('Areas de especialidad') }}</h1>
-<div class="relative flex flex-wrap justify-around  mt-16">
-    <x-spec-area-button 
-        href=" {{ config('routes.sterilization') }}" 
-        text="Esterilización" 
-        image="icons/esterilization.png" 
-    />
-    <x-spec-area-button 
-        href=" {{ config('routes.operating-room') }}" 
-        text="Quirófano" 
-        image="icons/operating-room.png" 
-    />
-    <x-spec-area-button 
-        href=" {{ config('routes.imageneology') }}" 
-        text="Imagenología" 
-        image="icons/imaging.png" 
-    />
-    <x-spec-area-button 
-        href=" {{ config('routes.refrigeration') }}" 
-        text="Refrigeración" 
-        image="icons/refrigeration.png" 
-    />
+{{-- @props(["specareas"])
+
+<h1 class="text-center text-[2.2rem] font-sans font-extralight text-[#0392ceff]">{{ __('Areas de especialidad') }}</h1>
+<div class="relative flex flex-wrap justify-center gap-8 mt-14">
+    @foreach ($specareas as $specarea  )
+        <x-spec-area-button 
+            href="/speciality-area/{{$specarea->name }}" 
+            text="{{ $specarea->name }}" 
+            image="{{ $specarea->icon_file_url }}" 
+        />
+    @endforeach
+</div> --}}
+
+@props(["specareas"])
+
+<h1 class="text-center text-[2.2rem] font-sans font-extralight text-[#0392ceff]">{{ __('Areas de especialidad') }}</h1>
+<div class="relative flex flex-wrap justify-center gap-8 mt-14" id="specareas-container">
+    @foreach ($specareas as $specarea)
+        <div class="animate-fade-in-right opacity-0" data-delay="{{ $loop->index * 300 }}">
+            <x-spec-area-button 
+                href="/speciality-area/{{ $specarea->name }}" 
+                text="{{ $specarea->name }}" 
+                image="{{ $specarea->icon_file_url }}" 
+            />
+        </div>
+    @endforeach
 </div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const delay = entry.target.getAttribute('data-delay');
+                setTimeout(() => {
+                    entry.target.classList.remove('opacity-0');
+                    entry.target.classList.add('animate-fade-in-right-active');
+                }, delay);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('#specareas-container > div').forEach(el => {
+        observer.observe(el);
+    });
+});
+</script>
+@endpush
+
+{{-- <x-spec-area-button 
+    href=" {{ config('routes.sterilization') }}" 
+    text="Esterilización" 
+    image="icons/esterilization.png" 
+/>
+<x-spec-area-button 
+    href=" {{ config('routes.operating-room') }}" 
+    text="Quirófano" 
+    image="icons/operating-room.png" 
+/>
+<x-spec-area-button 
+    href=" {{ config('routes.imageneology') }}" 
+    text="Imagenología" 
+    image="icons/imaging.png" 
+/>
+<x-spec-area-button 
+    href=" {{ config('routes.refrigeration') }}" 
+    text="Refrigeración" 
+    image="icons/refrigeration.png" 
+/> --}}
 
 {{-- <div class="mx-5 sm:mx-5 md:ml-32 md:mr-40 mt-14 mb-10 border-t-[3px] border-slate-400"></div>
 

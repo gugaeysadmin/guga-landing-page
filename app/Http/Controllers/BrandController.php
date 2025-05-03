@@ -55,6 +55,20 @@ class BrandController extends Controller
         ], 201);
     }
 
+    public function onlyname(Request $request)
+    {
+
+        
+        $brand = Brand::create([
+            'name' => $request['name'],
+        ]);
+
+        return response()->json([
+            'message' => 'Marca creada exitosamente',
+            'data' => $brand
+        ], 201);
+    }
+
     /**
      * Display the specified resource.
      */

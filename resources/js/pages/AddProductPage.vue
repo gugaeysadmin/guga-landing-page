@@ -1,104 +1,352 @@
 <template>
-    <Title content="AGREGAR PRODUCTO"  />
-    <button @click="goBack" class="py-2 mt-4 flex flex-row items-center justify-center align-middle content-center gap-2">
-        <i class="bi bi-arrow-left-circle-fill text-xl text-blue-500"></i>
-        <p class="underline font-medium text-lg text-blue-500 pb-1">Regresar</p>
+  <Title content="NUEVO PRODUCTO"  />
+  <button @click="goBack" class="py-2 mt-4 flex flex-row items-center justify-center align-middle content-center gap-2">
+      <i class="bi bi-arrow-left-circle-fill text-xl text-blue-500"></i>
+      <p class="underline font-medium text-lg text-blue-500 pb-1">Regresar</p>
   </button>
-
-  <div class="mt-12 py-5 px-5 rounded-xl bg-white shadow-sm">
-    <div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 class="text-2xl font-bold mb-6">Formulario de Producto</h1>
+  
+  <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+    <form @submit.prevent="submitForm" class=" w-full flex flex-wrap px-4 md:px-12 gap-6">
       
-      <form @submit.prevent="submitForm">
-        <!-- Campo Nombre -->
-        <div class="mb-6">
-          <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre *</label>
-          <input
-            v-model="form.nombre"
-            type="text"
-            id="nombre"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      <!-- name -->
+      <div class="w-full py-2">
+        <label for="name" class="block text-md font-medium text-cyan-800">Nombre *</label>
+        <input
+          id="name"
+          v-model="formData.name"
+          required
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+        ></input>
+      </div>
+
+      <!-- description -->
+      <div class="w-full py-2">
+        <label for="description" class="block text-md font-medium text-cyan-800">Descripción *</label>
+        <textarea
+          id="description"
+          v-model="formData.description"
+          required
+          rows="4"
+          class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+        ></textarea>
+      </div>
+
+      <!-- brand -->
+      <div class="mb-6 w-full ">
+        <label class="block text-md font-medium text-cyan-800">Marca *</label>
+        <div class="flex gap-2 mt-1">
+          <select
+            v-model="formData.brand_id"
+            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           >
-          <p v-if="errors.nombre" class="mt-1 text-sm text-red-600">{{ errors.nombre }}</p>
+            <option value="" disabled selected>Selecciona una marca</option>
+            <option v-for="brand in brands" :key="brand.id" :value="brand.id">
+              {{ brand.name }}
+            </option>
+          </select>
+          <button
+            type="button"
+            @click="showBrandModal = true"
+            class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+          >
+            + Nueva
+          </button>
         </div>
+        <p v-if="errors.marca" class="mt-1 text-sm text-red-600">{{ errors.marca }}</p>
+      </div>
 
-        <!-- Campo Descripción -->
-        <div class="mb-6">
-          <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-1">Descripción *</label>
-          <textarea
-            v-model="form.descripcion"
-            id="descripcion"
-            rows="4"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          ></textarea>
-          <p v-if="errors.descripcion" class="mt-1 text-sm text-red-600">{{ errors.descripcion }}</p>
+      <!-- categories -->
+      <div class="mb-6 w-full ">
+        <label class="block text-md font-medium text-cyan-800">Categorías *</label>
+        <div class="flex gap-2 mt-1">
+          <select
+            v-model="selectedCategorie"
+            @change="addCategory"
+            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option v-for="category in categories" :key="category.id" :value="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+          <button
+            type="button"
+            @click="showCategoryModal = true"
+            class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+          >
+            + Nueva
+          </button>
+
         </div>
+        
+        <div class="mt-4 flex flex-wrap gap-2">
+          <div
+            v-for="(category, index) in formData.categories"
+            :key="index"
+            class="flex items-center bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm"
+          >
+            {{ getCategoryName(category) }}
+            <button
+              type="button"
+              @click="deleteCategory(index)"
+              class="ml-2 text-blue-600 hover:text-blue-800"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <!-- Campo Marca con Modal -->
-        <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Marca *</label>
-          <div class="flex gap-2">
+      <!-- specAreas -->
+      <div class="mb-6 w-full  ">
+        <label class="block text-md font-medium text-cyan-800">Áreas de especialidad *</label>
+        <div class="flex gap-2 mt-1">
+          <select
+            v-model="selectedSpecArea"
+            @change="addSpecArea"
+            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" disabled selected>Selecciona una área de especialidad</option>
+            <option v-for="specArea in specAreas" :key="specArea.id" :value="specArea.id">
+              {{ specArea.name }}
+            </option>
+          </select>
+        </div>
+        
+        <div class="mt-4 flex flex-wrap gap-2">
+          <div
+            v-for="(specArea, index) in formData.specAreas"
+            :key="index"
+            class="flex items-center bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm"
+          >
+            {{ getSpecAreaName(specArea) }}
+            <button
+              type="button"
+              @click="deleteSpecArea(index)"
+              class="ml-2 text-blue-600 hover:text-blue-800"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Switch para activar/desactivar accesorios -->
+      <div class="flex items-center">
+        <label class="flex items-center cursor-pointer">
+          <div class="relative">
+            <input 
+              type="checkbox" 
+              class="sr-only" 
+              v-model="accesoryPdfEnabled"
+              @change="toggleAccesoryPdf"
+            >
+            <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
+            <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+          </div>
+          <div class="ml-3 text-sm font-medium">Tiene accesorios</div>
+        </label>
+      </div>
+
+      <!-- Accesorios -->
+      <div v-if="accesoryPdfEnabled" class="mb-4 w-full md:gap-4 flex ">
+        <div class="w-full">
+          <label class="block text-md font-medium text-cyan-800">Selecciona el pdf de accesorios</label>
+          <div class="flex gap-2 mt-1">
             <select
-              v-model="form.marca"
+              v-model="formData.accesrorypdf"
+              class="flex-1 px-3 py-[0.39rem] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="" disabled selected>Selecciona una pdf</option>
+              <option v-for="accesoryDoc in accesoryDocs" :key="accesoryDoc.id" :value="accesoryDoc.id">
+                {{ accesoryDoc.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="w-full">
+          <label for="name" class="block text-md font-medium text-cyan-800">Número de página *</label>
+          <input
+            id="name"
+            type="number"
+            v-model="formData.name"
+            required
+            class="mt-1 rounded-md  border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+          ></input>
+        </div>
+      </div>
+
+      <!-- Switch para activar/desactivar servicios -->
+      <div class="flex w-full">
+        <label class="flex items-center cursor-pointer">
+          <div class="relative">
+            <input 
+              type="checkbox" 
+              class="sr-only" 
+              v-model="servicesEnabled"
+              @change="toggleServices"
+            >
+            <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
+            <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+          </div>
+          <div class="ml-3 text-sm font-medium">Tiene servicios</div>
+        </label>
+      </div>
+      <div v-if="servicesEnabled" class=" flex   flex-col w-full">
+        <label class="block text-md font-medium text-cyan-800">Ingresa la descripción de los servicios</label>
+        <QuillEditor 
+          v-model:content="formData.services_description" 
+          content-type="html"
+          theme="snow" 
+          :toolbar="[
+             [{ 'font': [] }, { 'size': [] }],
+              [ 'bold', 'italic', 'underline', 'strike' ],
+              [{ 'color': [] }, { 'background': [] }],
+              [, 'blockquote' ],
+              [{ 'list': 'ordered' }, { 'list': 'bullet'}, { 'indent': '-1' }, { 'indent': '+1' }],
+              [ 'direction', { 'align': [] }],
+              [ 'link', 'image' ]
+    
+          ]" 
+  
+        />
+      </div>
+
+      <!-- Switch para activar/desactivar la tabla -->
+      <div class="flex w-full">
+        <label class="flex items-center cursor-pointer">
+          <div class="relative">
+            <input 
+              type="checkbox" 
+              class="sr-only" 
+              v-model="tableEnabled"
+              @change="toggleTable"
+            >
+            <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
+            <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+          </div>
+          <div class="ml-3 text-sm font-medium">Tiene tabla</div>
+        </label>
+      </div>
+      
+      <!-- Tabla -->
+      <div v-if="tableEnabled" class="flex flex-col w-full">
+
+        <div class="mb-6 w-full ">
+          <label class="block text-md font-medium text-cyan-800">Selecciona la tabla *</label>
+          <div class="flex gap-2 mt-1">
+            <select
+              @change = "handleSelectTableHeader"
+              v-model="selectedTableHeader"
               class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
-              <option value="" disabled selected>Selecciona una marca</option>
-              <option v-for="marca in marcas" :key="marca.id" :value="marca.id">
-                {{ marca.nombre }}
+              <option value="" disabled selected>Selecciona una configuración de tabla</option>
+              <option v-for="tableHeader in tableHeaders" :key="tableHeader.id" :value="tableHeader.id">
+                {{ tableHeader.name }}
               </option>
+              
             </select>
             <button
               type="button"
-              @click="showMarcaModal = true"
-              class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+              @click="showTableConfigModal = true"
+              class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
             >
               + Nueva
             </button>
           </div>
-          <p v-if="errors.marca" class="mt-1 text-sm text-red-600">{{ errors.marca }}</p>
         </div>
 
-        <!-- Campo Categorías -->
-        <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Categorías</label>
-          <select
-            v-model="categoriaSeleccionada"
-            @change="agregarCategoria"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="" disabled selected>Selecciona una categoría</option>
-            <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">
-              {{ categoria.nombre }}
-            </option>
-          </select>
-          
-          <!-- Chips de categorías seleccionadas -->
-          <div class="mt-2 flex flex-wrap gap-2">
-            <div
-              v-for="(categoria, index) in form.categorias"
-              :key="index"
-              class="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+        <div class="overflow-x-auto">
+          <label for="newTableName" class="block text-sm font-medium text-gray-700 mb-1">Vista previa de la tabla</label>
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Eliminar</th>
+                <th v-for="(header, index) in formData.table_data.headers" :key="index" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ header }}</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr v-for="(row, rowIndex) in formData.table_data.table" :key="rowIndex">
+                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                    <button
+                        @click="handleRemoveTableRow( rowIndex)"
+                        class="text-red-600 hover:text-red-900"
+                    >
+                        Eliminar
+                    </button>
+                  </td>
+                  <td v-for="(header, headerIndex) in formData.table_data.headers" :key="headerIndex">
+                    <div v-if="header == 'imagen'" class="flex items-center gap-2 px-1">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        @change="handleRowImgUpload($event, rowIndex)"
+                        class="hidden"
+                        :id="'image-upload-'+rowIndex"
+                      >
+                      <label 
+                        :for="'image-upload-'+rowIndex"
+                        class="cursor-pointer w-28 inline-flex justify-center rounded-md border border-transparent bg-indigo-400 disabled:bg-indigo-300 py-1 px-4 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        {{ row.imagen ? 'Cambiar Imagen' : 'Subir Imagen' }}
+                      </label>
+                      <span v-if="row.imagen" class="text-xs text-gray-500">
+                        {{ row.imagen.name || 'Imagen adjunto' }}
+                      </span>
+                    </div>
+                    <div v-else-if="header == 'pdf'" class="flex items-center gap-2 px-1">
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        @change="handleRowPdfUpload($event, rowIndex)"
+                        class="hidden"
+                        :id="'pdf-upload-'+rowIndex"
+                      >
+                      <label 
+                        :for="'pdf-upload-'+rowIndex"
+                        class="cursor-pointer w-28 inline-flex justify-center rounded-md border border-transparent bg-indigo-400 disabled:bg-indigo-300 py-1 px-4 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        {{ row.pdf ? 'Cambiar PDF' : 'Subir PDF' }}
+                      </label>
+                      <span v-if="row.pdf" class="text-xs text-gray-500 min-w-20">
+                        {{ row.pdf.name || 'PDF adjunto' }}
+                      </span>
+                    </div>
+                    <div v-else class="px-1">
+                      <input
+                        v-model="row[header]"
+                        :placeholder="tupla"
+                        class="mt-1 block rounded-md  w-40 min-w-40 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                      ></input>
+
+                    </div>
+                
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class=" py-3 px-1 flex justify-center text-sm text-gray-500">
+            <button
+              type="button"
+              @click="handleAddTableRow"
+              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-              {{ obtenerNombreCategoria(categoria) }}
-              <button
-                type="button"
-                @click="eliminarCategoria(index)"
-                class="ml-2 text-blue-600 hover:text-blue-800"
-              >
-                &times;
-              </button>
-            </div>
-          </div>
+              + Nueva fila
+            </button>
+          </div >
         </div>
+      </div>
 
+
+      <!-- image or url upload -->
+      <div class="w-full mt-8"> 
+        <!-- Uploads -->
         <div class="mb-6">
-          <label class="block text-lg font-bold text-gray-700 mb-1">Multimedia (Imágenes/Videos)</label>
+          <label class="block text-md font-medium text-cyan-800">Multimedia (Imágenes/Videos)</label>
           
-          <div class="flex flex-col gap-4">
-            <!-- Input para subir archivos -->
+          <div class="flex flex-col gap-4 mt-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Subir archivos</label>
               <input 
@@ -110,18 +358,17 @@
               >
             </div>
             
-            <!-- Input para agregar URLs -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">O ingresar URL</label>
-              <div class="flex gap-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1 mt-4">O ingresar URL</label>
+              <div class="flex gap-2 ">
                 <input 
-                  v-model="nuevaUrl" 
+                  v-model="newUrl" 
                   type="url" 
                   placeholder="https://ejemplo.com/video.mp4" 
                   class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                 <button 
-                  @click="agregarUrl" 
+                  @click="addUrl" 
                   type="button" 
                   class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
                 >
@@ -131,8 +378,8 @@
             </div>
           </div>
         </div>
-
-        <!-- Tabla de multimedia ordenable -->
+  
+        <!-- table -->
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-1">Archivos agregados</label>
           
@@ -147,8 +394,23 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="(item, index) in form.multimedia" :key="item.id" class="hover:bg-gray-50 cursor-move">
-                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ index + 1 }}</td>
+                <tr 
+                  v-for="(item, index) in formData.productImages" 
+                  :key="item.id" 
+                  draggable="true"
+                  @dragstart="handleDragStart($event, index)"
+                  @dragover.prevent="handleDragOver($event, index)"
+                  @dragenter.prevent="handleDragEnter($event, index)"
+                  @dragleave="handleDragLeave($event)"
+                  @drop="handleDrop($event, index)"
+                  @dragend="handleDragEnd"
+                  :class="{
+                      'bg-blue-50': dragOverIndex === index,
+                      'cursor-move': !isDragging,
+                      'opacity-50': isDragging && draggedItemIndex === index
+                  }"
+                >
+                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ item.index }}</td>
                   <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                     {{ item.type ||  'URL Externa' }}
                   </td>
@@ -158,13 +420,19 @@
                       :src="item.preview" 
                       class="h-10 w-10 object-cover rounded"
                     >
+                    <div 
+                      v-else-if="item.type && item.type.startsWith('video')" 
+                      class="flex items-center"
+                    >
+                      <span class="text-blue-500 underline truncate max-w-xs">{{ item.name }}</span>
+                    </div>
                     <div v-else-if="item.url" class="flex items-center">
                       <span class="text-blue-500 underline truncate max-w-xs">{{ item.url }}</span>
                     </div>
                   </td>
                   <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                     <button 
-                      @click="eliminarMultimedia(index)" 
+                      @click="deletePriductImage(index)" 
                       type="button" 
                       class="text-red-600 hover:text-red-900"
                     >
@@ -172,7 +440,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="form.multimedia.length === 0">
+                <tr v-if="formData.productImages.length === 0">
                   <td colspan="4" class="px-4 py-3 text-center text-sm text-gray-500">No hay archivos agregados</td>
                 </tr>
               </tbody>
@@ -180,209 +448,667 @@
           </div>
         </div>
 
+      </div>
 
-        <DynamicTable v-model="form.detalles"/>
-        <!-- Botón de enviar -->
-        <button
-          type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
-        >
-          Guardar Producto
-        </button>
-      </form>
+      <!-- Botones  -->
+      <div class="w-full h-20">
+        <div class="flex justify-end space-x-3">
+          <!-- <button
+            v-if="onCancel"
+            type="button"
+            @click="onCancel"
+            class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Cancelar
+          </button> -->
+          <button
+            type="submit"
+            :disabled = "loading"
+            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            {{ loading? "Guardando" : "Guardar" }}
+          </button>
+        </div>
+      </div>
+    </form>
 
-      <!-- Modal para nueva marca -->
-      <div v-if="showMarcaModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
-          <div class="p-6">
-            <h2 class="text-xl font-bold mb-4">Agregar Nueva Marca</h2>
-            
-            <div class="mb-4">
-              <label for="nuevaMarca" class="block text-sm font-medium text-gray-700 mb-1">Nombre de la marca *</label>
-              <input
-                v-model="nuevaMarca.nombre"
-                type="text"
-                id="nuevaMarca"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              >
-            </div>
-            
-            <div class="flex justify-end gap-2">
-              <button
-                type="button"
-                @click="showMarcaModal = false"
-                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
-              >
-                Cancelar
-              </button>
-              <button
-                type="button"
-                @click="agregarMarca"
-                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
-              >
-                Guardar
-              </button>
-            </div>
+    <div v-if="showBrandModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+        <div class="p-6">
+          <h2 class="text-xl font-bold mb-4">Agregar Nueva Marca</h2>
+          
+          <div class="mb-4">
+            <label for="nuevaMarca" class="block text-sm font-medium text-gray-700 mb-1">Nombre de la marca *</label>
+            <input
+              v-model="newBrand"
+              type="text"
+              id="nuevaMarca"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            >
+          </div>
+          
+          <div class="flex justify-end gap-2">
+            <button
+              type="button"
+              @click="showBrandModal = false, newBrand = null"
+              class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+            >
+              Cancelar
+            </button>
+            <button
+              @click="createBrand"
+              :disabled = "loading"
+              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              {{ loading? "Guardando" : "Guardar" }}
+            </button>
           </div>
         </div>
       </div>
     </div>
+
+    <div v-if="showCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+        <div class="p-6">
+          <h2 class="text-xl font-bold mb-4">Agregar Nueva Categoría</h2>
+          
+          <div class="mb-4">
+            <label for="newCategory" class="block text-sm font-medium text-gray-700 mb-1">Nombre de la categoría *</label>
+            <input
+              v-model="newCategory"
+              type="text"
+              id="newCategory"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            >
+          </div>
+          
+          <div class="flex justify-end gap-2">
+            <button
+              type="button"
+              @click="showCategoryModal = false, newCategory = null"
+              class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+            >
+              Cancelar
+            </button>
+            <button
+              @click="createCategories"
+              :disabled = "loading"
+              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              {{ loading? "Guardando" : "Guardar" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div v-if="showTableConfigModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-xl">
+        <form  class="p-6 w-full">
+          <h2 class="text-xl font-bold mb-4">Agregar nueva configuracion de tabla</h2>
+          
+          <div class="mb-4">
+            <label for="newTableName" class="block text-sm font-medium text-gray-700 mb-1">Nombre de la tabla *</label>
+            <input
+              v-model="newTableConf.name"
+              type="text"
+              id="newTableName"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            >
+          </div>
+          <div class="w-full  py-2">
+            <div>
+              <label for="name" class="block text-md font-medium text-cyan-800">Nombre de la columna </label>
+              <div class="flex gap-2">
+                <input
+                  id="name"
+                  v-model="newHeader"
+                  required
+                  class="mt-1 block flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                ></input>
+                <button
+                  type="button"
+                  @click="addTableHeader"
+                  class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+                >
+                  + Nueva
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="overflow-x-auto">
+            <label for="newTableName" class="block text-sm font-medium text-gray-700 mb-1">Vista previa de la tabla</label>
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th v-for="(item, index) in newTableConf.headers" :key="index" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ item }}</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                  <td colspan="4" class="px-4 py-3 text-center text-sm text-gray-500">Datos de la tabla</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="flex justify-end gap-2">
+            <button
+              type="button"
+              @click="closeTableHeaderConf"
+              class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+            >
+              Cancelar
+            </button>
+            <button
+              @click="createTableHeader"
+              type="submit"
+              :disabled = "loading"
+              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              {{ loading? "Guardando" : "Guardar" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </div>
 </template>
+<script setup>
+  import { FwbProgress } from 'flowbite-vue';
+  import { ref, computed, onMounted, reactive } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { Ckeditor, useCKEditorCloud } from '@ckeditor/ckeditor5-vue';
 
-<script>
-import { ref } from 'vue';
-export default {
-    data() {
-      return {
-        nuevaUrl: '',
-        form: {
-          nombre: '',
-          descripcion: '',
-          marca: '',
-          categorias: [],
-          multimedia: [],
-          detalles: {
-            enabled: false, // true si el usuario decide añadirla
-            headers: [
-              { id: 1, nombre: 'Capacidad', visible: true },
-              { id: 2, nombre: 'Dimensiones', visible: true },
-              // ...otros headers agregados por el usuario
-            ],
-            rows: [
-              {
-                id: 1,
-                valores: {
-                  1: '100 unidades', // Capacidad
-                  2: '20x30x40 cm', // Dimensiones
-                  // ...otros valores
-                },
-                pdf: null // Puede ser File object o URL string
-              }
-              // ...otras filas
-            ]
-          }
-        },
-        errors: {
-          nombre: '',
-          descripcion: '',
-          marca: ''
-        },
-        categoriaSeleccionada: '',
-        marcas: [
-          { id: 1, nombre: 'Nike' },
-          { id: 2, nombre: 'Adidas' },
-          { id: 3, nombre: 'Puma' }
-        ],
-        categorias: [
-          { id: 1, nombre: 'Electrónica' },
-          { id: 2, nombre: 'Ropa' },
-          { id: 3, nombre: 'Hogar' },
-          { id: 4, nombre: 'Deportes' }
-        ],
-        showMarcaModal: false,
-        nuevaMarca: {
-          nombre: ''
-        }
-      }
+  const editorOptions = {
+    theme: 'snow',
+    placeholder: 'Escribe algo bonito...',
+  };
+
+  const loading = ref(false);
+  const categories = ref(null);
+  const selectedCategorie = ref("");
+  const selectedSpecArea = ref("");
+  const selectedTableHeader = ref("");
+
+
+  const specAreas = ref(null);
+  const brands = ref(null);
+  const accesoryDocs = ref(null);
+  const tableHeaders = ref(null);
+
+  const showBrandModal = ref(false);
+  const showCategoryModal = ref(false);
+  const showTableConfigModal = ref(false);
+
+  
+  const newBrand = ref(null);
+  const newCategory = ref(null);
+  const newUrl = ref(null);
+  const newHeader = ref(null);
+  const newTableConf = ref({
+    name: null,
+    headers: ["pdf"]
+  })
+
+  const draggedItemIndex = ref(null);
+  const dragOverIndex = ref(null);
+  const isDragging = ref(false);
+
+  const accesoryPdfEnabled = ref(false)
+  const servicesEnabled = ref(false)
+  const tableEnabled = ref(true)
+
+  const formData = ref({
+    name: '',
+    description: '',
+    has_table: false,
+    product_services: '',
+    brand_id: '',
+    table_data: {
+      headers: [],
+      table: []
     },
-    methods: {
-      goBack() {
-        this.$router.go(-1); // Regresa a la página anterior en el historial
-      },
-      submitForm() {
-        // Validación simple
-        this.errors = {
-          nombre: !this.form.nombre ? 'El nombre es requerido' : '',
-          descripcion: !this.form.descripcion ? 'La descripción es requerida' : '',
-          marca: !this.form.marca ? 'La marca es requerida' : ''
-        };
+    has_accesrorypdf: false,
+    has_page: 0,
+    has_services: false,
+    services_description: '',
+    accesrorypdf: "",
+    productImages: [],
+    categories: [],
+    specAreas: []
+  })
 
-        // Verificar si hay errores
-        const hasErrors = Object.values(this.errors).some(error => error !== '');
-        if (hasErrors) return;
+  const errors = ref({
+    name: '',
+    description: '',
+    has_table: false,
+    product_services: '',
+    brand_id: null,
+    table_data: '',
+    has_accesrorypdf: false,
+    has_page: 0,
+    has_services: false,
+    services_description: '',
+    accesrorypdf: null,
+    productImages: [],
+    categories: [],
+    specAreas: []
+  });
 
-        // Enviar formulario (aquí iría tu lógica para enviar a API)
-        console.log('Formulario enviado:', this.form);
-        alert('Formulario enviado con éxito!');
-      },
-      agregarCategoria() {
-        if (this.categoriaSeleccionada && !this.form.categorias.includes(this.categoriaSeleccionada)) {
-          this.form.categorias.push(this.categoriaSeleccionada);
-          this.categoriaSeleccionada = '';
-        }
-      },
-      eliminarCategoria(index) {
-        this.form.categorias.splice(index, 1);
-      },
-      obtenerNombreCategoria(id) {
-        const categoria = this.categorias.find(c => c.id == id);
-        return categoria ? categoria.nombre : '';
-      },
-      agregarMarca() {
-        if (!this.nuevaMarca.nombre) return;
 
-        // Generar un nuevo ID (en una app real esto lo haría el backend)
-        const newId = Math.max(...this.marcas.map(m => m.id)) + 1;
+  const router = useRouter();
 
-        // Agregar la nueva marca
-        this.marcas.push({
-          id: newId,
-          nombre: this.nuevaMarca.nombre
-        });
+  onMounted(async () => {
+    fetchCategories();
+    fetchSpecAreas();
+    fetchBrands();
+    fetchAccesoryDocs();
+    fetchTableHeaders();
+  });
+  
+  const  goBack = () => {
+    router.back()
+  }
 
-        // Seleccionar la nueva marca automáticamente
-        this.form.marca = newId;
+  const submitForm = async (data) => {
+    console.log(formData.value)
+  }
 
-        // Resetear y cerrar modal
-        this.nuevaMarca.nombre = '';
-        this.showMarcaModal = false;
-      },
-      handleFileUpload(event) {
-        const files = event.target.files;
-        Array.from(files).forEach(file => {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.form.multimedia.push({
-              id: Date.now() + Math.random(),
-              file,
-              type: file.type,
-              preview: e.target.result
-            });
-          };
-          reader.readAsDataURL(file);
-        });
-      },
-      agregarUrl() {
-        if (this.nuevaUrl) {
-          this.form.multimedia.push({
-            id: Date.now() + Math.random(),
-            url: this.nuevaUrl,
-            type: null
-          });
-          this.nuevaUrl = '';
-        }
-      },
-      eliminarMultimedia(index) {
-        this.form.multimedia.splice(index, 1);
+  // Fetching data
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/category');
+      const data = await response.json();
+      if (data.success) {
+        categories.value = data.data;
       }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const fetchSpecAreas = async () => {
+    try {
+      const response = await fetch('/api/speciality-areas');
+      const data = await response.json();
+      if (data.success) {
+        specAreas.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching speciality-areas:', error);
+    }
+  };
+
+  const fetchAccesoryDocs = async () => {
+    try {
+      const response = await fetch('/api/accesory-pdf');
+      const data = await response.json();
+      if (data.success) {
+        accesoryDocs.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching accesory-pdf:', error);
+    }
+  };
+
+  const fetchTableHeaders = async () => {
+    try {
+      const response = await fetch('/api/th-conf');
+      const data = await response.json();
+      if (data.success) {
+        tableHeaders.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching tableHeaders:', error);
+    }
+  };
+
+  const fetchBrands = async () => {
+    try {
+      const response = await fetch('/api/brand');
+      const data = await response.json();
+      if (data.success) {
+        brands.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching brand:', error);
+    }
+  };
+
+
+  // Brands
+
+  const createBrand = async () => {
+    loading.value=true
+    try {
+      const form = new FormData();
+      form.append('name', newBrand.value);
+
+      const response = await fetch('/api/brand/create-on', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+
+      if (!response.ok) throw new Error('Error al guardar');
+
+      const data = await response.json();
+      showBrandModal.value = false;
+      loading.value=false;
+      newBrand.value = null;
+      await fetchBrands();
+      
+    } catch (error) {
+      console.error('Error:', error);
+      // Mostrar error al usuario
+      errors.value.submit = 'Error al guardar la marca';
+    }
+    loading.value=false
+
+  };
+
+
+  // Categories
+
+  const addCategory= ()=> {
+    if (selectedCategorie && !formData.value.categories.includes(selectedCategorie.value)) {
+      formData.value.categories.push(selectedCategorie.value);
+      selectedCategorie.value = "";
     }
   }
+
+  const deleteCategory = (index) => {
+    formData.value.categories.splice(index, 1);
+  }
+  const getCategoryName = (id)=> {
+    const category = categories.value.find(c => c.id == id);
+    console.log(formData.value.categories)
+    return category ? category.name : '';
+  }
+
+  const createCategories = async (formData) => {
+    loading.value=true
+    try {
+      const form = new FormData();
+      form.append('title',newCategory.value );
+
+      const response = await fetch('/api/category/create', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+
+      if (!response.ok) throw new Error('Error al guardar');
+      showCategoryModal.value = false;
+      loading.value=false;
+      newCategory.value = null;
+      await fetchCategories();
+      
+    } catch (error) {
+      console.error('Error:', error);
+      errors.value.submit = 'Error al guardar la categoria';
+    }
+    loading.value=false
+
+  };
+
+
+  // SpecArea
+  const addSpecArea= ()=> {
+    if (selectedSpecArea && !formData.value.specAreas.includes(selectedSpecArea.value)) {
+      formData.value.specAreas.push(selectedSpecArea.value);
+      selectedSpecArea.value = "";
+    }
+  }
+
+  const deleteSpecArea = (index) => {
+    formData.value.specAreas.splice(index, 1);
+  }
+
+  const getSpecAreaName = (id)=> {
+    const specArea = specAreas.value.find(c => c.id == id);
+    console.log(specArea)
+    return specArea ? specArea.name : '';
+  }
+
+
+  // accesory pdf
+
+  const toggleAccesoryPdf = () => {
+    if(accesoryPdfEnabled.value){
+      formData.value.accesrorypdf = "";
+      formData.value.has_page = 0;
+      formData.value.has_accesrorypdf = false ;
+      accesoryPdfEnabled.value = false;
+    } else {
+      formData.value.has_accesrorypdf = true;
+      accesoryPdfEnabled.value = true;      
+    }
+    accesoryPdfEnabled.value = !accesoryPdfEnabled.value
+  }
+  
+
+
+  // services text
+  const toggleServices = () => {
+    if(servicesEnabled.value){
+      formData.value.services_description = ""
+      formData.value.has_services = false ;
+      servicesEnabled.value = false;
+    } else {
+      formData.value.has_services = true;
+      servicesEnabled.value = true;      
+    }
+    servicesEnabled.value = !servicesEnabled.value
+  }
+
+
+  // Table
+
+  const toggleTable = () => {
+    if(servicesEnabled.value){
+      formData.value.has_table = false
+      formData.value.table_data.headers = [] ;
+      formData.value.table_data.table = [] ;
+    } else {
+      formData.value.has_table = true;
+    }
+  }
+
+  const closeTableHeaderConf = () => {
+    showTableConfigModal.value = false;
+    newTableConf.value.name = null;
+    newTableConf.value.headers = ["pdf"]
+  }
+
+  const addTableHeader = () => {
+    newTableConf.value.headers.pop();
+    newTableConf.value.headers.push(newHeader.value);
+    newTableConf.value.headers.push("pdf");
+    newHeader.value = null
+
+  }
+
+  const createTableHeader = async () => {
+    loading.value=true
+    try {
+      const form = new FormData();
+      const headers = {
+        headers: ["imagen",...newTableConf.value.headers]
+      }
+      form.append('name',newTableConf.value.name );
+      form.append('table_json', JSON.stringify(headers))
+
+      const response = await fetch('/api/th-conf/create', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+
+      if (!response.ok) throw new Error('Error al guardar');
+      showTableConfigModal.value = false;
+      loading.value=false;
+      newTableConf.value.name = null;
+      newTableConf.value.headers = ["pdf"]
+
+      await fetchTableHeaders();
+      
+    } catch (error) {
+      console.error('Error:', error);
+      errors.value.submit = 'Error al guardar la categoria';
+    }
+    loading.value=false
+  }
+
+  const handleSelectTableHeader = () => {
+    const tableConf = tableHeaders.value.find((e) => e.id == selectedTableHeader.value );
+    formData.value.table_data.headers = JSON.parse(tableConf.table_json).headers
+    formData.value.table_data.table = []
+    
+  }
+
+  const handleAddTableRow = () => {
+
+    const rowObject = Object.fromEntries(
+      formData.value.table_data.headers.map(header => [header,""])
+    )
+    console.log(rowObject);
+    formData.value.table_data.table.push(rowObject);
+  }
+
+  const handleRemoveTableRow = (index) => {
+    formData.value.table_data.table.splice(index,1)
+  }
+  const handleRowPdfUpload = (event, rowIndex) => {
+    const file = event.target.files[0];
+    if (file) {
+      formData.value.table_data.table[rowIndex].pdf = file;
+    }
+  }
+
+  const handleRowImgUpload = (event, rowIndex) => {
+    const file = event.target.files[0];
+    if (file) {
+      formData.value.table_data.table[rowIndex].imagen = file;
+    }
+  }
+
+
+
+  // images
+
+  const handleFileUpload = (event) => {
+    const files = event.target.files;
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        formData.value.productImages.push({
+          id: Date.now() + Math.random(),
+          file,
+          type: file.type,
+          name: file.name,
+          preview: e.target.result,
+          index: formData.value.productImages.length + 1,
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const addUrl = () => {
+    if (newUrl) {
+      formData.value.productImages.push({
+        id: Date.now() + Math.random(),
+        url: newUrl.value,
+        type: 'url',
+        index: formData.value.productImages.length + 1,
+      });
+      newUrl.value = '';
+    }
+  }
+
+  const deletePriductImage = (index) => {
+    // formData.value.productImages.splice(index, 1);
+    formData.value.productImages = formData.value.productImages
+        .filter((_, i) => i !== index)
+        .map((item, idx) => ({ ...item, index: idx + 1 }));
+  }
+
+  const handleDragStart = (event, index) => {
+      draggedItemIndex.value = index;
+      isDragging.value = true;
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', index);
+  };
+
+  const handleDragOver = (event, index) => {
+      event.preventDefault();
+      dragOverIndex.value = index;
+  };
+
+  const handleDragEnter = (event, index) => {
+      event.preventDefault();
+      dragOverIndex.value = index;
+  };
+
+  const handleDragLeave = () => {
+      dragOverIndex.value = null;
+  };
+
+  const handleDrop = (event, dropIndex) => {
+      event.preventDefault();
+      if (draggedItemIndex.value === null || draggedItemIndex.value === dropIndex) return;
+      
+      const reorderedOfferts = [...formData.value.productImages];
+      const [movedItem] = reorderedOfferts.splice(draggedItemIndex.value, 1);
+      reorderedOfferts.splice(dropIndex, 0, movedItem);
+      
+      // Actualizar índices
+      reorderedOfferts.forEach((offert, idx) => {
+          offert.index = idx + 1;
+      });
+      formData.value.productImages = [...reorderedOfferts];
+      dragOverIndex.value = null;
+  };
+  
+  const handleDragEnd = () => {
+      isDragging.value = false;
+
+      draggedItemIndex.value = null;
+      dragOverIndex.value = null;
+  };
+
+
+
+
 </script>
 
-<!-- 
-No me muestres el codigo qque acabas de generar solo indicame en donde va y dame el codigo que te  voy a pedir,
-necesito 
-1.- un campo para agregar imagenes o videos, pueden ser muchas, 
-2.- tambien debe permitir urls si no se tiene el video
-3.- estos se deben mostrar en una pequena
+<style scoped>
+  @import "quill/dist/quill.snow.css";
 
-ok al igual que la tabla  no me des el codigo anterior solo indicame lo que va a llevar, necesito una tabla que se llame detalles,  esta tabla  tiene la particuliaridad de que 
-
-1. EL usuario esta libre de poner  tabla o no  poner tabla,
-2. los headers de las tablas las puede definir el usuario pero por defecto la tabla llevaria los campos  capacidad dimensiones pero igual pueden ser eliminados por el ususrio
-3. el contenido de la tabla puede agregarlo el usuario
-4. el unico header que  siempre llevara y siempre aparecera al final de la tabla es uno que diga PDF pero no es obligatorio
-
--->
+  input[type="checkbox"]:checked ~ .dot {
+    transform: translateX(100%);
+    background-color: #3B82F6;
+  }
+  input[type="checkbox"]:checked ~ .block {
+    background-color: #93C5FD;
+  }
+</style>

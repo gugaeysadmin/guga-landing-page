@@ -32,7 +32,7 @@
 
         <!-- Campo url -->
         <div>
-            <label for="url" class="block text-sm font-medium text-gray-700">Url </label>
+            <label for="url" class="block text-sm font-medium text-gray-700">Url</label>
             <input 
                 id="url"
                 v-model="formData.url" 
@@ -146,7 +146,7 @@
           :disabled = "loading"
           class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
-          {{ props.loading? "...Guardando" : submitText }}
+          {{ props.loading? "Guardando" : submitText }}
         </button>
       </div>
     </form>
@@ -285,7 +285,7 @@
         }
     
         // Validar tamaño
-        if (file.size > 500 * 1024) {
+        if (file.size > 20000 * 1024) {
         errors.value.image = 'El archivo no debe superar los 500KB';
         return;
         }

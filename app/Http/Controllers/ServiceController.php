@@ -19,11 +19,11 @@ class ServiceController extends Controller
     public function index()
     {
         try {
-            $specareas = Service::orderBy('index')->get();
+            $services = Service::orderBy('index')->get();
             
             return response()->json([
                 'success' => true,
-                'data' => $specareas
+                'data' => $services
             ]);
         } catch (Exception $e) {
             Log::error('Error al obtener servicio: ' . $e->getMessage());

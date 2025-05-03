@@ -105,6 +105,7 @@ class PageConfigController extends Controller
                 'contact_phone_alternative' => 'sometimes|string|max:20',
                 'contact_email' => 'sometimes|string|max:50',
                 'address' => 'sometimes|string',
+                'catalogs_filters' => 'sometimes|string',
             ]);
 
             // Actualizar campos básicos
@@ -140,6 +141,9 @@ class PageConfigController extends Controller
             }
             if (isset($validated['address'])) {
                 $lpconfig->address = $validated['address'];
+            }
+            if (isset($validated['catalogs_filters'])) {
+                $lpconfig->catalogs_filters = $validated['catalogs_filters'];
             }
             
             // Manejar la imagen si se proporciona

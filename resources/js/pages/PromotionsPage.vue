@@ -102,7 +102,7 @@
             :disabled="loading"
             class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500 disabled:bg-indigo-500 w-32"
           >
-            {{ loading? "...Promoviendo" :"Promover" }}
+            {{ loading? "Promoviendo" :"Promover" }}
           </button>
         </div>
       </div>
