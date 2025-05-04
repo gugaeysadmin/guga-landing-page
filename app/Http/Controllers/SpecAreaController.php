@@ -36,7 +36,7 @@ class SpecAreaController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {   
         // $validated = $request->validate([
         //     'title' => 'required|string|max:100',
         //     'details' => 'nullable|string',
@@ -46,17 +46,18 @@ class SpecAreaController extends Controller
 
         // // Calcular el próximo índice (máximo actual + 1)
         $nextIndex = (SpecialityArea::max('index') ?? 0) + 1;
-
+        Log::info($request);
         // // Guardar la imagen
         $imagePath = $request->file('image')->store('specarea', 'public');
-
+        $videoPath = $request->video->store('specarea', 'public');
         
         $specarea = SpecialityArea::create([
             'name' => $request['title'],
             'description' => $request['details'],
             'icon_file_url' => $imagePath,
             // 'active' => $request['active'] ? 1 : 0,
-            'index' => $nextIndex
+            'index' => $nextIndex,
+            'video_url'=>$videoPath
         ]);
 
         return response()->json([
@@ -130,16 +131,15 @@ class SpecAreaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Log::info($request);
         try {
             $specarea = SpecialityArea::findOrFail($id);
             
             $validated = $request->validate([
                 'title' => 'sometimes|string|max:100',
                 'details' => 'sometimes|string',
-                'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:500',
                 'index' => 'sometimes|integer',
                 'filters' => 'sometimes|string',
-
             ]);
 
             // Actualizar campos básicos
@@ -161,9 +161,19 @@ class SpecAreaController extends Controller
                 }
                 
                 // Guardar la nueva imagen
-                $imageName = time().'_'.Str::slug($validated['title'] ?? $specarea->name).'.'.$request->image->extension();
-                $imagePath = $request->image->storeAs('specarea', $imageName, 'public');
+                $imagePath = $request->file('image')->store('specarea', 'public');
                 $specarea->icon_file_url = $imagePath;
+            }
+
+            if ($request->hasFile('video')) {
+                // Eliminar la imagen anterior si existe
+                if ($specarea->video_url) {
+                    Storage::disk('public')->delete($specarea->video_url);
+                }
+                
+                // Guardar la nueva imagen
+                $videoPath = $request->video->store('specarea', 'public');
+                $specarea->video_url = $videoPath;
             }
             
             // Manejar el índice si se proporciona
@@ -197,8 +207,13 @@ class SpecAreaController extends Controller
             $specarea = SpecialityArea::findOrFail($id);
             
             // Eliminar la imagen asociada
-            if ($specarea->img_url) {
-                Storage::disk('public')->delete($specarea->img_url);
+            if ($specarea->icon_file_url) {
+                Storage::disk('public')->delete($specarea->icon_file_url);
+            }
+
+            // Eliminar la imagen asociada
+            if ($specarea->video_url) {
+                Storage::disk('public')->delete($specarea->video_url);
             }
             
             $specarea->delete();

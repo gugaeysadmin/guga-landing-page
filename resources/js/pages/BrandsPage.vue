@@ -40,7 +40,7 @@
 
 
     <Modal :visible="showModal" @close="showModal = false" title="Nueva marca">
-      <PromotionForm
+      <BrandForm
         :onSubmit="createBrand"
         :initialData="emptyOffert"
         :onCancel="() => { showModal = false; currentOffert = null; }"
@@ -190,6 +190,7 @@
       } catch (error) {
         console.error('Error:', error);
         // Mostrar error al usuario
+        loading.value=false
         errors.value.submit = 'Error al guardar la marca';
       }
       loading.value=false

@@ -24,10 +24,10 @@ class PageConfigController extends Controller
                 'data' => $lpconfig
             ]);
         } catch (Exception $e) {
-            Log::error('Error al obtener la configuracion de la página: ' . $e->getMessage());
+            Log::error('Error al obtener la configuración de la página: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al obtener la configuracion de la página'
+                'message' => 'Error al obtener la configuración de la página'
             ], 404);
         }
     }
@@ -77,10 +77,10 @@ class PageConfigController extends Controller
                 'data' => $lpconfig
             ]);
         } catch (Exception $e) {
-            Log::error('Error al obtener la configuracion de la página: ' . $e->getMessage());
+            Log::error('Error al obtener la configuración de la página: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error al obtener la configuracion de la página'
+                'message' => 'Error al obtener la configuración de la página'
             ], 404);
         }
     }

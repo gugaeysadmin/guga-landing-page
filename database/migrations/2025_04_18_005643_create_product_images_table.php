@@ -18,8 +18,10 @@ return new class extends Migration
             $table->json('optional1')->nullable();
             $table->json('optional2')->nullable();
             $table->integer('index')->default(0);
+            $table->boolean('active');
             $table->unsignedBigInteger('product_id');
-
+            
+            
             $table->foreign('product_id')
                   ->references('id')
                   ->on('products')

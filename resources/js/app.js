@@ -50,6 +50,7 @@ import serviceform from './forms/ServiceForm.vue';
 import accesorypdfform from './forms/AccesoryPdfForm.vue';
 import enterpriseform from './forms/EnterpriseForm.vue';
 import producttable from './components/product/ProductTable.vue';
+import updatespecareaform from './forms/UpdateSpecAreaForm.vue';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
@@ -85,6 +86,8 @@ app.component('ServiceForm', serviceform);
 app.component('AccesoryPdfForm', accesorypdfform);
 app.component('EnterpriseForm', enterpriseform);
 app.component('ProductTable',producttable);
+app.component('UpdateSpecAreaForm',updatespecareaform);
+
 
 
 app.component('QuillEditor', QuillEditor);
@@ -271,5 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Escuchar eventos de scroll
-document.addEventListener('scroll', updateNavbar);
+if(!window.location.pathname.startsWith('/app')){
+    // Escuchar eventos de scroll
+    document.addEventListener('scroll', updateNavbar);
+}

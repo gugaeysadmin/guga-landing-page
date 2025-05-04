@@ -15,6 +15,7 @@ class ProductImage extends Model
         'type',
         'optional2',
         'optional3',
+        'active',
         'product_id',
     ];
 

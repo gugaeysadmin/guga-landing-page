@@ -37,7 +37,7 @@
     </div>
 
 
-    <Modal :visible="showModal" @close="showModal = false" title="Nueva oferta">
+    <Modal :visible="showModal" @close="showModal = false" title="Nueva catálogo de accesorios">
       <AccesoryPdfForm
         :onSubmit="createPdfAccesory"
         :initialData="emptyOffert"
@@ -189,6 +189,7 @@
       } catch (error) {
         console.error('Error:', error);
         // Mostrar error al usuario
+        loading.value=false
         errors.value.submit = 'Error al guardar la accesory-pdf';
       }
       loading.value=false

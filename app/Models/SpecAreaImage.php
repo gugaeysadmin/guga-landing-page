@@ -15,7 +15,8 @@ class SpecAreaImage extends Model
         'type',
         'optional2',
         'optional3',
-        'spec_area_id',
+        'active',
+        'spec_area_id'
     ];
 
     public function SpecialityArea()

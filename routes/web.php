@@ -7,6 +7,7 @@ use App\Http\Controllers\CatalogCatController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\OffertController;
 use App\Http\Controllers\PageConfigController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpecAreaController;
@@ -65,7 +66,7 @@ Route::post('/api/speciality-areas/reorder', [SpecAreaController::class, 'reorde
 Route::post('/api/speciality-areas/reorder-table', [SpecAreaController::class, 'reorder']);
 Route::get('/api/speciality-areas', [SpecAreaController::class, 'index']);
 Route::get('/api/speciality-areas/{id}', [SpecAreaController::class, 'show']);
-Route::put('/api/speciality-areas/{id}', [SpecAreaController::class, 'update']);
+Route::post('/api/speciality-areas/update/{id}', [SpecAreaController::class, 'update']);
 Route::delete('/api/speciality-areas/{id}', [SpecAreaController::class, 'destroy']);
 
 //Servicios
@@ -114,19 +115,22 @@ Route::post('/api/lp-config/update', [PageConfigController::class, 'update']);
 Route::get('/api/lp-config', [PageConfigController::class, 'index']);
 Route::get('/api/lp-config/{id}', [PageConfigController::class, 'show']);
 
-//Productos
-Route::post('/api/product/create', [CatalogCatController::class, 'store']);
-Route::get('/api/products', [CatalogCatController::class, 'index']);
-Route::get('/api/product/{id}', [CatalogCatController::class, 'show']);
-Route::post('/api/product/{id}', [CatalogCatController::class, 'update']);
-Route::delete('/api/product/{id}', [CatalogCatController::class, 'destroy']);
-
 //Table Headers
 Route::post('/api/th-conf/create', [TableHeaderController::class, 'store']);
 Route::get('/api/th-conf', [TableHeaderController::class, 'index']);
 Route::get('/api/th-conf/{id}', [TableHeaderController::class, 'show']);
 Route::post('/api/th-conf/{id}', [TableHeaderController::class, 'update']);
 Route::delete('/api/th-conf/{id}', [TableHeaderController::class, 'destroy']);
+
+
+// Productos
+Route::post('/api/product/create', [ProductController::class, 'store']);
+Route::post('/api/product/reorder', action: [ProductController::class, 'reorderIndexes']);
+Route::post('/api/product/reorder-table', [ProductController::class, 'reorder']);
+Route::get('/api/product', [ProductController::class, 'index']);
+Route::get('/api/product/{id}', [ProductController::class, 'show']);
+Route::put('/api/product/{id}', [ProductController::class, 'update']);
+Route::delete('/api/product/{id}', [ProductController::class, 'destroy']);
 
 
 Route::get('/dashboard', function () {

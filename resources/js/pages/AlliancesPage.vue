@@ -214,6 +214,7 @@
       console.error('Error:', error);
       // Mostrar error al usuario
       errors.value.submit = 'Error al guardar la allianza';
+      loading.value=false ;
     }
     loading.value=false
 

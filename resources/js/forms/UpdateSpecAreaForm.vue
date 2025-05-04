@@ -17,9 +17,37 @@
         </p>
       </div>
   
+      <!-- Campo Detalles -->
+      <div>
+        <label for="details" class="block text-sm font-medium text-gray-700"
+          >Detalles</label
+        >
+        <textarea
+          id="details"
+          v-model="formData.details"
+          rows="6"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        ></textarea>
+      </div>
+
+      <!-- campo video  -->
+
+      <div>
+        <label for="details" class="block text-sm font-medium text-gray-700"
+          >Video de inicio</label>
+        <input 
+          type="file" 
+          multiple 
+          accept="video/*" 
+          required
+          @change="handleFileUpload" 
+          class="block w-full text-sm mt-2 text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+        >
+      </div>
+  
       <!-- Campo Imagen -->
       <div>
-        <label class="block text-sm font-medium text-gray-700">Pdf *</label>
+        <label class="block text-sm font-medium text-gray-700">Icono *</label>
         <div
           @click="openFilePicker"
           @dragover.prevent="dragOver = true"
@@ -59,18 +87,18 @@
                     ref="fileInput"
                     type="file"
                     class="sr-only"
-                    accept=".pdf"
+                    accept="image/jpeg, image/png"
                     @change="handleFileChange"
                   />
                 </label>
                 <p class="pl-1">o arrástralo aquí</p>
               </div>
-              <p class="text-xs text-gray-500">pdf, máximo 4000KB</p>
+              <p class="text-xs text-gray-500">JPG o PNG, máximo 20000KB</p>
             </template>
             <template v-else>
               <div class="relative">
                 <img
-                  :src="'/img/pdf.webp'"
+                  :src="previewImage"
                   alt="Preview"
                   class="mx-auto max-h-48 rounded-md object-cover"
                 />
@@ -96,7 +124,7 @@
                 </button>
               </div>
               <p class="text-xs text-gray-500">
-                {{ selectedFile.name }} ({{ formatFileSize(selectedFile.size) }})
+                {{ selectedFile }} ({{ formatFileSize(selectedFile.size) }})
               </p>
             </template>
           </div>
@@ -108,14 +136,6 @@
   
       <!-- Botones -->
       <div class="flex justify-end space-x-3">
-        <!-- <button
-          v-if="onCancel"
-          type="button"
-          @click="onCancel"
-          class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
-          Cancelar
-        </button> -->
         <button
           type="submit"
           :disabled = "loading"
@@ -139,6 +159,7 @@
           type: Object,
           default: () => ({
               title: '',
+              details: '',
               image: null,
           }),
         },
@@ -160,7 +181,9 @@
     
     const formData = ref({
         title: '',
+        details: '',
         image: null,
+        video: null
     });
     
     const errors = ref({
@@ -174,26 +197,27 @@
     const previewImage = ref(null);
     
     // Cargar datos iniciales
-    // onMounted(() => {
-    //     if (props.initialData) {
-    //     formData.value = {
-    //         title: props.initialData.title || '',
-    //         details: props.initialData.details || '',
-    //         image: props.initialData.image || null,
-    //     };
-    
-    //     if (props.initialData.image) {
-    //         if (typeof props.initialData.image === 'string') {
-    //         // Si es una URL (para edición)
-    //         previewImage.value = props.initialData.image;
-    //         } else if (props.initialData.image instanceof File) {
-    //         // Si es un File (después de recargar)
-    //         selectedFile.value = props.initialData.image;
-    //         previewImage.value = URL.createObjectURL(props.initialData.image);
-    //         }
-    //     }
-    //     }
-    // });
+    onMounted(() => {
+        if (props.initialData) {
+          console.log(props.initialData)
+          formData.value = {
+              title: props.initialData.title || '',
+              details: props.initialData.details || '',
+              image: props.initialData.image || null,
+              video: props.initialData.video
+          };
+          // if (props.initialData.image) {
+          //     if (typeof props.initialData.image === 'string') {
+          //     // Si es una URL (para edición)
+          //     previewImage.value = props.initialData.image;
+          //     } else if (props.initialData.image instanceof File) {
+          //     // Si es un File (después de recargar)
+          //     selectedFile.value = props.initialData.image;
+          //     previewImage.value = URL.createObjectURL(props.initialData.image);
+          //     }
+          // }
+        }
+    });
     
     // Validar formulario
     const validate = () => {
@@ -206,7 +230,7 @@
         }
     
         if (!selectedFile.value && !props.initialData?.image) {
-        errors.value.image = 'El pdf es obligatorio';
+        errors.value.image = 'La imagen es obligatoria';
         valid = false;
         }
     
@@ -218,7 +242,9 @@
         if (validate()) {
         const dataToSubmit = {
             title: formData.value.title,
+            details: formData.value.details,
             image: selectedFile.value || props.initialData?.image,
+            video: formData.value.video
         };
         props.onSubmit(dataToSubmit);
         }
@@ -247,15 +273,15 @@
         if (!file) return;
     
         // Validar tipo de archivo
-        const validTypes = ['application/pdf'];
+        const validTypes = ['image/jpeg', 'image/png'];
         if (!validTypes.includes(file.type)) {
-        errors.value.image = 'Solo se permiten archivos pdf';
+        errors.value.image = 'Solo se permiten archivos JPG o PNG';
         return;
         }
     
         // Validar tamaño
-        if (file.size > 4000 * 1024) {
-        errors.value.image = 'El archivo no debe superar los 4000KB';
+        if (file.size > 20000 * 1024) {
+        errors.value.image = 'El archivo no debe superar los 20000KB';
         return;
         }
     
@@ -284,10 +310,22 @@
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     };
+
+    const handleFileUpload = (event) => {
+      const files = event.target.files;
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          formData.value.video=file;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
 </script>
 
 <script>
     export default {
-        name: "AccesoryPdfForm"
+        name: "UpdateSpecAreaForm"
     }
 </script>

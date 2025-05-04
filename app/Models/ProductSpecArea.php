@@ -19,8 +19,8 @@ class ProductSpecArea extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function specialityArea()
+    public function specArea()
     {
-        return $this->belongsTo(SpecialityArea::class);
+        return $this->belongsTo(SpecialityArea::class,'spec_area_id' );
     }
 }

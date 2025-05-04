@@ -150,30 +150,55 @@
       </div>
 
       <!-- Accesorios -->
-      <div v-if="accesoryPdfEnabled" class="mb-4 w-full md:gap-4 flex ">
-        <div class="w-full">
-          <label class="block text-md font-medium text-cyan-800">Selecciona el pdf de accesorios</label>
-          <div class="flex gap-2 mt-1">
-            <select
-              v-model="formData.accesrorypdf"
-              class="flex-1 px-3 py-[0.39rem] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="" disabled selected>Selecciona una pdf</option>
-              <option v-for="accesoryDoc in accesoryDocs" :key="accesoryDoc.id" :value="accesoryDoc.id">
-                {{ accesoryDoc.name }}
-              </option>
-            </select>
+      <div v-if="accesoryPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
+        <div class="flex gap-8 items-end">
+          <div class="w-full">
+            <label class="block text-md font-medium text-cyan-800">Selecciona el pdf con el catálogo de accesorios</label>
+            <div class="flex gap-2">
+              <div class="flex gap-2 mt-1 w-full">
+                <select
+                  v-model="formData.catalogaccesrorypdf"
+                  class="flex-1 px-3 py-[0.39rem] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" disabled selected>Selecciona una pdf</option>
+                  <option v-for="accesoryDoc in accesoryDocs" :key="accesoryDoc.id" :value="accesoryDoc.id">
+                    {{ accesoryDoc.name }}
+                  </option>
+                </select>
+              </div>
+              <button
+                type="button"
+                @click="showPdfModal = true"
+                class="px-3 py-2 mt-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors min-w-24"
+              >
+                + Nueva
+              </button>
+            </div>
+          </div>
+          <div class="">
+            <label for="name" class="block text-md font-medium text-cyan-800">Número de página *</label>
+            <input
+              id="name"
+              type="number"
+              v-model="formData.has_page"
+              
+              required
+              class="mt-1 rounded-md  border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+            ></input>
           </div>
         </div>
-        <div class="w-full">
-          <label for="name" class="block text-md font-medium text-cyan-800">Número de página *</label>
-          <input
-            id="name"
-            type="number"
-            v-model="formData.name"
-            required
-            class="mt-1 rounded-md  border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
-          ></input>
+
+        <div class="w-full mt-4">
+          <div>
+              <label class="block text-md font-medium text-cyan-800">ó Sube el ficha técnica específico a este producto. </label>
+              <input 
+                type="file" 
+                multiple 
+                accept=".pdf" 
+                @change="handleFileUploadAccesoryPdf" 
+                class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              >
+            </div>
         </div>
       </div>
 
@@ -193,7 +218,7 @@
           <div class="ml-3 text-sm font-medium">Tiene servicios</div>
         </label>
       </div>
-      <div v-if="servicesEnabled" class=" flex   flex-col w-full">
+      <div v-if="servicesEnabled" class=" flex pl-8  flex-col w-full">
         <label class="block text-md font-medium text-cyan-800">Ingresa la descripción de los servicios</label>
         <QuillEditor 
           v-model:content="formData.services_description" 
@@ -231,10 +256,10 @@
       </div>
       
       <!-- Tabla -->
-      <div v-if="tableEnabled" class="flex flex-col w-full">
+      <div v-if="tableEnabled" class="flex pl-8 flex-col w-full">
 
         <div class="mb-6 w-full ">
-          <label class="block text-md font-medium text-cyan-800">Selecciona la tabla *</label>
+          <label class="block text-md font-medium text-cyan-800">Selecciona las columnas de la tabla *</label>
           <div class="flex gap-2 mt-1">
             <select
               @change = "handleSelectTableHeader"
@@ -242,7 +267,7 @@
               class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
-              <option value="" disabled selected>Selecciona una configuración de tabla</option>
+              <option value="" disabled selected>Selecciona una configuración de columnas</option>
               <option v-for="tableHeader in tableHeaders" :key="tableHeader.id" :value="tableHeader.id">
                 {{ tableHeader.name }}
               </option>
@@ -258,8 +283,8 @@
           </div>
         </div>
 
-        <div class="overflow-x-auto">
-          <label for="newTableName" class="block text-sm font-medium text-gray-700 mb-1">Vista previa de la tabla</label>
+        <div v-if="selectedTableHeader !== ''" class="overflow-x-auto">
+          <label for="newTableName" class="block text-md font-medium text-cyan-800 mb-1">Vista previa de la tabla</label>
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
@@ -327,7 +352,7 @@
               </tr>
             </tbody>
           </table>
-          <div class=" py-3 px-1 flex justify-center text-sm text-gray-500">
+          <div v-if="selectedTableHeader !== ''" class=" py-3 px-1 flex justify-center text-sm text-gray-500">
             <button
               type="button"
               @click="handleAddTableRow"
@@ -381,9 +406,9 @@
   
         <!-- table -->
         <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Archivos agregados</label>
+          <label class="block text-md font-medium text-cyan-800 mb-1">Archivos agregados</label>
           
-          <div class="overflow-x-auto">
+          <div class="overflow-x-auto mt-2">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
@@ -544,11 +569,10 @@
       </div>
     </div>
 
-
     <div v-if="showTableConfigModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div class="bg-white rounded-lg shadow-xl w-full max-w-xl">
         <form  class="p-6 w-full">
-          <h2 class="text-xl font-bold mb-4">Agregar nueva configuracion de tabla</h2>
+          <h2 class="text-xl font-bold mb-4">Agregar nueva tabla</h2>
           
           <div class="mb-4">
             <label for="newTableName" class="block text-sm font-medium text-gray-700 mb-1">Nombre de la tabla *</label>
@@ -580,10 +604,11 @@
               </div>
             </div>
           </div>
+          <p class="text-xs"><b>Nota:</b> no se pueden agregar columnas con el mismo nombre</p>
 
 
-          <div class="overflow-x-auto">
-            <label for="newTableName" class="block text-sm font-medium text-gray-700 mb-1">Vista previa de la tabla</label>
+          <div class="overflow-x-auto mt-5">
+            <label for="newTableName" class="block text-md font-medium text-cyan-800 mb-1">Vista previa de la tabla</label>
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
@@ -619,12 +644,144 @@
       </div>
     </div>
 
+    <div v-if="showPdfModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-xl">
+        <form  class="p-6 w-full">
+          <h2 class="text-xl font-bold mb-4">Agregar nuevo catálogo de accesorios</h2>
+          <div  class="space-y-6">
+            <div>
+              <label for="title" class="block text-sm font-medium text-gray-700"
+                >Título *</label
+              >
+              <input
+                type="text"
+                id="title"
+                v-model="formDataPdf.title"
+                required
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+              <p v-if="errors.title" class="mt-1 text-sm text-red-600">
+                {{ errorsPdf.title }}
+              </p>
+            </div>
+        
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Pdf *</label>
+              <div
+                @click="openFilePicker"
+                @dragover.prevent="dragOver = true"
+                @dragleave="dragOver = false"
+                @drop.prevent="handleDropPdf"
+                :class="{
+                  'border-indigo-500 bg-indigo-50': dragOver,
+                  'border-gray-300': !dragOver && !previewImage,
+                  'border-green-500': previewImage && !dragOver,
+                }"
+                class="mt-1 flex justify-center rounded-md border-2 border-dashed px-6 pt-5 pb-6 transition-colors"
+              >
+                <div class="space-y-1 text-center">
+                  <template v-if="!previewImage">
+                    <div class="flex justify-center">
+                      <svg
+                        class="mx-auto h-12 w-12 text-gray-400"
+                        stroke="currentColor"
+                        fill="none"
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div class="flex text-sm text-gray-600">
+                      <label
+                        class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
+                      >
+                        <span>Sube un archivo</span>
+                        <input
+                          ref="fileInput"
+                          type="file"
+                          class="sr-only"
+                          accept=".pdf"
+                          @change="handleFileChange"
+                        />
+                      </label>
+                      <p class="pl-1">o arrástralo aquí</p>
+                    </div>
+                    <p class="text-xs text-gray-500">pdf, máximo 4000KB</p>
+                  </template>
+                  <template v-else>
+                    <div class="relative">
+                      <img
+                        :src="'/img/pdf.webp'"
+                        alt="Preview"
+                        class="mx-auto max-h-48 rounded-md object-cover"
+                      />
+                      <button
+                        type="button"
+                        @click.stop="removeImage"
+                        class="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white shadow-sm hover:bg-red-600"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <p class="text-xs text-gray-500">
+                      {{ selectedFile.name }} ({{ formatFileSize(selectedFile.size) }})
+                    </p>
+                  </template>
+                </div>
+              </div>
+              <p v-if="errorsPdf.image" class="mt-1 text-sm text-red-600">
+                {{ errorsPdf.image }}
+              </p>
+            </div>
+        
+          </div>
+          <div class="flex justify-end gap-2 mt-4">
+            <button
+              type="button"
+              @click="closePdfModal"
+              class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+            >
+              Cancelar
+            </button>
+            <button
+              @click="handleSubmitPdf"
+              type="submit"
+              :disabled = "loading"
+              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              {{ loading? "Guardando" : "Guardar" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </div>
 </template>
 <script setup>
   import { FwbProgress } from 'flowbite-vue';
   import { ref, computed, onMounted, reactive } from 'vue';
   import { useRouter } from 'vue-router';
+  import axios from 'axios';
   import { Ckeditor, useCKEditorCloud } from '@ckeditor/ckeditor5-vue';
 
   const editorOptions = {
@@ -645,6 +802,7 @@
   const tableHeaders = ref(null);
 
   const showBrandModal = ref(false);
+  const showPdfModal = ref(false)
   const showCategoryModal = ref(false);
   const showTableConfigModal = ref(false);
 
@@ -662,10 +820,17 @@
   const dragOverIndex = ref(null);
   const isDragging = ref(false);
 
+
+  const dragOver = ref(false);
+  const fileInput = ref(null);
+  const selectedFile = ref(null);
+  const previewImage = ref(null);
+
+
+
   const accesoryPdfEnabled = ref(false)
   const servicesEnabled = ref(false)
-  const tableEnabled = ref(true)
-
+  const tableEnabled = ref(false)
   const formData = ref({
     name: '',
     description: '',
@@ -677,14 +842,20 @@
       table: []
     },
     has_accesrorypdf: false,
+    accesorypdf: null,
     has_page: 0,
     has_services: false,
     services_description: '',
-    accesrorypdf: "",
+    catalogaccesrorypdf: "",
     productImages: [],
     categories: [],
     specAreas: []
   })
+
+  const formDataPdf = ref({
+    title: '',
+    image: null,
+  });
 
   const errors = ref({
     name: '',
@@ -694,13 +865,19 @@
     brand_id: null,
     table_data: '',
     has_accesrorypdf: false,
+    accesoryodf: null,
     has_page: 0,
     has_services: false,
     services_description: '',
-    accesrorypdf: null,
+    catalogaccesrorypdf: null,
     productImages: [],
     categories: [],
     specAreas: []
+  });
+
+  const errorsPdf = ref({
+      title: '',
+      image: '',
   });
 
 
@@ -719,7 +896,69 @@
   }
 
   const submitForm = async (data) => {
-    console.log(formData.value)
+    loading.value=true;
+    console.log(formData.value);
+    try{
+      const form = new FormData();
+      form.append('name', formData.value.name);
+      form.append('description', formData.value.description);
+      form.append('services_description', formData.value.services_description);
+      form.append('has_table', formData.value.has_table);
+      form.append('has_services', formData.value.has_services);
+      form.append('has_page', formData.value.has_page); //page
+      form.append('has_accesrorypdf', formData.value.has_accesrorypdf);
+      form.append('catalogaccesrorypdf', formData.value.catalogaccesrorypdf); //cat accesory pdf id
+      form.append('brand_id', formData.value.brand_id);
+      form.append('product_services', formData.value.product_services);
+      form.append('accesorypdf', formData.value.accesorypdf);
+      form.append('table_data_headers', JSON.stringify(formData.value.table_data.headers));
+      form.append('categories', JSON.stringify(formData.value.categories));
+      form.append('specAreas', JSON.stringify(formData.value.specAreas));
+      form.append('table_data', formData.value.table_data.table);
+      formData.value.table_data.table.forEach((row,index) => {
+        formData.value.table_data.headers.forEach((header, HeaderIndex) => {
+          form.append(`table_data[${index}][${header}]`, row[header]);
+        })
+      })
+      formData.value.productImages.forEach((image, index) => {
+        // Si necesitas enviar metadatos adicionales
+        form.append(`productImages[${index}][file]`, image.file);
+        form.append(`productImages[${index}][name]`, image.name);
+        form.append(`productImages[${index}][url]`, image.url);
+        form.append(`productImages[${index}][type]`, image.type);
+        form.append(`productImages[${index}][index]`, image.index);
+        // ... otros metadatos
+      });
+
+      const response = await fetch('/api/product/create', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      })
+
+      // const response = await axios.post('/api/product/create', formData.value, {
+      //   headers: {
+      //     'Content-Type': 'application/json', // Importante
+      //     'Accept': 'application/json',
+      //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+      //   }
+      // })
+      if(response.ok){
+        console.log(response);
+        router.back()
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+      // Mostrar error al usuario
+      errors.value.submit = 'Error al guardar el producto';
+      loading.value=false
+
+    }
+    loading.value=false
   }
 
   // Fetching data
@@ -814,6 +1053,8 @@
       console.error('Error:', error);
       // Mostrar error al usuario
       errors.value.submit = 'Error al guardar la marca';
+      loading.value=false
+
     }
     loading.value=false
 
@@ -825,16 +1066,16 @@
   const addCategory= ()=> {
     if (selectedCategorie && !formData.value.categories.includes(selectedCategorie.value)) {
       formData.value.categories.push(selectedCategorie.value);
-      selectedCategorie.value = "";
     }
+    selectedCategorie.value = "";
   }
 
   const deleteCategory = (index) => {
     formData.value.categories.splice(index, 1);
   }
+
   const getCategoryName = (id)=> {
     const category = categories.value.find(c => c.id == id);
-    console.log(formData.value.categories)
     return category ? category.name : '';
   }
 
@@ -862,6 +1103,8 @@
     } catch (error) {
       console.error('Error:', error);
       errors.value.submit = 'Error al guardar la categoria';
+      loading.value=false
+
     }
     loading.value=false
 
@@ -882,52 +1125,179 @@
 
   const getSpecAreaName = (id)=> {
     const specArea = specAreas.value.find(c => c.id == id);
-    console.log(specArea)
     return specArea ? specArea.name : '';
   }
 
 
-  // accesory pdf
-
+// accesorios pdf
   const toggleAccesoryPdf = () => {
-    if(accesoryPdfEnabled.value){
-      formData.value.accesrorypdf = "";
+    
+    if(!accesoryPdfEnabled.value){
+      formData.value.catalogaccesrorypdf = "";
       formData.value.has_page = 0;
       formData.value.has_accesrorypdf = false ;
-      accesoryPdfEnabled.value = false;
-    } else {
-      formData.value.has_accesrorypdf = true;
-      accesoryPdfEnabled.value = true;      
+      formData.value.accesorypdf = null
     }
-    accesoryPdfEnabled.value = !accesoryPdfEnabled.value
+    formData.value.has_accesrorypdf = accesoryPdfEnabled.value;
+
   }
+
+  const handleFileUploadAccesoryPdf = (event) => {
+    const file = event.target.files[0];;
+    formData.value.accesorypdf = file;
+  }
+
+  const closePdfModal = () => {
+    previewImage.value = null
+    formDataPdf.value.image = null;
+    formDataPdf.value.title = "";
+    fileInput.value = null;
+    selectedFile.value = null;
+    showPdfModal.value = false;
+  }
+
+  const validatePdf = () => {
+      let valid = true;
+      errorsPdf.value = { title: '', image: '' };
+  
+      if (!formDataPdf.value.title.trim()) {
+      errorsPdf.value.title = 'El título es obligatorio';
+      valid = false;
+      }
+  
+      if (!selectedFile.value) {
+      errorsPdf.value.image = 'El pdf es obligatorio';
+      valid = false;
+      }
+  
+      return valid;
+  };
+
+  const openFilePicker = () => {
+      fileInput.value.click();
+  };
+
+  const handleFileChange = (e) => {
+      const file = e.target.files[0];
+      processFile(file);
+  };
+
+  const handleDropPdf = (e) => {
+      dragOver.value = false;
+      const file = e.dataTransfer.files[0];
+      processFile(file);
+  };
+
+  const processFile = (file) => {
+      if (!file) return;
+
+      // Validar tipo de archivo
+      const validTypes = ['application/pdf'];
+      if (!validTypes.includes(file.type)) {
+        errors.value.image = 'Solo se permiten archivos pdf';
+        return;
+      }
+
+      // Validar tamaño
+      if (file.size > 4000 * 1024) {
+        errors.value.image = 'El archivo no debe superar los 4000KB';
+      return;
+      }
+
+      selectedFile.value = file;
+      formDataPdf.value.image = file;
+      previewImage.value = URL.createObjectURL(file);
+      errors.value.image = '';
+  };
+
+  const removeImage = (e) => {
+    e.stopPropagation();
+    selectedFile.value = null;
+    previewImage.value = null;
+    formDataPdf.value.image = null;
+    if (fileInput.value) {
+      fileInput.value.value = '';
+    }
+  };
+
+  const formatFileSize = (bytes) => {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  const handleSubmitPdf = () => {
+      if (validatePdf()) {
+      const dataToSubmit = {
+        title: formDataPdf.value.title,
+        image: selectedFile.value || props.initialData?.image,
+      };
+      createPdfAccesory(dataToSubmit);
+      }
+  };
+
+  const createPdfAccesory = async (formData) => {
+    loading.value=true
+    try {
+      const form = new FormData();
+      form.append('title', formData.title);
+      form.append('image', formData.image);
+
+      const response = await fetch('/api/accesory-pdf/create', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+
+      if (!response.ok) throw new Error('Error al guardar');
+
+      const data = await response.json();
+      showPdfModal.value = false;
+      formDataPdf.value.image = null;
+      formDataPdf.value.title = "";
+      fileInput.value = null;
+      selectedFile.value = null;
+      previewImage.value = null;
+      await fetchAccesoryDocs();
+      
+    } catch (error) {
+      console.error('Error:', error);
+      // Mostrar error al usuario
+      loading.value=false
+      errors.value.submit = 'Error al guardar la accesory-pdf';
+    }
+    loading.value=false
+
+  };
   
 
 
   // services text
   const toggleServices = () => {
-    if(servicesEnabled.value){
+
+    if(!servicesEnabled.value){
       formData.value.services_description = ""
       formData.value.has_services = false ;
-      servicesEnabled.value = false;
-    } else {
-      formData.value.has_services = true;
-      servicesEnabled.value = true;      
     }
-    servicesEnabled.value = !servicesEnabled.value
+    formData.value.has_services = servicesEnabled.value;
   }
 
 
   // Table
 
   const toggleTable = () => {
-    if(servicesEnabled.value){
+    if(!tableEnabled.value){
       formData.value.has_table = false
       formData.value.table_data.headers = [] ;
       formData.value.table_data.table = [] ;
-    } else {
-      formData.value.has_table = true;
+      selectedTableHeader.value = ""
     }
+    formData.value.has_table = tableEnabled.value;
   }
 
   const closeTableHeaderConf = () => {
@@ -937,9 +1307,11 @@
   }
 
   const addTableHeader = () => {
-    newTableConf.value.headers.pop();
-    newTableConf.value.headers.push(newHeader.value);
-    newTableConf.value.headers.push("pdf");
+    if(newTableConf.value.headers && newTableConf.value.headers !== "" && !newTableConf.value.headers.includes(newHeader.value)){
+      newTableConf.value.headers.pop();
+      newTableConf.value.headers.push(newHeader.value);
+      newTableConf.value.headers.push("pdf");
+    }
     newHeader.value = null
 
   }
@@ -974,6 +1346,8 @@
     } catch (error) {
       console.error('Error:', error);
       errors.value.submit = 'Error al guardar la categoria';
+      loading.value=false
+
     }
     loading.value=false
   }
@@ -981,8 +1355,7 @@
   const handleSelectTableHeader = () => {
     const tableConf = tableHeaders.value.find((e) => e.id == selectedTableHeader.value );
     formData.value.table_data.headers = JSON.parse(tableConf.table_json).headers
-    formData.value.table_data.table = []
-    
+    formData.value.table_data.table = []    
   }
 
   const handleAddTableRow = () => {
@@ -990,13 +1363,13 @@
     const rowObject = Object.fromEntries(
       formData.value.table_data.headers.map(header => [header,""])
     )
-    console.log(rowObject);
     formData.value.table_data.table.push(rowObject);
   }
 
   const handleRemoveTableRow = (index) => {
     formData.value.table_data.table.splice(index,1)
   }
+
   const handleRowPdfUpload = (event, rowIndex) => {
     const file = event.target.files[0];
     if (file) {

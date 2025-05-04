@@ -1,19 +1,74 @@
 <template>
     <div class="flex flex-col gap-4 mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
-        <h1 class="text-2xl font-semibold text-[#4180ab]">CATEGORÍAS EN CATÁLOGOS</h1>
+        <h1 class="text-2xl font-semibold text-[#4180ab]">FILTROS EN CATÁLOGOS</h1>
         <div class="flex flex-col gap-4">
             <div  class="flex justify-end">
-              <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
-                  <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
-                  <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+              <button
+                class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                @click="updateConfigData"
+                :disabled="filters.length === 0 || loading"
+              >
+                  Actualizar
               </button>
             </div>
 
             <div
-              v-for="(section, index) in dataset"
-              :key="section.id"
+              v-for="(filter, index) in filters"
+              :key="index"
+              class="flex-block"
             >
-              <div class="flex flex-row items-center gap-2 px-4">
+              <div class="flex w-full items-center rounded-lg bg-slate-200 px-4  py-2 gap-4">
+                <button 
+                  @click="handleDeleteSection(index)"
+                  class="h-7 w-7 rounded-full bg-red-400 flex pt-1 justify-center hover:bg-red-900 active:bg-red-600"
+                >
+                  <i class="bi bi-trash-fill text-white  "></i>
+                </button>
+                <div class="font-semibold">
+                  {{ filter.section }}
+                </div>
+              </div>
+              <div v-for="(category, catindex) in filter.categories" class="flex w-full items-center rounded-lg bg-slate-100 pr-4 pl-12  py-2 gap-4 mt-2">
+                <button
+                  @click="deleteSubcategory(index, catindex)" 
+                  class="h-7 w-7 rounded-full bg-orange-400 flex pt-1 justify-center hover:bg-orange-900 active:bg-orange-600"
+                >
+                  <i class="bi bi-trash-fill text-white  "></i>
+                </button>
+                <div>
+                  {{ category }}
+                </div>
+              </div>
+              <div class="flex w-full items-center rounded-lg bg-slate-100 pr-4 pl-12 py-3 gap-4 mt-2">
+                <select
+                  v-model="categorySelected[index]"
+                  class="w-64 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" disabled selected>Selecciona una categoría</option>
+                  <option v-for="category in categories" :key="category.id" :value="category.name">
+                    {{ category.name }}
+                  </option>
+                </select>
+                <button
+                  type="button"
+                  @click="addSubCategory(index,categorySelected[index])"
+                  class="px-3 py-2 bg-[#4180ab] hover:bg-[#5ca6d8] text-white text-semibold rounded-md transition-colors w-24"
+                >
+                  + Agregar
+                </button>
+
+                <button
+                  type="button"
+                  @click="showCategoryModal=true"
+                  class="px-3 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-semibold rounded-md transition-colors w-40"
+                >
+                  + Crear categoría
+                </button>
+              </div>
+
+
+
+              <!-- <div class="flex flex-row items-center gap-2 px-4">
                 <p class="text-lg text-[#4180ab] font-semibold">{{ section.section_name }}</p>
                 <button @click="()=> confirmDelete(section.id)"  class="flex items-center justify-center text-sm rounded-full group  active:bg-slate-100">
                   <i class="bi bi-trash-fill text-red-700 group-hover:text-red-600 group-active:text-red-900"></i>
@@ -22,26 +77,21 @@
               <button class="flex flex-row items-center gap-1 mt-2 pl-8">
                 <i class="bi bi-plus-circle-fill text-[#4180ab] text-lg"></i>
                 <P class="text-sm text-[#4180ab] align-middle">Agregar</P>
+              </button> -->
+            </div>
+            <div class="flex gap-4 w-full items-center rounded-lg bg-slate-200 px-4  py-3">
+              <input
+                v-model="currentSecton"
+                placeholder="Nómbre de la sección"
+                class="border-0 bg-slate-200 rounded-xl"
+              />
+              <button
+                type="button"
+                @click="addSection"
+                class="px-3 py-2 bg-[#4180ab] hover:bg-[#5ca6d8] text-white text-semibold rounded-md transition-colors w-24"
+              >
+                + Nueva
               </button>
-              <!-- Campo Marca con Modal -->
-              <!-- <div class="flex flex-row gap-2">
-                <select
-                  class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                >
-                  <option value="" disabled selected>Selecciona una marca</option>
-                  <option v-for="category in categories" :key="category.id" :value="category.id">
-                    {{ category.name }}
-                  </option>
-                </select>
-                <button
-                  type="button"
-                  @click="showMarcaModal = true"
-                  class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
-                >
-                  + Nueva
-                </button>
-              </div> -->
             </div>
         </div>
     </div>
@@ -57,29 +107,20 @@
       />
     </Modal>
 
-    <Modal :visible="showModal" @close="showModal = false" title="Nueva sección">
-      <CatalogSectionForm
-        :onSubmit="createCatalogSection"
-        :initialData="emptyOffert"
-        :onCancel="() => { showModal = false; currentOffert = null; }"
-        :submitText="Crear"
-        :loading="loading"
-      />
-    </Modal>
 
     <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
       <div>
         <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta sección?</h2>
         <div class="flex justify-center space-x-8">
           <button
-            @click="showDeleteModal = false"
+            @click="showDeleteModal = false, sectionDelecting = null"
             :disabled="loading"
             class="px-4 py-2 border-2 rounded-md w-32"
           >
             Cancelar
           </button>
           <button
-            @click="deleteCatalogSection"
+            @click="deleteSection"
             :disabled="loading"
             class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:bg-red-400 w-32"
           >
@@ -97,42 +138,39 @@
   const showCategoryModal = ref(false);
   const showDeleteModal = ref(false);
   const currentOffert = ref(null);
+  const categorySelected = ref([])
   const dataset = ref([]);
   const searchTerm = ref('');
   const deleteId = ref(null);
+  const currentSecton = ref(null);
+  const sectionDelecting = ref(null);
   const loading = ref(false);
-  const caategorySelected = ref(null);
-
   const categories = ref('');
+
+  const filters = ref([])
 
   const emptyOffert = {
     title: '',
   };
 
-
   onMounted(async () => {
     fetchCategories();
-    await fetchData();
+    fetchConfigData();
   });
 
-  const filteredOfferts = computed(() => {
-    if (!searchTerm.value) return dataset.value;
-    const term = searchTerm.value.toLowerCase();
-    return dataset.value.filter(data => 
-        data.section_name.toLowerCase().includes(term)
-    )
-  });
-
-  const fetchData = async () => {
-    // try {
-    //   const response = await fetch('/api/catalog-section');
-    //   const data = await response.json();
-    //   if (data.success) {
-    //     dataset.value = data.data;
-    //   }
-    // } catch (error) {
-    //   console.error('Error fetching categories:', error);
-    // }
+  const fetchConfigData = async () => {
+    try {
+      const response = await fetch('/api/lp-config');
+      const data = await response.json();
+      if (data.success) {
+        console.log(JSON.parse(data.data.catalogs_filters));
+        if(data.data.catalogs_filters && data.data.catalogs_filters.length>0){
+          filters.value = JSON.parse(data.data.catalogs_filters);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching offerts:', error);
+    }
   };
 
   const fetchCategories = async () => {
@@ -147,55 +185,13 @@
     }
   };
 
-  const handleSearch = (term) => {
-    searchTerm.value = term;
-  };
-
-
-  const handleEdit = (data) => {
-    currentOffert.value = {
-      ...data,
-      title: data.section_name,
-    };
-    showModal.value = true;
-  };
-
-  const confirmDelete = (id) => {
-    deleteId.value = id;
-    showDeleteModal.value = true;
-  };
-
-
-  const deleteCatalogSection = async () => {
-    loading.value=true
-
-    try {
-      const response = await fetch(`/api/catalog-section/${deleteId.value}`, {
-        method: 'DELETE',
-        headers: {
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        }
-      });
-      
-      if (response.ok) {
-        await fetchData(); // Refrescar la lista
-        showDeleteModal.value = false;
-      }
-    } catch (error) {
-      console.error('Error deleting catalog section:', error);
-    }
-    loading.value=false
-
-  };
-
-
-  const createCatalogSection = async (formData) => {
-    loading.value=true
+  const updateConfigData = async() => {
+    loading.value = true;
     try {
       const form = new FormData();
-      form.append('title', formData.title);
+      form.append('catalogs_filters', JSON.stringify(filters.value));
 
-      const response = await fetch('/api/catalog-section/create', {
+      const response = await fetch(`/api/lp-config/update`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -203,21 +199,55 @@
         },
         body: form
       });
-
-      if (!response.ok) throw new Error('Error al guardar');
-
-      const data = await response.json();
-      showModal.value = false;
-      await fetchData();
       
+      if (response.ok) {
+        await fetchConfigData();
+        // showModal.value = false;
+        // currentOffert.value = null;
+        currentSecton.value = null;
+      }
     } catch (error) {
-      console.error('Error:', error);
-      // Mostrar error al usuario
-      errors.value.submit = 'Error al guardar la categoria';
+      console.error('Error updating offert:', error);
+      loading.value = false;
     }
-    loading.value=false
+    loading.value = false;
+  }
 
-  };
+  const addSection = () => {
+    if(currentSecton.value && currentSecton.value!==""){
+      filters.value.push({
+        section: currentSecton.value,
+        categories: []
+      });
+      categorySelected.value.push("");
+      currentSecton.value=null
+    }
+
+  }
+
+  const addSubCategory = (index, category )=>{
+    if(category!== "" || category){
+      filters.value[index].categories.push(category);
+      categorySelected.value[index]="";
+    }
+  }
+
+
+
+  const handleDeleteSection= (id)=> {
+    showDeleteModal.value=true
+    console.log(id)
+  }
+
+  const deleteSubcategory = (sectionIndex, subIndex)=>{
+    filters.value[sectionIndex].categories.splice(subIndex,1);
+  }
+  
+  const deleteSection = () => {
+    filters.value.splice(sectionDelecting, 1);
+    sectionDelecting.value=null;
+    showDeleteModal.value=false;
+  }
 
   const createCategories = async (formData) => {
     loading.value=true
@@ -244,6 +274,8 @@
       console.error('Error:', error);
       // Mostrar error al usuario
       errors.value.submit = 'Error al guardar la categoria';
+      loading.value=false
+
     }
     loading.value=false
 

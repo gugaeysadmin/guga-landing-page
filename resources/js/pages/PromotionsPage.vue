@@ -327,6 +327,8 @@ const handleCancel = () => {
       console.error('Error:', error);
       // Mostrar error al usuario
       errors.value.submit = 'Error al guardar la oferta';
+      loading.value=false
+
     }
     loading.value=false
 

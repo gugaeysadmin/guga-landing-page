@@ -138,6 +138,10 @@ export default {
   <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
     <ProductTable
       :products="filteredProducts"
+      :brands="brands"
+      :categories="categories"
+      :specareas="specAreas"
+      @status-change="updateProductStatus"
       @search="handleSearch"
       @edit="handleEdit"
       @delete="confirmDelete"
@@ -181,7 +185,9 @@ export default {
   const searchTerm = ref('');
   const deleteId = ref(null);
   const loading = ref(false);
-
+  const categories = ref(null);
+  const specAreas = ref(null);
+  const brands = ref(null);
 
   const router = useRouter();
 
@@ -193,7 +199,8 @@ export default {
 
 
   onMounted(async () => {
-    await fetchProducts();
+
+    fetchProducts();
   });
 
   const filteredProducts = computed(() => {
@@ -205,6 +212,56 @@ export default {
     )
   });
 
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/category');
+      const data = await response.json();
+      if (data.success) {
+        categories.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+  const fetchSpecAreas = async () => {
+    try {
+      const response = await fetch('/api/speciality-areas');
+      const data = await response.json();
+      if (data.success) {
+        specAreas.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching speciality-areas:', error);
+    }
+  };
+  const fetchBrands = async () => {
+    try {
+      const response = await fetch('/api/brand');
+      const data = await response.json();
+      if (data.success) {
+        brands.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching brand:', error);
+    }
+  };
+
+  const updateProductStatus = async ({ id, active }) => {
+    try {
+      const response = await fetch(`/api/product/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ active })
+      });
+
+    } catch (error) {
+      console.error('Error updating offert status:', error);
+    }
+  };
+
 
   const fetchProducts = async () => {
     try {
@@ -212,6 +269,7 @@ export default {
       const data = await response.json();
       if (data.success) {
         products.value = data.data;
+        console.log(data.data);
       }
     } catch (error) {
       console.error('Error fetching product:', error);

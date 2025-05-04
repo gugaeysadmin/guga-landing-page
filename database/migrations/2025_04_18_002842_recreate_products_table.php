@@ -24,6 +24,7 @@ return new class extends Migration
             $table->json('table_data')->nullable();
 
             $table->boolean('has_accesrorypdf')->nullable();
+            $table->string("accesorypdf",300)->nullable();
             $table->integer('pdf_page')->nullable();
             $table->boolean('has_services')->nullable();
             $table->text('services_description')->nullable();
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->unsignedBigInteger('accesorypdf_id')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->unsignedBigInteger('table_id')->nullable();
+            $table->boolean('active');
 
             $table->foreign('accesorypdf_id')
                   ->references('id')

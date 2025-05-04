@@ -23,8 +23,9 @@ class Product extends Model
         'pdf_page',
         'has_services',
         'services_description',
-        'accesorypdf_id'
-        
+        'accesorypdf_id',
+        'accesorypdf',
+        'active'
     ];
 
     public function brand()
@@ -49,12 +50,14 @@ class Product extends Model
         return $this->hasMany(Accesory::class);
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Categories::class);
+        return $this->belongsToMany(Categories::class, 'category_product', // Nombre de la tabla pivot
+        'product_id',       // Clave foránea del modelo actual
+        'category_id');
     }
 
-    public function  productSpecArea()
+    public function  productSpecAreas()
     {
         return $this->hasMany(ProductSpecArea::class);
     }

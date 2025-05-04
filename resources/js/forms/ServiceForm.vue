@@ -78,7 +78,7 @@
                 </label>
                 <p class="pl-1">o arrástralo aquí</p>
               </div>
-              <p class="text-xs text-gray-500">JPG o PNG, máximo 500KB</p>
+              <p class="text-xs text-gray-500">JPG o PNG, máximo 20000KB</p>
             </template>
             <template v-else>
               <div class="relative">

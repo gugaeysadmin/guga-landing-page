@@ -3,11 +3,13 @@
       <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    <th class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activo</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">Nombre</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marca</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categorías</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Áreas de especialidad</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -15,20 +17,6 @@
                     v-for="(product, index) in paginatedProducts" 
                     :key="product.id"
                 >
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ (currentPage - 1) * itemsPerPage + index + 1 }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">{{ product.name }}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">{{ product.product }}</div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="text-sm text-gray-500  max-w-xs truncate" :title="product.categories">
-                            {{ truncateDescription(product.categories) }}
-                        </div>
-                    </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         
                         <button
@@ -37,6 +25,31 @@
                         >
                             Eliminar
                         </button>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <select
+                            :value="product.active == 1? true: false"
+                            @change="emit('status-change', { id: product.id, active: $event.target.value === 'true' })"
+                            class="block min-w-20 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        >
+                            <option :value="true">Activo</option>
+                            <option :value="false">Inactivo</option>
+                        </select>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">{{ product.name }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">{{ truncateDescription(product?.brand?.name || "") }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">{{ formatCategories(product.category) }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">{{ formatSpecAreas(product.product_spec_areas) }}</div>
                     </td>
                 </tr>
                 <tr v-if="paginatedProducts.length === 0">
@@ -101,7 +114,26 @@
     const dragOverIndex = ref(null);
     const isDragging = ref(false);
     const searchQuery = ref('');
-        
+    
+
+    const formatCategories = (categories)=>{
+        if(categories && categories.length > 0){
+            const formated = categories.map((data, index)=>data.name);
+            return truncateDescription(formated.join(", "))
+            
+        }else{
+            return ""
+        }
+    }
+    const formatSpecAreas = (specareas)=>{
+        if(specareas && specareas.length > 0){
+            const formated = specareas.map((data, index)=>data.spec_area.name);
+            return truncateDescription(formated.join(", "))
+            
+        }else{
+            return ""
+        }
+    }
     const truncateDescription = (text) => {
         if (!text) return '';
         return text.length > 50 ? text.substring(0, 50) + '...' : text;

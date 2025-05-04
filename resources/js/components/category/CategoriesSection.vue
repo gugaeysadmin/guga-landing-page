@@ -104,6 +104,8 @@
     }
   };
 
+  
+
   const handleSearch = (term) => {
     searchTerm.value = term;
   };
@@ -139,6 +141,8 @@
       }
     } catch (error) {
       console.error('Error deleting category:', error);
+      loading.value=false
+
     }
     loading.value=false
 
@@ -169,6 +173,8 @@
       console.error('Error:', error);
       // Mostrar error al usuario
       errors.value.submit = 'Error al guardar la categoria';
+      loading.value=false
+
     }
     loading.value=false
 

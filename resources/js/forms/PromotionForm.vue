@@ -78,7 +78,7 @@
                 </label>
                 <p class="pl-1">o arrástralo aquí</p>
               </div>
-              <p class="text-xs text-gray-500">JPG o PNG, máximo 500KB</p>
+              <p class="text-xs text-gray-500">JPG o PNG, máximo 20000KB</p>
             </template>
             <template v-else>
               <div class="relative">
@@ -187,28 +187,6 @@
     const fileInput = ref(null);
     const selectedFile = ref(null);
     const previewImage = ref(null);
-    
-    // Cargar datos iniciales
-    // onMounted(() => {
-    //     if (props.initialData) {
-    //     formData.value = {
-    //         title: props.initialData.title || '',
-    //         details: props.initialData.details || '',
-    //         image: props.initialData.image || null,
-    //     };
-    
-    //     if (props.initialData.image) {
-    //         if (typeof props.initialData.image === 'string') {
-    //         // Si es una URL (para edición)
-    //         previewImage.value = props.initialData.image;
-    //         } else if (props.initialData.image instanceof File) {
-    //         // Si es un File (después de recargar)
-    //         selectedFile.value = props.initialData.image;
-    //         previewImage.value = URL.createObjectURL(props.initialData.image);
-    //         }
-    //     }
-    //     }
-    // });
     
     // Validar formulario
     const validate = () => {

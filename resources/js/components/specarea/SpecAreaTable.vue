@@ -73,7 +73,7 @@
                     </a>
                     <span v-else class="text-sm text-gray-500">Sin imagen</span>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                         <!-- <button
                             @click="emit('edit', specArea)"
                             class="text-indigo-600 hover:text-indigo-900 mr-3"
@@ -81,13 +81,14 @@
                             Editar
                         </button> -->
                         <button
-                            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            @click="sendToFilters(specArea.id, specArea.name)"
+                            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-500 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Ver
                         </button>
                     </td>
 
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm  font-medium">
                         <!-- <button
                             @click="emit('edit', specArea)"
                             class="text-indigo-600 hover:text-indigo-900 mr-3"
@@ -95,7 +96,8 @@
                             Editar
                         </button> -->
                         <button
-                            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                             @click="sendToProduct"
+                            class="inline-flex justify-center  rounded-md border border-transparent bg-cyan-600  disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Ver
                         </button>
@@ -103,12 +105,12 @@
 
 
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <!-- <button
+                        <button
                             @click="emit('edit', specArea)"
-                            class="text-indigo-600 hover:text-indigo-900 mr-3"
+                            class="text-indigo-600 hover:text-indigo-900 mr-5"
                         >
                             Editar
-                        </button> -->
+                        </button>
                         <button
                             @click="emit('delete', specArea.id)"
                             class="text-red-600 hover:text-red-900"
@@ -129,7 +131,7 @@
   
 <script setup>
     import { ref } from 'vue';
-    
+    import { useRouter } from 'vue-router';
     const props = defineProps({
         specAreas: {
         type: Array,
@@ -140,11 +142,18 @@
     
     const emit = defineEmits(['search', 'status-change', 'edit', 'delete', 'reorder']);
     
+    const router = useRouter();
     const draggedItemIndex = ref(null);
     const dragOverIndex = ref(null);
     const isDragging = ref(false);
 
     const searchQuery = ref('');
+    const sendToFilters = (id, specarea)=> {
+        router.push(`/app/admin/speciality-areas/filters?id=${id}&specarea=${specarea}`)
+    }
+    const sendToProduct = () => {
+
+    }
     
     const truncateDescription = (text) => {
         if (!text) return '';

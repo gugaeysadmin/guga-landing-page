@@ -37,10 +37,22 @@
     <Modal :visible="showModal" @close="showModal = false" title="Nueva área de especialidad">
       <SpecAreaForm
         :onSubmit="createSpecArea"
-        :initialData="emptyOffert"
-        :onCancel="() => { showModal = false; currentOffert = null; }"
+        :initialData="emptySpecArea"
+        :onCancel="() => { showModal = false; currentSpecArea = null; }"
         :submitText="Crear"
         :loading="loading"
+        :editing="false"
+      />
+    </Modal>
+
+    <Modal :visible="showModalEdit" @close="showModalEdit = false" title="Editar área de especialidad">
+      <SpecAreaForm
+        :onSubmit="updateSpecArea"
+        :initialData="currentSpecArea"
+        :onCancel="() => { showModal = false; currentSpecArea = null; }"
+        :submitText="Editar"
+        :loading="loading"
+        :editing="true"
       />
     </Modal>
 
@@ -70,14 +82,16 @@
 <script setup>
   import { ref, computed, onMounted } from 'vue';
   const showModal = ref(false);
+  const showModalEdit = ref(false);
+
   const showDeleteModal = ref(false);
-  const currentOffert = ref(null);
+  const currentSpecArea = ref(null);
   const specAreas = ref([]);
   const searchTerm = ref('');
   const deleteId = ref(null);
   const loading = ref(false);
 
-  const emptyOffert = {
+  const emptySpecArea = {
     title: '',
     details: '',
     image: null,
@@ -116,12 +130,14 @@
 
 
   const handleEdit = (specArea) => {
-    currentOffert.value = {
+    currentSpecArea.value = {
       ...specArea,
       title: specArea.name,
-      details: specArea.description
+      details: specArea.description,
+      image: specArea.icon_file_url,
+      video: specArea.video_url,
     };
-    showModal.value = true;
+    showModalEdit.value = true;
   };
 
   const confirmDelete = (id) => {
@@ -158,6 +174,7 @@
       form.append('title', formData.title);
       form.append('details', formData.details);
       form.append('image', formData.image);
+      form.append('video', formData.video);
 
       const response = await fetch('/api/speciality-areas/create', {
         method: 'POST',
@@ -175,32 +192,49 @@
       await fetchSpecAreas();
       
     } catch (error) {
+      loading.value=false
+
       console.error('Error:', error);
       // Mostrar error al usuario
-      errors.value.submit = 'Error al guardar el area de especialidad';
+      loading.value=false
+
     }
     loading.value=false
 
   };
 
-  const updateOffert = async (formData) => {
+  const updateSpecArea = async (formData) => {
+    loading.value=true
+
+    console.log(currentSpecArea.value)
+    console.log(formData)
     try {
-      const response = await fetch(`/api/speciality-areas/${currentOffert.value.id}`, {
-        method: 'PUT',
+      const form = new FormData();
+      form.append('title', formData.title);
+      form.append('details', formData.details);
+      form.append('image', formData.image);
+      form.append('video', formData.video);
+      const response = await fetch(`/api/speciality-areas/update/${currentSpecArea.value.id}`, {
+        method: 'POST',
         headers: {
+          'Accept': 'application/json',
           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         },
-        body: formData
+        body: form
       });
       
       if (response.ok) {
         await fetchSpecAreas();
-        showModal.value = false;
-        currentOffert.value = null;
+        showModalEdit.value = false;
+        currentSpecArea.value = null;
       }
     } catch (error) {
+      loading.value=false
+
       console.error('Error updating speciality areas:', error);
     }
+    loading.value=false
+
   };
 
   const handleReorder = (newOrder) => {

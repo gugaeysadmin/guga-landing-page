@@ -14,7 +14,7 @@ import accesoriespdfpage from "../pages/AccesoriesPdfPage.vue";
 import alliancespage from "../pages/AlliancesPage.vue";
 import brandspage from "../pages/BrandsPage.vue";
 import servicespage from "../pages/ServicesPage.vue";
-
+import specareacategorypage from "../pages/SpecAreaCategoryPage.vue"
 const routes = [
     {
         path: '/app/homevue',
@@ -55,6 +55,10 @@ const routes = [
     {
         path: '/app/admin/speciality-areas',
         component: specialityareapage
+    },
+    {
+        path: '/app/admin/speciality-areas/filters',
+        component: specareacategorypage
     },
     {
         path: '/app/admin/enterprise/accesories-pdf',

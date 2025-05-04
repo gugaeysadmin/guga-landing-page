@@ -10,6 +10,7 @@ class SpecialityArea extends Model
         'name',
         'description',
         'icon_file_url',
+        'video_url',
         'index',
         'filters'
     ];
@@ -18,12 +19,8 @@ class SpecialityArea extends Model
         return $this->hasMany(SpecAreaImage::class);
     }
 
-    // public function SpecialityAreaSections()
-    // {
-    //     return $this->hasMany(SpecialityAreaSection::class);
-    // }
-    // public function  productSpecArea()
-    // {
-    //     return $this->hasMany(ProductSpecArea::class);
-    // }
+    public function  productSpecArea()
+    {
+        return $this->hasMany(ProductSpecArea::class);
+    }
 }

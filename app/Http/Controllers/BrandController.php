@@ -40,6 +40,7 @@ class BrandController extends Controller
     {
         // // Calcular el próximo índice (máximo actual + 1)
         // // Guardar la imagen
+
         $imagePath = $request->file('image')->store('brands', 'public');
 
         

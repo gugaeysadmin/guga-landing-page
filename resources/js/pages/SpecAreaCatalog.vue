@@ -1,9 +1,5 @@
 <template>
-    <Title :content="`FILTROS DE ${specarea}`"  />
-    <button @click="goBack" class="py-2 mt-4 flex flex-row items-center justify-center align-middle content-center gap-2">
-        <i class="bi bi-arrow-left-circle-fill text-xl text-blue-500"></i>
-        <p class="underline font-medium text-lg text-blue-500 pb-1">Regresar</p>
-    </button>
+    <Title :content="`FILTROS DE`"  />
     <div class="flex flex-col gap-4 mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
         <h1 class="text-2xl font-semibold text-[#4180ab]">FILTROS EN CATÁLOGOS</h1>
         <div class="flex flex-col gap-4">
@@ -29,7 +25,7 @@
                 >
                   <i class="bi bi-trash-fill text-white  "></i>
                 </button>
-                <div class="font-semibold">
+                <div>
                   {{ filter.section }}
                 </div>
               </div>
@@ -132,167 +128,155 @@
         </div>
       </div>
     </Modal>
-    
 </template>
 
 <script setup>
-    import { ref, computed, onMounted } from 'vue';
-    import { useRouter, useRoute } from 'vue-router';
-    const showModal = ref(false);
-    const showCategoryModal = ref(false);
-    const showDeleteModal = ref(false);
-    const currentOffert = ref(null);
-    const categorySelected = ref([])
-    const dataset = ref([]);
-    const searchTerm = ref('');
-    const deleteId = ref(null);
-    const specarea = ref("");
-    const specarea_id = ref(null);
-    const currentSecton = ref(null);
-    const sectionDelecting = ref(null);
-    const loading = ref(false);
-    const categories = ref('');
+  import { ref, computed, onMounted } from 'vue';
 
-    const filters = ref([])
-    const router = useRouter();
-    const route = useRoute();
+  const showModal = ref(false);
+  const showCategoryModal = ref(false);
+  const showDeleteModal = ref(false);
+  const currentOffert = ref(null);
+  const categorySelected = ref([])
+  const dataset = ref([]);
+  const searchTerm = ref('');
+  const deleteId = ref(null);
+  const currentSecton = ref(null);
+  const sectionDelecting = ref(null);
+  const loading = ref(false);
+  const categories = ref('');
 
+  const filters = ref([])
 
-    const emptyOffert = {
-        title: '',
-    };
+  const emptyOffert = {
+    title: '',
+  };
 
-    onMounted(async () => {
-        specarea_id.value=route.query.id;
-        specarea.value=route.query.specarea.toUpperCase();
-        fetchCategories();
-        fetchConfigData();
-    });
+  onMounted(async () => {
+    fetchCategories();
+    fetchConfigData();
+  });
 
-    const goBack =() =>{
-        router.back();
+  const fetchConfigData = async () => {
+    try {
+      const response = await fetch('/api/lp-config');
+      const data = await response.json();
+      if (data.success) {
+        console.log(JSON.parse(data.data.catalogs_filters));
+        if(data.data.catalogs_filters && data.data.catalogs_filters.length>0){
+          filters.value = JSON.parse(data.data.catalogs_filters);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching offerts:', error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/category');
+      const data = await response.json();
+      if (data.success) {
+        categories.value = data.data;
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const updateConfigData = async() => {
+    loading.value = true;
+    try {
+      const form = new FormData();
+      form.append('catalogs_filters', JSON.stringify(filters.value));
+
+      const response = await fetch(`/api/lp-config/update`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+      
+      if (response.ok) {
+        await fetchConfigData();
+        // showModal.value = false;
+        // currentOffert.value = null;
+        currentSecton.value = null;
+      }
+    } catch (error) {
+      console.error('Error updating offert:', error);
+      loading.value = false;
+    }
+    loading.value = false;
+  }
+
+  const addSection = () => {
+    if(currentSecton.value && currentSecton.value!==""){
+      filters.value.push({
+        section: currentSecton.value,
+        categories: []
+      });
+      categorySelected.value.push("");
+      currentSecton.value=null
     }
 
-    const fetchConfigData = async () => {
-        try {
-        const response = await fetch(`/api/speciality-areas/${specarea_id.value}`);
-        const data = await response.json();
-        if (data.success) {
-            console.log(data.data);
-            if(data.data.filters && data.data.filters.length>0){
-                filters.value = JSON.parse(data.data.filters);
-            }
-        }
-        } catch (error) {
-        console.error('Error fetching offerts:', error);
-        }
-    };
+  }
 
-    const fetchCategories = async () => {
-        try {
-        const response = await fetch('/api/category');
-        const data = await response.json();
-        if (data.success) {
-            categories.value = data.data;
-        }
-        } catch (error) {
-        console.error('Error fetching categories:', error);
-        }
-    };
-
-    const updateConfigData = async() => {
-        loading.value = true;
-        try {
-        const form = new FormData();
-        form.append('filters', JSON.stringify(filters.value));
-
-        const response = await fetch(`/api/speciality-areas/update/${specarea_id.value}`, {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: form
-        });
-        
-        if (response.ok) {
-            await fetchConfigData();
-            // showModal.value = false;
-            // currentOffert.value = null;
-            currentSecton.value = null;
-        }
-        } catch (error) {
-        console.error('Error updating offert:', error);
-        loading.value = false;
-        }
-        loading.value = false;
+  const addSubCategory = (index, category )=>{
+    if(category!== "" || category){
+      filters.value[index].categories.push(category);
+      categorySelected.value[index]="";
     }
+  }
 
-    const addSection = () => {
-        if(currentSecton.value && currentSecton.value!==""){
-        filters.value.push({
-            section: currentSecton.value,
-            categories: []
-        });
-        categorySelected.value.push("");
-        currentSecton.value=null
-        }
+
+
+  const handleDeleteSection= (id)=> {
+    showDeleteModal.value=true
+    console.log(id)
+  }
+
+  const deleteSubcategory = (sectionIndex, subIndex)=>{
+    filters.value[sectionIndex].categories.splice(subIndex,1);
+  }
+  
+  const deleteSection = () => {
+    filters.value.splice(sectionDelecting, 1);
+    sectionDelecting.value=null;
+    showDeleteModal.value=false;
+  }
+
+  const createCategories = async (formData) => {
+    loading.value=true
+    try {
+      const form = new FormData();
+      form.append('title', formData.title);
+
+      const response = await fetch('/api/category/create', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+
+      if (!response.ok) throw new Error('Error al guardar');
+
+      const data = await response.json();
+      showCategoryModal.value = false;
+      await fetchCategories();
+      
+    } catch (error) {
+      console.error('Error:', error);
+      // Mostrar error al usuario
+      errors.value.submit = 'Error al guardar la categoria';
+      loading.value=false
 
     }
+    loading.value=false
 
-    const addSubCategory = (index, category )=>{
-        if(category!== "" || category){
-        filters.value[index].categories.push(category);
-        categorySelected.value[index]="";
-        }
-    }
-
-
-
-    const handleDeleteSection= (id)=> {
-        showDeleteModal.value=true
-        console.log(id)
-    }
-
-    const deleteSubcategory = (sectionIndex, subIndex)=>{
-        filters.value[sectionIndex].categories.splice(subIndex,1);
-    }
-    
-    const deleteSection = () => {
-        filters.value.splice(sectionDelecting, 1);
-        sectionDelecting.value=null;
-        showDeleteModal.value=false;
-    }
-
-    const createCategories = async (formData) => {
-        loading.value=true
-        try {
-        const form = new FormData();
-        form.append('title', formData.title);
-
-        const response = await fetch('/api/category/create', {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: form
-        });
-
-        if (!response.ok) throw new Error('Error al guardar');
-
-        const data = await response.json();
-        showCategoryModal.value = false;
-        await fetchCategories();
-        
-        } catch (error) {
-        console.error('Error:', error);
-        // Mostrar error al usuario
-        errors.value.submit = 'Error al guardar la categoria';
-        loading.value=false
-
-        }
-        loading.value=false
-
-    };
+  };
 </script>
