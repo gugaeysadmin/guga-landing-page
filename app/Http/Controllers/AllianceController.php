@@ -261,9 +261,9 @@ class AllianceController extends Controller
     {
         $alliances = Alliance::orderBy('index')->get();
         
-        foreach ($alliances as $index => $offert) {
-            $alliances->index = $index + 1;
-            $alliances->save();
+        foreach ($alliances as $index => $alliance) {
+            $alliance->index = $index + 1;
+            $alliance->save();
         }
     }
 }

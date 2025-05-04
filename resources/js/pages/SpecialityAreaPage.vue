@@ -162,6 +162,7 @@
       }
     } catch (error) {
       console.error('Error deleting spec area:', error);
+      loading.value=false
     }
     loading.value=false
 

@@ -81,7 +81,6 @@ class OffertController extends Controller
 
     public function reorder(Request $request)
     {
-        Log::info($request);
         $request->validate([
             'updates' => 'required|array',
             'updates.*.id' => 'required|exists:offerts,id',

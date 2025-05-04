@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\OffertController;
 use App\Http\Controllers\PageConfigController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductSpecAreaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpecAreaController;
@@ -131,6 +132,17 @@ Route::get('/api/product', [ProductController::class, 'index']);
 Route::get('/api/product/{id}', [ProductController::class, 'show']);
 Route::put('/api/product/{id}', [ProductController::class, 'update']);
 Route::delete('/api/product/{id}', [ProductController::class, 'destroy']);
+
+
+// Product spec area
+
+Route::post('/api/product-specarea/create', [ProductSpecAreaController::class, 'store']);
+Route::post('/api/product-specarea/reorder', action: [ProductSpecAreaController::class, 'reorderIndexes']);
+Route::post('/api/product-specarea/reorder-table', [ProductSpecAreaController::class, 'reorder']);
+Route::get('/api/product-specarea', [ProductSpecAreaController::class, 'index']);
+Route::get('/api/product-specarea/{id}', [ProductSpecAreaController::class, 'show']);
+Route::put('/api/product-specarea/{id}', [ProductSpecAreaController::class, 'update']);
+Route::delete('/api/product-specarea/{id}', [ProductSpecAreaController::class, 'destroy']);
 
 
 Route::get('/dashboard', function () {

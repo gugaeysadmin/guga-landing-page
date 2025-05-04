@@ -3,9 +3,9 @@
       <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                     <th class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activo</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">Nombre</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marca</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categorías</th>
@@ -17,6 +17,9 @@
                     v-for="(product, index) in paginatedProducts" 
                     :key="product.id"
                 >
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         
                         <button
@@ -35,9 +38,6 @@
                             <option :value="true">Activo</option>
                             <option :value="false">Inactivo</option>
                         </select>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm font-medium text-gray-900">{{ product.name }}</div>

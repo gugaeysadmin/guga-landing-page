@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_spec_areas', function (Blueprint $table) {
             $table->id();
-            $table->integer('priority');
+            $table->integer('index')->default(0);;
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('spec_area_id');
 

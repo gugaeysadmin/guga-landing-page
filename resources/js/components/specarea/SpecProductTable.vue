@@ -16,11 +16,10 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nómbre</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Icono</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marcas</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categorias</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Productos</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
 
                 </tr>
@@ -51,66 +50,27 @@
                         {{ specArea.index }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">{{ specArea.name }}</div>
+                        <div class="text-sm font-medium text-gray-900">{{ specArea.product.name }}</div>
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm text-gray-500  max-w-xs truncate" :title="specArea.description">
-                            {{ truncateDescription(specArea.description) }}
+                        <div class="text-sm text-gray-500  max-w-xs truncate" :title="specArea.product.description">
+                            {{ truncateDescription(specArea.product.description) }}
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                    <a 
-                        v-if="specArea.icon_file_url" 
-                        :href="`/storage/${specArea.icon_file_url}`" 
-                        target="_blank"
-                        class="inline-block"
-                    >
-                        <img 
-                        :src="`/storage/${specArea.icon_file_url}`" 
-                        class="h-10 w-15 rounded-xl object-cover"
-                        :alt="`Imagen de ${specArea.name}`"
-                        >
-                    </a>
-                    <span v-else class="text-sm text-gray-500">Sin imagen</span>
+                        <div class="text-sm font-medium text-gray-900">{{ truncateDescription(specArea.product?.brand?.name || "") }}</div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                        <!-- <button
-                            @click="emit('edit', specArea)"
-                            class="text-indigo-600 hover:text-indigo-900 mr-3"
-                        >
-                            Editar
-                        </button> -->
-                        <button
-                            @click="sendToFilters(specArea.id, specArea.name)"
-                            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-500 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Ver
-                        </button>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">{{ formatCategories(specArea.product.category) }}</div>
                     </td>
-
-                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm  font-medium">
-                        <!-- <button
-                            @click="emit('edit', specArea)"
-                            class="text-indigo-600 hover:text-indigo-900 mr-3"
-                        >
-                            Editar
-                        </button> -->
-                        <button
-                             @click="sendToProduct(specArea.id, specArea.name)"
-                            class="inline-flex justify-center  rounded-md border border-transparent bg-cyan-600  disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Ver
-                        </button>
-                    </td>
-
 
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button
+                        <!-- <button
                             @click="emit('edit', specArea)"
                             class="text-indigo-600 hover:text-indigo-900 mr-5"
                         >
                             Editar
-                        </button>
+                        </button> -->
                         <button
                             @click="emit('delete', specArea.id)"
                             class="text-red-600 hover:text-red-900"
@@ -202,10 +162,29 @@
         draggedItemIndex.value = null;
         dragOverIndex.value = null;
     };
+
+    const formatCategories = (categories)=>{
+        if(categories && categories.length > 0){
+            const formated = categories.map((data, index)=>data.name);
+            return truncateDescription(formated.join(", "))
+            
+        }else{
+            return ""
+        }
+    }
+    const formatSpecAreas = (specareas)=>{
+        if(specareas && specareas.length > 0){
+            const formated = specareas.map((data, index)=>data.spec_area.name);
+            return truncateDescription(formated.join(", "))
+            
+        }else{
+            return ""
+        }
+    }
 </script>
 
 <script>
     export default {
-        name: "SpecAreaTable"
+        name: "SpecProductTable"
     }
 </script>

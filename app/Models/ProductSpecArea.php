@@ -9,7 +9,7 @@ class ProductSpecArea extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'priority',
+        'index',
         'product_id',
         'spec_area_id',
     ];

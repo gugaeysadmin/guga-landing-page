@@ -948,7 +948,7 @@
       // })
       if(response.ok){
         console.log(response);
-        router.back()
+        // router.back()
       }
 
     } catch (error) {

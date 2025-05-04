@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Categories;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\ProductSpecArea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -119,18 +120,19 @@ class ProductController extends Controller
 
         foreach ($specareas as $specAreaId) {
             $currentCount = ProductSpecArea::where('spec_area_id', $specAreaId)->count();
-            if(!$currentCount || $currentCount = null)
+            if(!$currentCount || $currentCount == null){
                 $currentCount = 0;
+            }
             $product->productSpecAreas()->create([
                 'spec_area_id' => $specAreaId,
-                'priority' => $currentCount + 1, // La nueva prioridad será: total actual + 1
+                'index' => $currentCount + 1,
                 'product_id' => $product->id
             ]);
         }
         
         
-        if($request->productImagesas){
-            foreach($request->productImagesas as $productImage){
+        if($request->productImages){
+            foreach($request->productImages as $productImage){
                 if($productImage["type"] == 'url')
                     $product->productImages()->create([
                     'url' => $productImage["url"],
@@ -139,7 +141,7 @@ class ProductController extends Controller
                     'active'=>1,
                 ]);
                 else{
-                    $file = $productImage['file']; // Ya es un UploadedFile
+                    $file = $productImage['file'];
                     $url = $file->store('productImages', 'public');
                     $product->productImages()->create([
                         'url' => $url,
@@ -218,44 +220,6 @@ class ProductController extends Controller
         
     }
 
-    // public function reorderIndexes()
-    // {
-    //     $offerts = Offert::orderBy('index')->get();
-        
-    //     foreach ($offerts as $index => $offert) {
-    //         $offert->update(['index' => $index + 1]);
-    //     }
-        
-    //     return response()->json(['message' => 'Índices reordenados']);
-    // }
-
-    // public function reorder(Request $request)
-    // {
-    //     Log::info($request);
-    //     $request->validate([
-    //         'updates' => 'required|array',
-    //         'updates.*.id' => 'required|exists:offerts,id',
-    //         'updates.*.index' => 'required|integer|min:1'
-    //     ]);
-        
-    //     try {
-    //         DB::beginTransaction();
-            
-    //         foreach ($request->updates as $update) {
-    //             Offert::where('id', $update['id'])
-    //                  ->update(['index' => $update['index']]);
-    //         }
-            
-    //         DB::commit();
-    //         return response()->json(['success' => true]);
-            
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-    //         return response()->json(['error' => $e->getMessage()], 500);
-    //     }
-    // }
-
-
     /**
      * Display the specified resource.
      */
@@ -327,49 +291,73 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, ProductSpecAreaController $productController)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $product = Product::findOrFail($id);
+            
+            // Eliminar la imagen asociada
+            if ($product->has_accesrorypdf) {
+                if($product->accesorypdf ){
+                    Storage::disk('public')->delete($product->accesorypdf);
+                }
+            }
+            $images = ProductImage::where("product_id", '=',$id)->get();
+            
+            if($images || $images == null){
+                foreach($images as $image){
+                    if($image->type !== "url" && $image->url && $image->url !== null){
+                        Storage::disk(name: 'public')->delete($image->url);
+                    }
+                }
+            }
+
+            $tabledata = [];
+            $tables= [];
+            if($product->has_table || $product->has_table == 1){
+                $tabledata = json_decode($product->table_data);
+                $tables = $tabledata->table;
+                if($tables && $tables !== null){
+                    foreach($tables as $table){
+                        if($table->pdf && $table->pdf !== null && $table->pdf !== ""){
+                            Storage::disk('public')->delete($table->pdf);
+                        }
+                        if($table->imagen && $table->imagen !== null && $table->imagen !== ""){
+                            Storage::disk('public')->delete($table->imagen);
+                        }
+                        
+                    }
+                }
+            
+            }
+
+            $specAreas = $product->productSpecAreas()->get();
+            
+            $product->delete();
+
+            if($specAreas && $specAreas !== null){
+                foreach($specAreas as $specArea){
+                    $productController->reorderAllSpecArea($specArea->spec_area_id);
+                }
+            }
+
+            
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'message' => 'Oferta eliminada exitosamente'
+            ]);
+            
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Error al eliminar oferta: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al eliminar la oferta'
+            ], 500);
+        }
     }
 
 
-    /**
-     * Reordenar ofertas cuando se cambia el índice de una
-     */
-    // private function reorderOfferts(Product $movedOffert, $newIndex)
-    // {
-
-    //     $currentIndex = $movedOffert->index;
-    //     $maxIndex = Offert::max('index');
-        
-    //     // Asegurar que el nuevo índice esté dentro de los límites
-    //     $newIndex = max(1, min($newIndex, $maxIndex));
-        
-    //     if ($newIndex > $currentIndex) {
-    //         // Mover hacia abajo en la lista
-    //         Offert::where('index', '>', $currentIndex)
-    //               ->where('index', '<=', $newIndex)
-    //               ->decrement('index');
-    //     } elseif ($newIndex < $currentIndex) {
-    //         // Mover hacia arriba en la lista
-    //         Offert::where('index', '>=', $newIndex)
-    //               ->where('index', '<', $currentIndex)
-    //               ->increment('index');
-    //     }
-        
-    //     $movedOffert->index = $newIndex;
-    // }
-
-    /**
-     * Reordenar todas las ofertas (después de eliminar)
-     */
-    // private function reorderAllOfferts()
-    // {
-    //     $offerts = ProductSpecArea::orderBy('index')->get();
-        
-    //     foreach ($offerts as $index => $offert) {
-    //         $offert->index = $index + 1;
-    //         $offert->save();
-    //     }
-    // }
 }
