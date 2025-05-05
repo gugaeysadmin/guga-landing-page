@@ -5,7 +5,7 @@
         <!-- <div>
             <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
         </div> -->
-        <div class="relative">
+        <!-- <div class="relative">
             <i class="bi bi-search absolute left-3 top-3 text-slate-500"></i>
             <input 
                 v-model="searchTerm" 
@@ -13,6 +13,29 @@
                 placeholder="Buscar" 
                 class="pl-10 pr-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full w-full"
             />
+        </div> -->
+
+        <div class="">
+          <div class="flex items-center">
+              <!-- <img 
+                :src="`/storage/${offert.img_url}`" 
+                class="h-10 w-15 rounded-xl object-cover"
+                :alt="`Imagen de ${offert.name}`"
+              > -->
+            <label class=" cursor-pointer">
+              <div class="relative">
+                <input 
+                  type="checkbox" 
+                  class="sr-only" 
+                  v-model="activePromotion"
+                  @change="tooglePromotions"
+                >
+                <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
+                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+              </div>
+            </label>
+            <div class="ml-3 text-sm font-medium">Promocion activa</div>
+          </div>
         </div>
         <div>
             <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
@@ -166,13 +189,20 @@ const handleCancel = () => {
   const showModal = ref(false);
   const showDeleteModal = ref(false);
   const showPromoteModal = ref(false);
-
+  const activePromotion = ref(false)
   const currentOffert = ref(null);
   const offerts = ref([]);
   const searchTerm = ref('');
   const deleteId = ref(null);
   const promoteUrl = ref(null);
   const loading = ref(false);
+  const specOferId= ref(null);
+  const formData = ref({
+  })
+  const specOfert= ref({
+    img_url: null,
+    name: "",
+  })
 
   const emptyOffert = {
     title: '',
@@ -184,6 +214,7 @@ const handleCancel = () => {
 
   onMounted(async () => {
     await fetchOfferts();
+    await fetchConfigData();
   });
 
   const filteredOfferts = computed(() => {
@@ -194,6 +225,18 @@ const handleCancel = () => {
       (offert.description && offert.description.toLowerCase().includes(term))
     )
   });
+
+  const fetchConfigData = async () => {
+    try {
+      const response = await fetch('/api/lp-config');
+      const data = await response.json();
+      if (data.success) {
+        activePromotion.value = data.data.active_special_ofert == 1;
+      }
+    } catch (error) {
+      console.error('Error fetching offerts:', error);
+    }
+  };
 
   const fetchOfferts = async () => {
     try {
@@ -249,11 +292,35 @@ const handleCancel = () => {
     showPromoteModal.value = true
   }
 
+  const tooglePromotions = async () =>  {
+    loading.value = true;
+    try {
+      const form = new FormData();
+      form.append('special_ofert_active', activePromotion.value);
+      const response = await fetch(`/api/lp-config/update`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: form
+      });
+      
+      if (response.ok) {
+      }
+    } catch (error) {
+      console.error('Error updating offert:', error);
+      loading.value = false;
+    }
+    loading.value = false;
+  }
   const promote = async () => {
     loading.value = true;
     try {
       const form = new FormData();
       form.append('special_ofert', promoteUrl.value);
+      form.append('special_ofert_active', true);
+
 
       const response = await fetch(`/api/lp-config/update`, {
         method: 'POST',
@@ -324,10 +391,9 @@ const handleCancel = () => {
       await fetchOfferts();
       
     } catch (error) {
+      loading.value=false
       console.error('Error:', error);
       // Mostrar error al usuario
-      errors.value.submit = 'Error al guardar la oferta';
-      loading.value=false
 
     }
     loading.value=false
@@ -376,3 +442,16 @@ const handleCancel = () => {
     }
   };
 </script>
+
+
+<style scoped>
+  @import "quill/dist/quill.snow.css";
+
+  input[type="checkbox"]:checked ~ .dot {
+    transform: translateX(100%);
+    background-color: #3B82F6;
+  }
+  input[type="checkbox"]:checked ~ .block {
+    background-color: #93C5FD;
+  }
+</style>

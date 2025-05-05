@@ -131,11 +131,11 @@ var swiperAux = new Swiper('.swiper1', {
             spaceBetween: 2,
         },
         300: {
-            slidesPerView: 2,
+            slidesPerView: 1,
             spaceBetween: 2,
         },
         640: {
-        slidesPerView: 4,
+        slidesPerView: 2,
         spaceBetween: 20,
         },
         1200: {
@@ -143,16 +143,16 @@ var swiperAux = new Swiper('.swiper1', {
         spaceBetween: 40,
         },
         1500: {
-            slidesPerView: 5,
-            spaceBetween: 40,
+            slidesPerView: 4,
+            spaceBetween: 80,
         },
     },
 });
 
 var swiper2 = new Swiper('.swiper2', {
     modules: [Navigation, Pagination, Autoplay],
-    slidesPerView: 3,  // Sin comillas
-    centeredSlides: true,  // Cambiado a false para mejor visualización
+    slidesPerView: 2,  // Sin comillas
+    centeredSlides: false,  // Cambiado a false para mejor visualización
     spaceBetween: 0,
     loop: true,  // Agregado para mejor experiencia
     pagination: {
@@ -174,9 +174,25 @@ var swiper2 = new Swiper('.swiper2', {
     },
     breakpoints: {
         200: {
+            slidesPerView: 1,
+            spaceBetween: 2,
+        },
+        300: {
+            slidesPerView: 1,
+            spaceBetween: 2,
+        },
+        640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+        },
+        1200: {
+        slidesPerView: 3,
+        spaceBetween: 40,
+        },
+        1500: {
             slidesPerView: 3,
-            spaceBetween: 0,
-        }
+            spaceBetween: 80,
+        },
     }
 });
 
@@ -237,6 +253,7 @@ var swiper2 = new Swiper('.swiper2', {
 // });
 
 
+let modalMostrado = false;
 // Función para actualizar el navbar según la posición del scroll
 function updateNavbar() {
     const navbar = document.getElementById('navbar');
@@ -250,21 +267,38 @@ function updateNavbar() {
             navitem.classList.remove('text-gray-200', 'hover:text-white');
             navitem.classList.add('text-gray-500', 'hover:text-sky-500', 'font-semibold');
         });
+        navbar.classList.add('bg-slate-50', 'shadow');
+        logo.src = "/img/logo_normal.png"; 
+        if (!modalMostrado) {
+            document
+                .getElementById('triggerSpecialOffertModal')
+                .click();
+            modalMostrado = true;
+        }
 
         contactButton.classList.remove("hidden");
-        navbar.classList.add('bg-slate-50', 'shadow');
-        logo.src = "/img/logo_normal.png"; // Asegúrate de usar rutas absolutas
     } else {
         navItems.forEach(function(navitem) {
             navitem.classList.remove('text-gray-500', 'hover:text-sky-500', 'font-semibold');
             navitem.classList.add('text-gray-200', 'hover:text-white');
         });
 
-        contactButton.classList.add("hidden");
         navbar.classList.remove('bg-slate-50', 'shadow');
         logo.src = "/img/logo_white.png"; // Asegúrate de usar rutas absolutas
+        contactButton.classList.add("hidden");
     }
 }
+
+function mostrarModal() {
+    const scrollY = window.scrollY;
+    if (scrollY > 50 && !modalMostrado) {
+        document
+            .getElementById('triggerSpecialOffertModal')
+            .click();
+        }
+        modalMostrado = true;
+}
+
 
 // Ejecutar al cargar la página y al hacer scroll
 document.addEventListener('DOMContentLoaded', function() {

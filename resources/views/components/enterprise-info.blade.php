@@ -3,19 +3,19 @@
 <div class="bg-slate-100">
     <div>
         <div class="block text-center pt-32">
-            <h1 class="text-[2.2rem] font-sans font-extralight text-[#0392ceff]">{{ __('Sobre Nosotros') }}</h1>
+            <h1 class="text-[2.2rem] font-sans font-extralight italic text-[#0392ceff]">{{ __('Sobre Nosotros') }}</h1>
         </div>
-        <div class=" my-6 max-w-[50rem] mx-auto ">
-            <p class="text-center">{{ $about}}</p>
+        <div class=" my-8 max-w-[50rem] mx-auto ">
+            <p class="text-center italic text-xl">{{ $about}}</p>
         </div>
-        <div class="pb-32 flex justify-center">
-            <button class="rounded-xl py-2 px-4 mx-auto text-[#0392ceff] border-2 border-[#0392ceff]">
+        <div class="pb-24 flex justify-center">
+            <a href="/contact" class="rounded-xl py-2 px-4 mx-auto text-[#0392ceff] border-2 border-[#0392ceff]">
                 Contactanos
-            </button>
+            </a>
         </div>
     </div>
 </div>
-<div class="flex items-center justify-center py-[10rem] relative overflow-hidden min-h-screen" id="parallax-section">
+<div class="flex items-center justify-center py-[10rem] relative overflow-hidden min-h-[40rem]" id="parallax-section">
     
     <div class="flex flex-col max-w-[70rem]">
         <div class="hidden-section  max-w-[80rem] overflow-hidden flex flex-row items-center gap-1 opacity-0  translate-y-10 transition-all duration-[2000ms] ease-in-out animate-fadeIn">
@@ -58,7 +58,7 @@
             </div>
             <div class="bg-white w-6 h-[0.08rem]"></div>
             <div class="rounded-full full h-[6rem] flex flex-row items-center bg-[#000000CC] gap-6 px-16">
-                <div><h1 class="font-bold text-white text-3xl font-sans">Vision</h1></div>
+                <div><h1 class="font-bold text-white text-3xl font-sans">Valores</h1></div>
                 <div><h1 class="text-[#5ddae5] font-medium text-lg font-sans">{{ $values }}</h1></div>
             </div>
         </div>

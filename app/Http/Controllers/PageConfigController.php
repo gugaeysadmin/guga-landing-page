@@ -99,6 +99,7 @@ class PageConfigController extends Controller
                 'values' => 'sometimes|string',
                 'services_description' => 'sometimes|string',
                 'special_ofert' => 'sometimes|string',
+                'special_ofert_active' => 'sometimes|string',
                 'main_description' => 'sometimes|string',
                 'about_us' => 'sometimes|string',
                 'contact_phone' => 'sometimes|string|max:20',
@@ -129,6 +130,9 @@ class PageConfigController extends Controller
             }
             if (isset($validated['special_ofert'])) {
                 $lpconfig->special_ofert = $validated['special_ofert'];
+            }
+            if (isset($validated['special_ofert_active'])) {
+                $lpconfig->active_special_ofert = $validated['special_ofert_active']? 1: 0;
             }
             if (isset($validated['contact_phone'])) {
                 $lpconfig->contact_phone = $validated['contact_phone'];

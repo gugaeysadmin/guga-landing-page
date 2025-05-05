@@ -5,6 +5,7 @@ namespace App\View\Components\Pages;
 use App\Http\Controllers\Controller;
 use App\Models\Alliance;
 use App\Models\LandingPageConfig;
+use App\Models\Offert;
 use App\Models\Service;
 use App\Models\SpecialityArea;
 use Exception;
@@ -43,17 +44,32 @@ class WelcomeController extends Controller
 
         $services = $this->getServices();
 
+        $offerts = $this->getOfferts();
+        // $offerts = [
+        //     ['id'=> 1, 'title'=> 'Silla de transporte no magnética', 'description' => 'Descripcion de la oferta 1', 'url'=>'offerts/1EuzCOmQSPkpYbUFlMEDggPnJyZeU9wHB1zeUvqr.jpg'],
+        //     ['id'=> 2, 'title'=> 'Jeringa CT 9000', 'description' => 'Descripcion de la oferta 2', 'url'=>'offerts/cx5rlibsdrIpztGTya6GrxVbNRfw3asvWWbq4qYO.jpg'],
+        //     ['id'=> 3, 'title'=> 'Esterilizador de mesa', 'description' => 'Descripcion de la oferta 3', 'url'=>'offerts/mZJaIkoLDyxng3f26jTPXKu2qZVS0KsacouCyaxT.jpg'],
+        //     ['id'=> 4, 'title'=> 'OPTIRAY 350/50', 'description' => 'Descripcion de la oferta 4', 'url'=>'offerts/dQQLp6Rf9ySdPU9uTyklxcwEq3QPgc9ww5P1lzJI.jpg'],
+        //     ['id'=> 5, 'title'=> 'CALENTADOR DE MEDIO DE CONTRASTE', 'description' => 'Descripcion de la oferta 5', 'url'=>'offerts/lF9V17WSBHLg9iuBmVWYM0iednCZdXdU6LETzvyG.jpg'],
 
-        $offerts = [
-            ['id'=> 1, 'title'=> 'Silla de transporte no magnética', 'description' => 'Descripcion de la oferta 1', 'url'=>'offerts/1EuzCOmQSPkpYbUFlMEDggPnJyZeU9wHB1zeUvqr.jpg'],
-            ['id'=> 2, 'title'=> 'Jeringa CT 9000', 'description' => 'Descripcion de la oferta 2', 'url'=>'offerts/cx5rlibsdrIpztGTya6GrxVbNRfw3asvWWbq4qYO.jpg'],
-            ['id'=> 3, 'title'=> 'Esterilizador de mesa', 'description' => 'Descripcion de la oferta 3', 'url'=>'offerts/mZJaIkoLDyxng3f26jTPXKu2qZVS0KsacouCyaxT.jpg'],
-            ['id'=> 4, 'title'=> 'OPTIRAY 350/50', 'description' => 'Descripcion de la oferta 4', 'url'=>'offerts/dQQLp6Rf9ySdPU9uTyklxcwEq3QPgc9ww5P1lzJI.jpg'],
-            ['id'=> 5, 'title'=> 'CALENTADOR DE MEDIO DE CONTRASTE', 'description' => 'Descripcion de la oferta 5', 'url'=>'offerts/lF9V17WSBHLg9iuBmVWYM0iednCZdXdU6LETzvyG.jpg'],
-
-        ];
+        // ];
         
         return view('welcome', compact('imagelist', 'alliances', 'areas','services','offerts','entepriseInfo'));
+    }
+
+    public function getOfferts(){
+
+        try {
+            $offerts = Offert::where("active","=", 1)->orderBy('index')->get();
+            Log::info($offerts);
+            return $offerts;
+        } catch (Exception $e) {
+            Log::error('Error al obtener ofertas: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener las ofertas'
+            ], 500);
+        }
     }
 
     public function getSpecAreas(){
@@ -99,7 +115,6 @@ class WelcomeController extends Controller
     public function getAlliancees() {
         try {
             $alliances = Alliance::where('active','=',1)->orderBy('index')->get();
-            Log::info($alliances);
             return $alliances;
         } catch (Exception $e) {
             Log::error('Error al obtener alianzas: ' . $e->getMessage());

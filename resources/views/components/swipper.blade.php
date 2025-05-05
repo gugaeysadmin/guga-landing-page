@@ -8,7 +8,7 @@
     <!-- Slides -->
     @foreach($alliances as $alliance)
         <div class="swiper-slide p-10">
-          <div class=" flex justify-center items-center px-10 h-[8rem] w-[13rem] bg-white rounded-2xl shadow-5  mb-12">
+          <div class=" flex justify-center items-center px-10 h-[11rem] w-[18rem] bg-white rounded-2xl shadow-5  mb-12">
               @if ($alliance->url)  
                 <a href="{{ $alliance->url }}" class="my-auto" >
                     <img src="/storage/{{ $alliance->img_url }}" alt="..." class="object-contain" />

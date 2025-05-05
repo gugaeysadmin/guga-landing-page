@@ -65,6 +65,25 @@ class ProductController extends Controller
         }
     }
 
+    public function counting(){
+        Log::info("is this");
+        try {
+            $products = Product::count();
+
+
+            return response()->json([
+                'success' => true,
+                'data' => $products
+            ]);
+        } catch (Exception $e) {
+            Log::error('Error al obtener los productos: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener los productos'
+            ], 500);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -211,6 +230,7 @@ class ProductController extends Controller
             ], 201);
 
         }catch (Exception $e) {
+            DB::rollBack();
             Log::error('Error  crear producto: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
@@ -226,7 +246,20 @@ class ProductController extends Controller
     public function show(string $id)
     {
         try {
-            $product = Product::findOrFail($id);
+            $product = Product::with([
+                'brand' => function($query) {
+                    $query->select('id', 'name');
+                },
+                'category' => function($query) {
+                    $query->select('category_id', 'name');
+                },
+                'ProductSpecAreas.SpecArea' =>function($query) {
+                    $query->select('id', 'name');
+                },
+                'ProductImages' =>function($query) {
+                    $query->select('id','product_id', 'url', 'type', 'index','active');
+                }
+            ])->findOrFail($id);
             
             return response()->json([
                 'success' => true,
@@ -247,6 +280,72 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            DB::beginTransaction();
+            $product = Product::findOrFail($id);
+            
+            $validated = $request->validate([
+                'active' => 'sometimes|boolean',
+            ]);
+
+            if (isset($validated['active'])) {
+                $product->active = $validated['active'];
+            }
+
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->brand_id = $request->brand_id;
+            $product->active = 1;
+    
+            $product->has_accesrorypdf = $request->has_accesrorypdf ? 1 : 0;
+            $product->has_services = $request->has_services ? 1 : 0;
+            $product->has_table = $request->has_table ? 1 : 0;
+
+            $accesoryPdfUrl = "";
+    
+            if ($request->has_services) {
+                $product->services_description = $request->services_description;
+            } else {
+                $product->services_description = null;
+            }
+
+            if ($request->has_accesrorypdf){
+                if ($request->hasFile('accesorypdf')){
+                    $accesoryPdfUrl= $request->file('accesorypdf')->store('productAccesory', 'public');
+                }
+
+                $product->accesorypdf = $accesoryPdfUrl ;
+                $product->accesorypdf_id = $request->catalogaccesrorypdf;
+                $product->pdf_page = $request->has_page;
+    
+            }else{
+                $product->pdf_page = null;
+                $product->accesorypdf = null;
+                $product->accesorypdf_id = null;
+            }
+
+
+            
+            $product->save();
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'message' => 'Oferta actualizada exitosamente',
+                'data' => $product
+            ]);
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error al actualizar oferta: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al actualizar la oferta'
+            ], 500);
+        }
+    }
+
+    public function status(Request $request, string $id)
+    {
+        try {
             $offert = Product::findOrFail($id);
             
             $validated = $request->validate([
@@ -256,20 +355,6 @@ class ProductController extends Controller
             if (isset($validated['active'])) {
                 $offert->active = $validated['active'];
             }
-            
-            // // Manejar la imagen si se proporciona
-            // if ($request->hasFile('image')) {
-            //     // Eliminar la imagen anterior si existe
-            //     if ($offert->img_url) {
-            //         Storage::disk('public')->delete($offert->img_url);
-            //     }
-                
-            //     // Guardar la nueva imagen
-            //     $imageName = time().'_'.Str::slug($validated['title'] ?? $offert->name).'.'.$request->image->extension();
-            //     $imagePath = $request->image->storeAs('offerts', $imageName, 'public');
-            //     $offert->img_url = $imagePath;
-            // }
-
             
             $offert->save();
             

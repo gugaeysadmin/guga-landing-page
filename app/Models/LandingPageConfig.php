@@ -15,6 +15,7 @@ class LandingPageConfig extends Model
         'main_video_url',
         'about_us',
         'special_ofert',
+        'active_special_ofert',
         'contact_phone',
         'contact_phone_alternative',
         'contact_email',

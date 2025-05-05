@@ -31,11 +31,54 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
+    import { ref, onMounted } from 'vue';
+    import { RouterLink } from 'vue-router';
     const productsNumber = ref(0)
     const promotionsNumber = ref(0) 
     const alliancesNumber = ref(0) 
+
+    onMounted(async () => {
+        fetchAllianceNumber();
+        fetchProductNumber();
+        fetchOffertNumber();
+    });
+
+    const fetchProductNumber = async ()=> {
+        try {
+            const response = await fetch('/api/product-count/');
+            const data = await response.json();
+            if (data.success) {
+                productsNumber.value = data.data;
+            }
+        } catch (error) {
+            console.error('Error fetching product:', error);
+        }
+    }
+
+    const fetchAllianceNumber = async ()=> {
+        try {
+            const response = await fetch('/api/alliances-count/');
+            const data = await response.json();
+            if (data.success) {
+                promotionsNumber.value = data.data;
+            }
+        } catch (error) {
+            console.error('Error fetching alliance:', error);
+        }
+    }
+
+    const fetchOffertNumber = async ()=> {
+        try {
+            const response = await fetch('/api/offerts-count/');
+            const data = await response.json();
+            if (data.success) {
+                alliancesNumber.value = data.data;
+            }
+        } catch (error) {
+            console.error('Error fetching offert:', error);
+        }
+    }
+
 
 </script>
 <script>

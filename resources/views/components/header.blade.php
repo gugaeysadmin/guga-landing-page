@@ -13,7 +13,7 @@
     ]
 @endphp --}}
 
-<nav id="header" x-data="{ open: false }" class=" dark:bg-gray-800  dark:border-gray-700">
+<nav id="header" x-data="{ open: false }" class="header dark:bg-gray-800  dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
@@ -66,6 +66,17 @@
                         @endif
                     </div>
                 @endforeach
+                <div class="flex flex-row gap-4 ml-6">
+                    <div class="h-full justify-center items-center content-center">
+                        <a class="bi bi-whatsapp mr-2 text-xl hnav-item" href="https://api.whatsapp.com/send?phone=5567099766"></a>
+                    </div>
+                    <div class="h-full justify-center items-center content-center">
+                        <a class="bi bi-facebook mr-2 text-xl hnav-item" href="https://www.facebook.com/gugaeys/" target="_blank"></a>
+                    </div class="h-full justify-center items-center content-center">
+                    <div class="h-full justify-center items-center content-center">
+                        <a class="bi bi-linkedin text-xl hnav-item" href="https://www.linkedin.com/company/guga-equipos-y-servicios-sa-de-cv" target="_blank"></a>
+                    </div>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

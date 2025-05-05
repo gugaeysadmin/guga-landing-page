@@ -13,7 +13,7 @@
         referrerpolicy="no-referrer-when-downgrade"
         ></iframe>
     </div> --}}
-    <img src="{{ asset('img/catalog_img_header.jpg') }}" alt="services_img" class="w-full  xs:object-fill sm:max-h-[25rem] md:object-cover" style="object-position: 0 10%;"/>
+    <img src="{{ asset('img/footerbg.webp') }}" alt="services_img" class="w-full  xs:object-fill sm:max-h-[25rem] md:object-cover" style="object-position: 0 10%;"/>
     <div class="absolute inset-0 bg-black bg-opacity-60"></div>
     <!-- Informacion de la empresa -->
     <div class=" absolute inset-0 grid grid-cols-1 md:grid-cols-2  gap-20 py-12 sm:px-4 md:px-12 lg:px-32 pt-20">

@@ -190,7 +190,7 @@
 
         <div class="w-full mt-4">
           <div>
-              <label class="block text-md font-medium text-cyan-800">ó Sube el ficha técnica específico a este producto. </label>
+              <label class="block text-md font-medium text-cyan-800">ó Sube el pdf con los accesorios específicos para este producto. </label>
               <input 
                 type="file" 
                 multiple 
@@ -948,7 +948,7 @@
       // })
       if(response.ok){
         console.log(response);
-        // router.back()
+        router.back()
       }
 
     } catch (error) {

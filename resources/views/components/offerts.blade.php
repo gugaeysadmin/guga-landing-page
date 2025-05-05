@@ -2,7 +2,7 @@
 
 <div>
     <div class="pt-20 ">
-        <h1 class="text-center text-[2.2rem] font-sans font-extralight text-[#0392ceff]"> Nuestras ofertas</h1>
+        <h1 class="text-center text-[2.4rem] font-sans font-extralight text-[#0392ceff] italic"> Nuestras ofertas</h1>
     </div>
     <div class=" max-w-[80rem] mx-auto  gap-20 mt-10 pb-32 justify-center items-center">
         {{-- @foreach ($offerts as $offert ) --}}
@@ -35,11 +35,32 @@
                 <div class=" swiper swiper2">  <!-- Cambiado de swiper-container a swiper -->
                     <div class="swiper-wrapper">
                         @foreach($offerts as $offert)
-                            <div class="swiper-slide py-9">  
-                                <div class="flex justify-center items-center h-full">  
+                            <div class="swiper-slide py-9"> 
+                                <button class=" h-[30rem] w-[25rem] px-2 pb-2 bg-white rounded-2xl shadow-4 relative transition-all duration-300 ease-in-out hover:-translate-y-8 hover:cursor-pointer group"
+                                    type="button"
+                                    {{-- onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')"
+                                    data-twe-toggle="modal"
+                                    data-twe-target="#offertModal"
+                                    data-twe-ripple-init
+                                    data-twe-ripple-color="light" --}}
+                                >
+                                        <img
+                                            alt="Oferta"
+                                            src={{'storage/' . $offert['img_url']}}
+                                            class="w-full  bg-black"
+                                        />
+                                    <div class="flex items-center">
+                                        <p class="mt-3  text-xl text-center mx-auto text-sky-900 font-bold">{{ strtoupper($offert['name']) }}</p>
+                                    </div>
+                                
+                                </button>
+
+
+                                {{-- OLD COMPONENT --}}
+                                {{-- <div class="flex justify-center items-center h-full">  
                                     <button class="relative transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group" 
                                         type="button"
-                                        onclick="showOfertModal('{{ $offert['title'] }}', '{{ $offert['description'] }}', '{{ $offert['url']}}')"
+                                        onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')"
                                         data-twe-toggle="modal"
                                         data-twe-target="#offertModal"
                                         data-twe-ripple-init
@@ -48,7 +69,7 @@
                                         <!-- Tu contenido del slide aquí -->
                                         <div class="w-64 h-40 bg-slate-200 border-l-2 border-[#0392ceff] group-hover:bg-[#0392ceff] transform skew-x-[-15deg] flex justify-center items-center pl-11 pr-5 group transition duration-300">
                                             <div class="transform skew-x-[15deg] group-hover:text-white">
-                                                <h4 class="font-semibold text-lg group-hover:font-bold">{{ $offert['title'] }}</h4>
+                                                <h4 class="font-semibold text-lg group-hover:font-bold">{{ $offert['name'] }}</h4>
                                                 <p class="text-xs mt-1 group-hover:font-semibold text-sky-600 underline">VER</p>
                                             </div>
                                         </div>
@@ -57,7 +78,7 @@
                                             <i class="bi bi-percent text-white text-3xl"></i>
                                         </div>
                                     </button> 
-                                </div>
+                                </div> --}}
                             </div>
                         @endforeach
                     </div>

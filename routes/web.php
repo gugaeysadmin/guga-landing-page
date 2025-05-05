@@ -18,6 +18,7 @@ use App\View\Components\Pages\AlliancesController;
 
 use App\View\Components\Pages\CatalogsController;
 use App\View\Components\Pages\ContactController;
+use App\View\Components\Pages\ServiceContactController;
 use App\View\Components\Pages\ServicesController;
 use App\View\Components\Pages\SpecialityAreaController;
 use App\View\Components\Pages\WelcomeController;
@@ -37,6 +38,8 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/catalogs', [CatalogsController::class, 'index'])->name('catalogs');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/services', [ServicesController::class, 'index'])->name('services');
+Route::get('/services/contact/{service}', [ServiceContactController::class, 'showByService'])->name('serviceContact');
+
 Route::get('/alliances', [AlliancesController::class, 'index'])->name('alliances');
 
 
@@ -51,6 +54,7 @@ Route::get('/api/offerts', [OffertController::class, 'index']);
 Route::get('/api/offerts/{id}', [OffertController::class, 'show']);
 Route::put('/api/offerts/{id}', [OffertController::class, 'update']);
 Route::delete('/api/offerts/{id}', [OffertController::class, 'destroy']);
+Route::get('/api/offerts-count/', [OffertController::class, 'counting']);
 
 // Alianzas
 Route::post('/api/alliances/create', [AllianceController::class, 'store']);
@@ -60,6 +64,7 @@ Route::get('/api/alliances', [AllianceController::class, 'index']);
 Route::get('/api/alliances/{id}', [AllianceController::class, 'show']);
 Route::put('/api/alliances/{id}', [AllianceController::class, 'update']);
 Route::delete('/api/alliances/{id}', [AllianceController::class, 'destroy']);
+Route::get('/api/alliances-count/', [AllianceController::class, 'counting']);
 
 //Areas de especialidad
 Route::post('/api/speciality-areas/create', [SpecAreaController::class, 'store']);
@@ -130,7 +135,10 @@ Route::post('/api/product/reorder', action: [ProductController::class, 'reorderI
 Route::post('/api/product/reorder-table', [ProductController::class, 'reorder']);
 Route::get('/api/product', [ProductController::class, 'index']);
 Route::get('/api/product/{id}', [ProductController::class, 'show']);
-Route::put('/api/product/{id}', [ProductController::class, 'update']);
+Route::post('/api/product/{id}', [ProductController::class, 'update']);
+Route::put('/api/product/{id}', [ProductController::class, 'status']);
+Route::get('/api/product-count/', [ProductController::class, 'counting']);
+
 Route::delete('/api/product/{id}', [ProductController::class, 'destroy']);
 
 

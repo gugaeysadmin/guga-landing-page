@@ -10,9 +10,9 @@
 
 <a href="{{ $href }}" class="cursor-pointer flex flex-col transition-transform duration-300 hover:-translate-y-5 hover:border-blue-600 group">
     <div class="my-0 py-0 rounded-full border-2 border-[#0392ceff] group-hover:border-blue-600 m-auto">
-        <img src="/storage/{{ $image }}" alt="esterilization_icon" class="w-24 h-24 my-0 py-0"/>
+        <img src="/storage/{{ $image }}" alt="esterilization_icon" class="w-28 h-28 my-0 py-0"/>
     </div>
-    <div class="text-center mx-7 mt-2">
+    <div class="text-center mx-7 mt-4">
         <p class="text-[1.1rem] text-[#0392ceff] font-sans font-semibold group-hover:text-blue-600">{{ $text }}</p>
         {{-- <i class="bi bi-caret-down-fill text-[#0392ceff] group-hover:text-blue-600"></i> --}}
     </div>

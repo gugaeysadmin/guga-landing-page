@@ -21,7 +21,12 @@
                         {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        
+                        <button
+                            @click="sendToUpdateProduct(product.id)"
+                            class="text-indigo-600 hover:text-indigo-900 mr-3"
+                        >
+                            Editar
+                        </button>
                         <button
                             @click="emit('delete', product.id)"
                             class="text-red-600 hover:text-red-900"
@@ -83,7 +88,8 @@
 
 <script setup>
     import { ref, computed } from 'vue';
-        
+    import { useRouter } from 'vue-router';
+
     const props = defineProps({
         products: {
             type: Array,
@@ -91,6 +97,7 @@
             default: () => []
         }
     });
+    const router = useRouter();
         
     const emit = defineEmits(['search', 'status-change', 'edit', 'delete', 'reorder']);
 
@@ -115,6 +122,9 @@
     const isDragging = ref(false);
     const searchQuery = ref('');
     
+    const sendToUpdateProduct = (id, specarea) => {
+        router.push(`/app/admin/product/update?id=${id}`)
+    }
 
     const formatCategories = (categories)=>{
         if(categories && categories.length > 0){

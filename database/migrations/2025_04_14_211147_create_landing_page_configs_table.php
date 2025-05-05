@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('contact_phone_alternative', 20)->nullable();
             $table->string('contact_email', 50)->nullable();
             $table->text('address')->nullable();
+            $table->boolean('active_special_ofert')->nullable();
             $table->text('optional1')->nullable();
             $table->text('optional2')->nullable();
             $table->text('optional3')->nullable();

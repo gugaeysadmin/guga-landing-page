@@ -24,7 +24,7 @@
             <!-- Page Heading -->
             @isset($header)
                 {{-- <header id="navbar" class="sticky top-0 z-20 w-full dark:bg-gray-800 shadow transition-all duration-300"> --}}
-                <header id="navbar" class="fixed  w-full dark:bg-gray-800 transition-all duration-300 z-50">
+                <header id="navbar" class="navbar fixed  w-full dark:bg-gray-800 transition-all duration-300 z-50">
                         {{ $header }}
                 </header>
             @endisset

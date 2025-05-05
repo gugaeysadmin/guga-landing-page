@@ -33,6 +33,26 @@ class OffertController extends Controller
         }
     }
 
+    public function counting(){
+        
+        try {
+            $products = Offert::count();
+
+
+            return response()->json([
+                'success' => true,
+                'data' => $products
+            ]);
+        } catch (Exception $e) {
+            Log::error('Error al obtener los productos: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al obtener los productos'
+            ], 500);
+        }
+    }
+
+
     /**
      * Store a newly created resource in storage.
      */

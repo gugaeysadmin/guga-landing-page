@@ -16,6 +16,7 @@ import brandspage from "../pages/BrandsPage.vue";
 import servicespage from "../pages/ServicesPage.vue";
 import specareacategorypage from "../pages/SpecAreaCategoryPage.vue"
 import productspecareapage from "../pages/ProductSpecAreaPage.vue";
+import updateproductpage from "../pages/UpdateProductPage.vue";
 const routes = [
     {
         path: '/app/homevue',
@@ -40,6 +41,10 @@ const routes = [
     {
         path: '/app/admin/product/add',
         component: addproductpage
+    },
+    {
+        path: '/app/admin/product/update',
+        component: updateproductpage
     },
     {
         path: '/app/admin/promotions',
