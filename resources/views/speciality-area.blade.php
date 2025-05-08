@@ -178,9 +178,9 @@
                         
                         <div class="block">
                             <div class="min-w-[21rem]  min-h-[31rem] rounded-2xl overflow-hidden  shadow-xl" >
-                                <div id="carousel-{{ $index }}" class="relative bg-gray-600 rounded-2xl  overflow-hidden" data-carousel="static">
+                                <div id="carousel-{{ $index }}" class="relative max-w-[21rem]  max-h-[31rem] bg-gray-600 rounded-2xl  overflow-hidden" data-carousel="static">
                                     <!-- Carousel wrapper -->
-                                    <div class="relative h-full overflow-hidden">
+                                    <div class=" h-full overflow-hidden">
                                         @foreach ($product->product_images as $img )
 
                                             @php
@@ -189,13 +189,13 @@
                                             @endphp
                                             @if (str_starts_with($type, 'image'))
                                                 <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                                                    <img src="/storage/{{ $img->url }}" class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]" alt="...">
+                                                    <img src="/storage/{{ $img->url }}" class=" block w-full h-full object-cover " alt="...">
                                                 </div> 
                                             @elseif(str_starts_with($type, 'video'))
                                                 <div class="hidden duration-1000 ease-in-out" data-carousel-item>
                                                     <video 
                                                         controls    
-                                                        class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]"
+                                                        class="absolute block w-full h-full object-cover "
                                                     >
                                                         <source src="/storage/{{ $img->url }}" :type="{{ $type}}">
                                                     </video>
