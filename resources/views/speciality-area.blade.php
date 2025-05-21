@@ -85,7 +85,7 @@
                                 <p class="text-gray-500 text-xl font-normal  mb-8 max-w-[40rem] break-words whitespace-pre-line overflow-hidden">
                                     {{ $product->description }}
                                 </p>
-                                
+
                                 <div class="flex flex-row w-full gap-6 mt-4">
                                     <a href="https://api.whatsapp.com/send?phone=5567099766" target="_blank" class="flex flex-row justify-center items-center content-center rounded-full h-10 px-6 bg-[#25D366] hover:bg-[#3da362] active:bg-[#25D366]  gap-4">
                                         <i class="bi bi-whatsapp text-xl text-white"></i>
@@ -105,83 +105,85 @@
                                     $rows      = $tableData['table']   ?? [];
                                     echo "<script>console.log(". json_encode($rows) .");</script>";
                                 @endphp
-                                    <div class="block w-full mt-8">
-                                        <div class="text">
-                                            <div class="block w-full mb-6">
-                                                <p class="font-medium text-2xl leading-8 text-gray-900 mb-4">Modelos</p>
-                                                <div class="w-full overflow-auto">
-
+                                    @if ($rows != [] && $headers != [])
+                                        <div class="block w-full mt-8">
+                                            <div class="text">
+                                                <div class="block w-full mb-6">
+                                                    <p class="font-medium text-2xl leading-8 text-gray-900 mb-4">Modelos</p>
                                                     <div class="w-full overflow-auto">
-                                                        <table class="min-w-full  border border-white  shadow-sm overflow-hidden border-separate" style="border-spacing: 0 0.6rem;">
-                                                            <thead>
-                                                                <tr>
-                                                                    @foreach ($headers as $header)
-                                                                        @if ($header != 'imagen')
-                                                                            <th class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider first:rounded-l-lg last:rounded-r-lg bg-[#4180ab] ">
-                                                                                {{ $header }}
-                                                                            </th>
-                                                                        @endif
-                                                                    @endforeach
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody class="divide-y divide-gray-200">
-                                                                @foreach ($rows as $row)
-                                                                    @if (isset($row['position']))
-                                                                        <tr class="cursor-pointer group" data-position="{{ $row['position'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['position'] }})">
-                                                                            @foreach ($headers as $header)
-                                                                                @if ($header != 'imagen' && $header != 'pdf'  && isset($row[$header]))
-                                                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
-                                                                                        {{ isset($row[$header])? $row[$header]: 'N/A' }}
-                                                                                    </td>
-                                                                                @elseif ($header === 'pdf')
-                                                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
-                                                                                        <a href="/storage/{{$row[$header]}}">
-                                                                                            <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
-                                                                                        </a>
-                                                                                            {{-- {{ $row[$header] ?? 'N/A' }} --}}
-                                                                                    </td>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </tr>
-                                                                    @else
-                                                                        <tr class="cursor-pointer group">
-                                                                            @foreach ($headers as $header)
-                                                                                @if ($header != 'imagen' && $header != 'pdf' )
-                                                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
-                                                                                        @if (isset($row[$header]))
-                                                                                            {{$row[$header]}}
-                                                                                        @else
-                                                                                            {{ 'N/A' }}
-                                                                                        @endif
-                                                                                    </td>
-                                                                                @elseif ($header === 'pdf')
-                                                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
-                                                                                        @if ($row[$header])
+
+                                                        <div class="w-full overflow-auto">
+                                                            <table class="min-w-full  border border-white  shadow-sm overflow-hidden border-separate" style="border-spacing: 0 0.6rem;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        @foreach ($headers as $header)
+                                                                            @if ($header != 'imagen')
+                                                                                <th class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider first:rounded-l-lg last:rounded-r-lg bg-[#4180ab] ">
+                                                                                    {{ $header }}
+                                                                                </th>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="divide-y divide-gray-200">
+                                                                    @foreach ($rows as $row)
+                                                                        @if (isset($row['position']))
+                                                                            <tr class="cursor-pointer group" data-position="{{ $row['position'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['position'] }})">
+                                                                                @foreach ($headers as $header)
+                                                                                    @if ($header != 'imagen' && $header != 'pdf'  && isset($row[$header]))
+                                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
+                                                                                            {{ isset($row[$header])? $row[$header]: 'N/A' }}
+                                                                                        </td>
+                                                                                    @elseif ($header === 'pdf')
+                                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
                                                                                             <a href="/storage/{{$row[$header]}}">
                                                                                                 <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
                                                                                             </a>
-                                                                                        @else
-                                                                                            {{ 'N/A' }}
-                                                                                        @endif
-                                                                                    </td>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </tr>
-                                                                    @endif
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
+                                                                                                {{-- {{ $row[$header] ?? 'N/A' }} --}}
+                                                                                        </td>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </tr>
+                                                                        @else
+                                                                            <tr class="cursor-pointer group">
+                                                                                @foreach ($headers as $header)
+                                                                                    @if ($header != 'imagen' && $header != 'pdf' )
+                                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
+                                                                                            @if (isset($row[$header]))
+                                                                                                {{$row[$header]}}
+                                                                                            @else
+                                                                                                {{ 'N/A' }}
+                                                                                            @endif
+                                                                                        </td>
+                                                                                    @elseif ($header === 'pdf')
+                                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
+                                                                                            @if ($row[$header])
+                                                                                                <a href="/storage/{{$row[$header]}}">
+                                                                                                    <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
+                                                                                                </a>
+                                                                                            @else
+                                                                                                {{ 'N/A' }}
+                                                                                            @endif
+                                                                                        </td>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
+                                    @endif
+
                                 @endif
                             </div>
                         @endif
                         {{-- Imagenes y servicios --}}
-                        
+
                         <div class="block sticky top-32 h-fit ">
                             <div class="block min-w-[21rem]  min-h-[31rem] rounded-2xl overflow-hidden  shadow-xl" >
                                 <div id="carousel-{{ $index }}" class="relative max-w-[21rem]  max-h-[31rem] bg-gray-600 rounded-2xl  overflow-hidden" data-carousel="static">
@@ -196,16 +198,16 @@
                                             @if (str_starts_with($type, 'image'))
                                                 <div class="hidden duration-1000 ease-in-out" data-carousel-item>
                                                     <img src="/storage/{{ $img->url }}" class=" block w-full h-full object-cover " alt="...">
-                                                </div> 
+                                                </div>
                                             @elseif(str_starts_with($type, 'video'))
                                                 <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                                                    <video 
-                                                        controls    
+                                                    <video
+                                                        controls
                                                         class="absolute block w-full h-full object-cover "
                                                     >
                                                         <source src="/storage/{{ $img->url }}" :type="{{ $type}}">
                                                     </video>
-                                                </div> 
+                                                </div>
 
                                             @endif
                                         @endforeach
@@ -410,7 +412,7 @@
                                                         }
                                                     ?>
                                                     <div class="h-[35rem] w-full">
-                                                        <iframe 
+                                                        <iframe
                                                             src="{{ asset("/storage/".$url) }}#page={{ $page }}"
                                                             class="w-full h-full"
                                                             frameborder="0"
@@ -436,7 +438,7 @@
                                 <p class="text-gray-500 text-xl font-normal  mb-8 max-w-[40rem] break-words whitespace-pre-line overflow-hidden">
                                     {{ $product->description }}
                                 </p>
-                                
+
                                 <div class="flex flex-row w-full gap-6 mt-4">
                                     <a href="https://api.whatsapp.com/send?phone=5567099766" class="flex flex-row justify-center items-center content-center rounded-full h-10 px-6 bg-[#25D366] hover:bg-[#3da362] active:bg-[#25D366]  gap-4">
                                         <i class="bi bi-whatsapp text-xl text-white"></i>
@@ -456,78 +458,80 @@
                                     $rows      = $tableData['table']   ?? [];
                                     echo "<script>console.log(". json_encode($rows) .");</script>";
                                 @endphp
-                                    <div class="block w-full mt-8">
-                                        <div class="text">
-                                            <div class="block w-full mb-6">
-                                                <p class="font-medium text-2xl leading-8 text-gray-900 mb-4">Modelos</p>
-                                                <div class="w-full overflow-auto">
-
+                                    @if ($rows != [] && $headers != [])
+                                        <div class="block w-full mt-8">
+                                            <div class="text">
+                                                <div class="block w-full mb-6">
+                                                    <p class="font-medium text-2xl leading-8 text-gray-900 mb-4">Modelos</p>
                                                     <div class="w-full overflow-auto">
-                                                        <table class="min-w-full  border border-white  shadow-sm overflow-hidden border-separate" style="border-spacing: 0 0.6rem;">
-                                                            <thead>
-                                                                <tr>
-                                                                    @foreach ($headers as $header)
-                                                                        @if ($header != 'imagen')
-                                                                            <th class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider first:rounded-l-lg last:rounded-r-lg bg-[#4180ab] ">
-                                                                                {{ $header }}
-                                                                            </th>
-                                                                        @endif
-                                                                    @endforeach
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody class="divide-y divide-gray-200">
-                                                                @foreach ($rows as $row)
-                                                                    @if (isset($row['position']))
-                                                                        <tr class="cursor-pointer group" data-position="{{ $row['position'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['position'] }})">
-                                                                            @foreach ($headers as $header)
-                                                                                @if ($header != 'imagen' && $header != 'pdf'  && isset($row[$header]))
-                                                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
-                                                                                        {{ isset($row[$header])? $row[$header]: 'N/A' }}
-                                                                                    </td>
-                                                                                @elseif ($header === 'pdf')
-                                                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
-                                                                                        <a href="/storage/{{$row[$header]}}">
-                                                                                            <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
-                                                                                        </a>
-                                                                                            {{-- {{ $row[$header] ?? 'N/A' }} --}}
-                                                                                    </td>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </tr>
-                                                                    @else
-                                                                        <tr class="cursor-pointer group">
-                                                                            @foreach ($headers as $header)
-                                                                                @if ($header != 'imagen' && $header != 'pdf' )
-                                                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
-                                                                                        @if (isset($row[$header]))
-                                                                                            {{$row[$header]}}
-                                                                                        @else
-                                                                                            {{ 'N/A' }}
-                                                                                        @endif
-                                                                                    </td>
-                                                                                @elseif ($header === 'pdf')
-                                                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
-                                                                                        @if ($row[$header])
+
+                                                        <div class="w-full overflow-auto">
+                                                            <table class="min-w-full  border border-white  shadow-sm overflow-hidden border-separate" style="border-spacing: 0 0.6rem;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        @foreach ($headers as $header)
+                                                                            @if ($header != 'imagen')
+                                                                                <th class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider first:rounded-l-lg last:rounded-r-lg bg-[#4180ab] ">
+                                                                                    {{ $header }}
+                                                                                </th>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="divide-y divide-gray-200">
+                                                                    @foreach ($rows as $row)
+                                                                        @if (isset($row['position']))
+                                                                            <tr class="cursor-pointer group" data-position="{{ $row['position'] }}" onclick="changeCarouselImage('carousel-{{ $index }}', {{ $row['position'] }})">
+                                                                                @foreach ($headers as $header)
+                                                                                    @if ($header != 'imagen' && $header != 'pdf'  && isset($row[$header]))
+                                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
+                                                                                            {{ isset($row[$header])? $row[$header]: 'N/A' }}
+                                                                                        </td>
+                                                                                    @elseif ($header === 'pdf')
+                                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
                                                                                             <a href="/storage/{{$row[$header]}}">
                                                                                                 <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
                                                                                             </a>
-                                                                                        @else
-                                                                                            {{ 'N/A' }}
-                                                                                        @endif
-                                                                                    </td>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </tr>
-                                                                    @endif
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
+                                                                                                {{-- {{ $row[$header] ?? 'N/A' }} --}}
+                                                                                        </td>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </tr>
+                                                                        @else
+                                                                            <tr class="cursor-pointer group">
+                                                                                @foreach ($headers as $header)
+                                                                                    @if ($header != 'imagen' && $header != 'pdf' )
+                                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
+                                                                                            @if (isset($row[$header]))
+                                                                                                {{$row[$header]}}
+                                                                                            @else
+                                                                                                {{ 'N/A' }}
+                                                                                            @endif
+                                                                                        </td>
+                                                                                    @elseif ($header === 'pdf')
+                                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 first:rounded-l-lg last:rounded-r-lg bg-[#e4ebf0] group-hover:bg-[#bdd1de] transition transition-300">
+                                                                                            @if ($row[$header])
+                                                                                                <a href="/storage/{{$row[$header]}}">
+                                                                                                    <i class="bi bi-file-earmark-pdf-fill   text-red-500"></i>
+                                                                                                </a>
+                                                                                            @else
+                                                                                                {{ 'N/A' }}
+                                                                                            @endif
+                                                                                        </td>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
+                                    @endif
+
                                 @endif
                             </div>
                         @endif
@@ -662,7 +666,7 @@
 
         // Obtener el botón correspondiente al indicador del carrusel
         const button = carousel.querySelector(`button[data-carousel-slide-to="${position}"]`);
-        
+
         // Simular un clic en el botón para cambiar la imagen del carrusel
         if (button) {
             button.click();
@@ -679,7 +683,7 @@
         document.getElementById('offertImage').src = fullImageUrl;
 
         document.getElementById('offertModalLongDesc').textContent = shortDesc;
-        
+
         // Si necesitas manejar condiciones dinámicas:
         // const conditionsList = document.getElementById('offertModalConditions');
         // conditionsList.innerHTML = conditions.map(c => `<li>${c}</li>`).join('');
@@ -695,7 +699,7 @@
         document.getElementById('offertImage').src = fullImageUrl;
 
         document.getElementById('offertModalLongDesc').textContent = shortDesc;
-        
+
         // Si necesitas manejar condiciones dinámicas:
         // const conditionsList = document.getElementById('offertModalConditions');
         // conditionsList.innerHTML = conditions.map(c => `<li>${c}</li>`).join('');
