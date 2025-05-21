@@ -13,7 +13,7 @@
         <img src="/storage/{{ $image }}" alt="esterilization_icon" class="w-28 h-28 my-0 py-0"/>
     </div>
     <div class="text-center mx-7 mt-4">
-        <p class="text-[1.1rem] text-[#0392ceff] font-sans font-semibold group-hover:text-blue-600">{{ $text }}</p>
+        <p class="text-[1.1rem] max-w-32 text-[#0392ceff] font-sans font-semibold group-hover:text-blue-600">{{ $text }}</p>
         {{-- <i class="bi bi-caret-down-fill text-[#0392ceff] group-hover:text-blue-600"></i> --}}
     </div>
 </a>

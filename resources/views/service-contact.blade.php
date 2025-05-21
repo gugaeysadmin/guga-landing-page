@@ -24,13 +24,13 @@
                     <div class=" bg-sky-200 shadow-lg p-6 xs:w-full lg:w-[40vw]  border rounded-lg ">
                         <h2 class="text-md text-center font-sans font-semibold mb-2 text-blue-500">CONTACTA CON NOSOTROS</h2>
                         <h2 class="text-3xl text-center font-sans font-semibold mb-12 text-blue-950">Formulario de contacto</h2>
-                        <form action="#" method="post">
+                        <form action="{{ route('contact.sendServiceContact') }}" method="post">
+                            @csrf
                             <div class="mb-4">
                                 <label for="service" class="block text-sm font-medium text-gray-700">Servicio</label>
                                 <select
                                     id="service"
-                                    name="service"
-                                    
+                                    name="service"        
                                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                                 >
                                     <option value="">Selecciona un servicio</option>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="company" class="block text-sm font-medium text-gray-700">Empresa</label>
-                                <input id="company" name="email" type="email" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <input id="company" name="company" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             </div>
                             <div class="mb-4">
                                 <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
@@ -53,8 +53,8 @@
                             </div>
                             
                             <div class="mb-4">
-                                <label for="company" class="block text-sm font-medium text-gray-700">Teléfono</label>
-                                <input id="company" name="email" type="email" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                                <input id="phone" name="phone" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             </div>
                             <div class="mb-4">
                                 <label for="comments" class="block text-sm font-medium text-gray-700">Comentario</label>
@@ -70,3 +70,7 @@
 
     <x-slot name="footer"><x-footer/></x-slot>
 </x-layouts.landingpage-layout>
+
+<div class="fixed bottom-10 right-0 z-50">
+    <x-contact-button />
+</div>

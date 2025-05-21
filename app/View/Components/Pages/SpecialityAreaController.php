@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AccesoryPdf;
 use App\Models\Product;
 use App\Models\SpecialityArea;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\View\Component;
 use Log;
@@ -16,33 +17,26 @@ class SpecialityAreaController extends Controller
 {
 
 
-    public function showBySpecialty($specialty)
+    public function showBySpecialty($specialty, Request $request)
     {
-        // Lógica para manejar la especialidad
-        // Por ejemplo, buscar información en la base de datos:
-        $data = [
-            'refrigeration' => 'Refrigeración',
-            'sterilization' => 'sterilización',
-            'operating-room' => 'Quirófano',
-            'imageneology' => 'Imageneologia'
-        ];
 
-        $contentData = [
-            ['name'=> 'priducto 1', 'img' => 'https://pagedone.io/asset/uploads/1700471851.png'],
-            ['name'=> 'priducto 2', 'img' => 'https://pagedone.io/asset/uploads/1711514857.png'],
-            ['name'=> 'priducto 3', 'img' => 'https://pagedone.io/asset/uploads/1711514875.png'],
-            ['name'=> 'priducto 4', 'img' => 'https://pagedone.io/asset/uploads/1711514892.png'],
-            ['name'=> 'priducto 5', 'img' => 'https://pagedone.io/asset/uploads/1711514857.png'],
-            ['name'=> 'priducto 6', 'img' => 'https://pagedone.io/asset/uploads/1711514875.png'],
-        ];
+        // $data = [
+        //     'refrigeration' => 'Refrigeración',
+        //     'sterilization' => 'sterilización',
+        //     'operating-room' => 'Quirófano',
+        //     'imageneology' => 'Imageneologia'
+        // ];
+
         
         $specareadata = $this->getFilters($specialty);
-        $filters = $specareadata['filters'];
+        $filters = $specareadata['filters'] ?? [];
         if($filters == null){
             $filters = [];
         }
         $video_url = $specareadata['video_url'];
-        $content=$this->getSpecAreaData($specialty);
+
+        $content=$this->getSpecAreaData($specialty, $request->input('filter', []));
+
         $products = json_encode($content);
         $accesoryPdf = $this->getAccesoryPdfs();
 
@@ -50,7 +44,7 @@ class SpecialityAreaController extends Controller
         return view('speciality-area', ['info' => $specialty, 'content'=>json_decode($products), 'filters' => $filters, 'video_url'=> $video_url, 'accesoryPdf'=>$accesoryPdf]);
     }
 
-    public function getSpecAreaData($speciality){
+    public function getSpecAreaData($speciality, $appliedFilters = []){
 
         try {
             $product =  Product::with([
@@ -69,10 +63,18 @@ class SpecialityAreaController extends Controller
             ->join('speciality_areas', 'product_spec_areas.spec_area_id', '=', 'speciality_areas.id')
             ->where('speciality_areas.name', $speciality)
             ->where('products.active','=',1)
-            ->orderBy('product_spec_areas.index') // Ordenar por la tabla intermedia
-            ->select('products.*') // Asegurar que solo seleccione campos de products
-            ->get();
-            return $product;
+            ->orderBy('product_spec_areas.index');
+
+            if (!empty($appliedFilters)) {
+                // Aplanar el array de filtros para obtener solo las categorías específicas
+                $categories = collect($appliedFilters)->flatten()->unique()->toArray();
+                
+                $product->whereHas('category', function($q) use ($categories) {
+                    $q->whereIn('name', $categories);
+                });
+            }
+
+            return $product->select('products.*')->get();
         } catch (Exception $e) {
             Log::error('Error al obtener producto: ' . $e->getMessage());
         }

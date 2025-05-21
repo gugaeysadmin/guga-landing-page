@@ -42,11 +42,11 @@
             @endisset
 
 
-            @if(request()->is('/'))
-                <div id="contactBtn" class="fixed bottom-10 right-0 z-50 hidden">
+            {{-- @if(request()->is('/') || request()->is('/catalogs') || request()->is('/services') || request()->is('/contact') ) --}}
+                <div id="contactBtn" class="fixed bottom-10 right-0 z-50">
                     <x-contact-button />
                 </div>
-            @endif
+            {{-- @endif --}}
         </div>
     </body>
 </html>

@@ -79,9 +79,9 @@
                 <img src="{{ asset('img/services-install.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
             </div>
             <div class="font-sans px-8 md:px-12">
-                <h1 class="text-2xl font-semibold text-sky-700 mt-6 mb-4">Instalación</h1>
+                <h1 class="text-2xl font-semibold text-sky-700 mt-6 mb-4">Instalación, desinstalación y reacondicionamiento</h1>
                 <p class="text-sky-700">
-                    Para la instalación de equipos médicos se cuenta con ingenieros especializados en la tecnología médica de los equipos para brindar a los usuarios la confianza de un correcto uso y mantenimiento.
+                    Para la instalación/desinstalación de equipos médicos se cuenta con ingenieros especializados en la tecnología médica de los equipos para brindar a los usuarios la confianza de un servicio confiable en todo momento.
                 </p>
                 <ul class="mt-4 font-sans text-sm list-disc px-4 text-sky-700 ">
                     <li class="py-1 rounded-md"><b>Desinstalación</b> (desensamble, desconexión)</li>
@@ -350,3 +350,7 @@
     </div> --}}
     <x-slot name="footer"><x-footer/></x-slot>
 </x-layouts.landingpage-layout>
+
+<div class="fixed bottom-10 right-0 z-50">
+    <x-contact-button />
+</div>

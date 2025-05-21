@@ -59,6 +59,12 @@
 
             {{-- Contenido --}}
             <main class="flex flex-col gap-72 w-9/12 max-w-9/12 mt-14 mb-72 ">
+
+            @if (count($content) === 0)
+                <div class="w-full text-center pt-14">
+                    <p class="uppercase text-2xl text-gray-400 font-bold"> no se encontraron productos</p>
+                </div>
+            @endif
                 @foreach ($content as $index => $product)
                 {{-- <?php
                     $mensaje = "Hola desde PHP";
@@ -66,7 +72,7 @@
                 ?> --}}
 
                     {{-- Productos --}}
-                    <div class="flex flex-row gap-24 ">
+                    <div class="flex flex-row gap-24  ">
                         {{-- Descripcion y modelos --}}
                         @if ($index % 2 != 0)
                             <div class="pro-detail w-full block justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
@@ -81,7 +87,7 @@
                                 </p>
                                 
                                 <div class="flex flex-row w-full gap-6 mt-4">
-                                    <a href="https://api.whatsapp.com/send?phone=5567099766" class="flex flex-row justify-center items-center content-center rounded-full h-10 px-6 bg-[#25D366] hover:bg-[#3da362] active:bg-[#25D366]  gap-4">
+                                    <a href="https://api.whatsapp.com/send?phone=5567099766" target="_blank" class="flex flex-row justify-center items-center content-center rounded-full h-10 px-6 bg-[#25D366] hover:bg-[#3da362] active:bg-[#25D366]  gap-4">
                                         <i class="bi bi-whatsapp text-xl text-white"></i>
                                         <p class="text-lg font-bold text-white">Whatsapp</p>
                                     </a>
@@ -176,11 +182,11 @@
                         @endif
                         {{-- Imagenes y servicios --}}
                         
-                        <div class="block">
-                            <div class="min-w-[21rem]  min-h-[31rem] rounded-2xl overflow-hidden  shadow-xl" >
+                        <div class="block sticky top-32 h-fit ">
+                            <div class="block min-w-[21rem]  min-h-[31rem] rounded-2xl overflow-hidden  shadow-xl" >
                                 <div id="carousel-{{ $index }}" class="relative max-w-[21rem]  max-h-[31rem] bg-gray-600 rounded-2xl  overflow-hidden" data-carousel="static">
                                     <!-- Carousel wrapper -->
-                                    <div class=" h-full overflow-hidden">
+                                    <div class=" min-w-[21rem]  min-h-[31rem]  overflow-hidden">
                                         @foreach ($product->product_images as $img )
 
                                             @php

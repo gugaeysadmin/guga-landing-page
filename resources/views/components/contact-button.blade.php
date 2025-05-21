@@ -1,6 +1,6 @@
 <div x-data="{ open: false, expanded: false }" class="fixed bottom-10 right-0 select-none">
     <!-- Contenedor del botón -->
-    <div @click="if (!expanded) { open = !open }" 
+    {{-- <div @click="if (!expanded) { open = !open }" 
          @click.away="expanded = false"
          x-transition:enter="transition-all duration-75 ease-in-out"
          x-transition:leave="transition-all duration-75 ease-in-out"
@@ -13,7 +13,6 @@
          }"
          style="transition: all 300ms ease-in-out;"> 
 
-        <!-- Icono -->
         <div class="flex items-center justify-center bg-white"
              :class="{
                  'w-12 h-12 rounded-full': !expanded,
@@ -23,7 +22,6 @@
             <i class="bi bi-headset text-3xl text-blue-500"></i>
         </div>
 
-        <!-- Texto -->
         <div class="text-white text-lg font-bold font-sans"
              :class="{
                  'text-center ml-2': open && !expanded,
@@ -34,7 +32,6 @@
             Contáctanos
         </div>
 
-        <!-- Contenido adicional cuando está expandido -->
         <template x-if="expanded">
             <div class="text-white text-center">
                 <div class="mt-6 w-72 flex flex-col gap-1">
@@ -63,25 +60,40 @@
                 </div>
             </div>
         </template>
-    </div>
+    </div> --}}
 
-    <!-- Lógica para las transiciones en secuencia -->
-    <div x-effect="if (open) {
+
+    {{-- <div x-effect="if (open) {
         setTimeout(() => {
             expanded = true;
-        }, 300); // Espera a que termine la primera animación
+        }, 300); 
     }"></div>
     <div x-effect="if (!expanded) {
         setTimeout(() => {
             open = false;
-        }, 300); // Espera a que termine la segunda animación
-    }"></div>
+        }, 300); 
+    }"></div> --}}
+
+
+    <a href="https://api.whatsapp.com/send?phone=5567099766" target="_blank" class="cursor-pointer h-16 w-52 bg-[#3da362] hover:bg-[#25D366] active:bg-[#25D366] rounded-l-full flex flex-row items-center gap-2 pl-2 pr-6 shadow-lg justify-start" style="transition: all 300ms ease-in-out;"> 
+
+        <div class="flex items-center justify-center bg-white w-12 h-12 rounded-full"
+             style="transition: all 300ms ease-in-out;">
+            <i class="bi bi-whatsapp text-3xl text-[#3da362]"></i>
+        </div>
+
+        <div class="text-white text-lg font-bold font-sans ml-2"
+             style="transition: all 300ms ease-in-out;">
+            Whatsapp
+        </div>
+
+    </a>
 </div>
 
-<script>
+{{-- <script>
     function closeComponent() {
         setTimeout(() => {
             expanded = false;
         }, 300); // Retrasa la contracción para que se haga en orden
     }
-</script>
+</script> --}}

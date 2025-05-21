@@ -12,28 +12,44 @@
             <h1 class="text-white text-[3.5vw] font-sans">Todos nuestros equipos</h1>
         </div>
     </div>
-    <div class="flex px-4 md:px-16 m-auto mb-40">
-        <!-- Filtros -->
-        <aside class="w-1/4 bg-gray-100 p-4 mt-12 sticky">
-            <x-filters  :title="'Categorias de producto'" :filters="$filters"/>
-        </aside>
-        {{-- <?php
-            $mensaje = "Hola desde PHP";
-            echo "<script>console.log(". json_encode($product->services_description ?? "") .");</script>";
-        ?> --}}
-        <!-- Contenido -->
-        <main class="w-3/4 p-4" x-data="{ isGrid: true  }">
-            <!-- Botón de cambio de modo -->
-            <div class="flex justify-end mb-4">
-                <button id="gridView" @click="isGrid = true" class="mr-2 px-4 py-2 bg-sky-600 rounded hover:bg-sky-500" id="gridView">
-                    <i class="bi bi-grid text-xl text-sky-50"></i>
-                </button>
-                <button id="listView" @click="isGrid = false" class="px-4 py-2 bg-sky-600 rounded hover:bg-sky-500" id="listView">
-                    <i class="bi bi-list-ul text-xl text-sky-50"></i>
-                </button>
-            </div>
-            <!-- Contenedor de productos -->
+    <section class="py-32 px-4 sm:px-12 bg-slate-50">
+        <div class="max-w-[100rem] mx-auto">
+            <x-equipment-areas-catalogs :specareas="$specareas"/>
+        </div>
+    </section>
+
+    @php
+        $filtroEspecialidad = request()->input('filter.Áreas de ecpecialidad.0');
+    @endphp
+
+    @if($filtroEspecialidad)
+        <div id="seccion-filtro" class="flex px-4 md:px-16 m-auto pb-40 bg-slate-50 scroll-mt-36">
+            <!-- Filtros -->
+            <aside class="w-1/4 bg-slate-50 p-4 mt-12 sticky">
+                <x-filters  :title="'Categorias de producto'" :filters="$filters"/>
+            </aside>
+            {{-- <?php
+                $mensaje = "Hola desde PHP";
+                echo "<script>console.log(". json_encode($product->services_description ?? "") .");</script>";
+            ?> --}}
+            <!-- Contenido -->
+            <main class="w-3/4 p-4" x-data="{ isGrid: true  }">
+                <!-- Botón de cambio de modo -->
+                <div class="flex justify-end mb-4">
+                    <button id="gridView" @click="isGrid = true" class="mr-2 px-4 py-2 bg-sky-600 rounded hover:bg-sky-500" id="gridView">
+                        <i class="bi bi-grid text-xl text-sky-50"></i>
+                    </button>
+                    <button id="listView" @click="isGrid = false" class="px-4 py-2 bg-sky-600 rounded hover:bg-sky-500" id="listView">
+                        <i class="bi bi-list-ul text-xl text-sky-50"></i>
+                    </button>
+                </div>
+                <!-- Contenedor de productos -->
                 <div   id="productsContainer" class="flex flex-row flex-wrap gap-14">
+                    @if (count($products) === 0)
+                        <div class="w-full text-center pt-14">
+                            <p class="uppercase text-2xl text-gray-400 font-bold"> no se encontraron productos</p>
+                        </div>
+                    @endif
                     @foreach($products as $index => $product)
                         <?php
                             $img = "";
@@ -41,7 +57,7 @@
                             $productDecode = json_decode($encodeProduct);
 
                             foreach($productDecode->product_images as $image){
-                                 $type = trim($image->type ?? '', "\"' \t\n\r\0\x0B");
+                                    $type = trim($image->type ?? '', "\"' \t\n\r\0\x0B");
 
                                 // Imprime en consola para verificar exactamente lo que llega
                                 echo "<script>console.log('type → ' + " . json_encode($type) . ");</script>";
@@ -62,7 +78,9 @@
                             data-twe-ripple-color="light"
                         >
                                 <img src="{{ $img}}" alt="Producto" class=" object-cover h-full shadow-sm rounded-lg mb-4 group-hover:shadow-lg ">
-                            <h3 class="font-sans mt-4 font-semibold xs:text-md md:text-2xl text-sky-600 uppercase ">{{ $product->name }}</h3>
+                                <div >
+                                    <h3 class=" font-sans mt-4 font-semibold xs:text-md md:text-2xl text-sky-600 uppercase ">{{ $product->name }}</h3>
+                                </div>
                         </button>
                         <button x-show="!isGrid" class="productCard bg-white rounded-xl p-4 shadow-lg hover:shadow-xl  flex transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group"
                                 data-twe-toggle="modal"
@@ -606,9 +624,24 @@
                 <div class="mt-4 m-auto">
                     {{ $products->links() }}
                 </div>
-            </div>
-        </main>
-    </div>
+            </main>
+        </div>
+
+        @push('scripts')
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const seccion = document.getElementById('seccion-filtro');
+                    if(seccion) {
+                        // Scroll suave con offset para el header
+                        window.scrollTo({
+                            top: seccion.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            </script>
+        @endpush
+    @endif
  
 
     {{-- Footer --}}
@@ -627,3 +660,7 @@
         });
     </script>
 </x-layouts.landingpage-layout>
+
+<div class="fixed bottom-10 right-0 z-50">
+    <x-contact-button />
+</div>

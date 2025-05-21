@@ -309,10 +309,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // También ejecutar después de un pequeño delay
         setTimeout(updateNavbar, 300);
+        document.addEventListener('scroll', updateNavbar);
     }
 });
 
-if(!window.location.pathname.startsWith('/app')){
-    // Escuchar eventos de scroll
-    document.addEventListener('scroll', updateNavbar);
-}
+// if(!window.location.pathname.startsWith('/app')){
+//     // Escuchar eventos de scroll
+//     document.addEventListener('scroll', updateNavbar);
+// }

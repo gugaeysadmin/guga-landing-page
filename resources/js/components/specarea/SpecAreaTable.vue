@@ -111,12 +111,12 @@
                         >
                             Editar
                         </button>
-                        <button
+                        <!-- <button
                             @click="emit('delete', specArea.id)"
                             class="text-red-600 hover:text-red-900"
                         >
                             Eliminar
-                        </button>
+                        </button> -->
                     </td>
                 </tr>
                 <tr v-if="specAreas.length === 0">

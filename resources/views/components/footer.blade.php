@@ -31,7 +31,7 @@
         <div  class="block ga text-gray-200 max-w-[30rem]">
             <!-- Seccion con la direccion, telefono y correo -->
             <p class="bi bi-geo-alt">
-                Jazmines #34 Col. Granjas San Pablo C.P. 54930 Tultitlan Estado de
+                Tultitlan, Estado de
                 México México
             </p>
             <p class="bi bi-phone mt-4">

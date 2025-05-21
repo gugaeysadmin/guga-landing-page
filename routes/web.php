@@ -18,6 +18,7 @@ use App\View\Components\Pages\AlliancesController;
 
 use App\View\Components\Pages\CatalogsController;
 use App\View\Components\Pages\ContactController;
+use App\Http\Controllers\ContactController as ContactControllerApi;
 use App\View\Components\Pages\ServiceContactController;
 use App\View\Components\Pages\ServicesController;
 use App\View\Components\Pages\SpecialityAreaController;
@@ -45,6 +46,12 @@ Route::get('/alliances', [AlliancesController::class, 'index'])->name('alliances
 
 
 // APIS
+
+Route::post('/contact/email', [ContactControllerApi::class, 'sendContact'])->name('contact.sendContact');
+Route::post('/contact/specific-email', [ContactControllerApi::class, 'specificServiceContact'])->name('contact.sendSpecificContact');
+Route::post('/contact/service/email', [ContactControllerApi::class, 'sendServiceContact'])->name('contact.sendServiceContact');
+
+
 
 // Ofertas
 Route::post('/api/offerts/create', [OffertController::class, 'store']);

@@ -99,6 +99,8 @@
     {{-- Footer --}}
     <x-slot name="footer"><x-footer/></x-slot>
 </x-layouts.landingpage-layout>
+
+
 {{-- Viejo codigo --}}
 
 
