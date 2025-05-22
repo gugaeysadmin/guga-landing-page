@@ -2,11 +2,15 @@
 <x-layouts.landingpage-layout>
     {{-- Header --}}
     <x-slot name="header"> <x-header/></x-slot>
-    
+
     {{-- video --}}
     <div class="block">
         <x-landing-video :description="$entepriseInfo->main_description"/>
     </div>
+    <div class="w-full">
+        <x-flipbook/>
+    </div>
+
 
     {{-- Areas de equipamiento --}}
     <section class="py-32 px-4 sm:px-12 bg-slate-50">
@@ -67,7 +71,7 @@
             </div>
         </div>
     </section>
-    
+
     {{-- <div class="w-full md:w-3/5 py-16">
         <h1 class="px-5 sm:px-5 md:px-32 text-[3rem] font-sans font-semibold text-[#0392ceff]">{{ __('Alianzas') }}</h1>
         <div class="mx-5 sm:mx-5 md:ml-32 md:mr-40 mt-4 mb-10 border-t-[3px] border-slate-400"></div>
@@ -79,7 +83,7 @@
 
 
 
-    
+
 
 
     {{-- <section class="bg-slate-50 flex flex-wrap md:flex-row flex-col">
@@ -94,8 +98,8 @@
             <x-swipper :slides="$aliances" />
         </div>
     </section> --}}
- 
-    
+
+
     {{-- Footer --}}
     <x-slot name="footer"><x-footer/></x-slot>
 </x-layouts.landingpage-layout>
@@ -151,7 +155,7 @@
     <button
         id="triggerSpecialOffertModal"
         type="button"
-        
+
         class="hidden"
         data-twe-toggle="modal"
         data-twe-target="#specialOffertModal"

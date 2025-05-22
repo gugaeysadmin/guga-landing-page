@@ -14,4 +14,10 @@ export default defineConfig({
         }),
         vue()
     ],
+    resolve: {
+        alias: {
+            'jquery': 'jquery/dist/jquery.min.js',
+            'turn.js': 'turn.js/turn.min.js'
+        }
+    }
 });

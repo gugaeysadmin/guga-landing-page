@@ -10,6 +10,7 @@ import { createApp } from 'vue';
 import mainVue from './app.vue'
 import router from './router';
 
+
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -268,7 +269,7 @@ function updateNavbar() {
             navitem.classList.add('text-gray-500', 'hover:text-sky-500', 'font-semibold');
         });
         navbar.classList.add('bg-slate-50', 'shadow');
-        logo.src = "/img/logo_normal.png"; 
+        logo.src = "/img/logo_normal.png";
         if (!modalMostrado) {
             document
                 .getElementById('triggerSpecialOffertModal')
@@ -306,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!window.location.pathname.startsWith('/app')) {
         // Ejecutar inmediatamente al cargar
         updateNavbar();
-        
+
         // También ejecutar después de un pequeño delay
         setTimeout(updateNavbar, 300);
         document.addEventListener('scroll', updateNavbar);
