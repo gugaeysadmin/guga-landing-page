@@ -122,14 +122,15 @@
                 <img src="{{ asset('img/services-maintenance.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
             </div>
             <div class="font-sans px-8 md:px-12">
-                <h1 class="text-2xl font-semibold text-sky-700 mt-12 mb-4">Mantenimiento correctivo</h1>
-                <p class="text-sky-700">
+                <h1 class="text-2xl font-semibold text-sky-700 mt-20 mb-4">Mantenimiento correctivo</h1>
+                {{-- <p class="text-sky-700">
                     Actividades no planificadas necesarias para restaurar la integridad, seguridad o función del equipo después de una falla.
-                </p>
-                <h1 class="text-2xl font-semibold text-sky-700 mt-12 mb-4">Mantenimiento preventivo</h1>
-                <p class="text-sky-700">
+                </p> --}}
+                <h1 class="text-2xl font-semibold text-sky-700 my-4 ml-32">y</h1>
+                <h1 class="text-2xl font-semibold text-sky-700 mb-4">Mantenimiento preventivo</h1>
+                {{-- <p class="text-sky-700">
                     Una actividad programada para asegurar que el equipo médico funcione normalmente y continúe desempeñando su función.
-                </p>
+                </p> --}}
             </div>
         </div>
     </div>
@@ -248,9 +249,9 @@
                     <i class="bi bi-person-lines-fill text-[3.5rem]"></i>
                 </div>
                 <div class="w-[65%] flex items-center justify-center px-4">
-                    <div class="rounded-full border-solid border-4 border-sky-50 p-4 bg-sky-100">
+                    <a href="/contact"  class="rounded-full border-solid border-4 border-sky-50 p-4 bg-sky-100 hover:bg-sky-200 active:bg-sky-50">
                         <h1 class=" font-semibold text-sky-800">CONTACTANOS</h1>
-                    </div>
+                    </a>
                 </div>
             </div>
 

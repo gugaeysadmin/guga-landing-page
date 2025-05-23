@@ -7,9 +7,9 @@
     <div class="block">
         <x-landing-video :description="$entepriseInfo->main_description"/>
     </div>
-    <div class="w-full">
+    {{-- <div class="w-full">
         <x-flipbook/>
-    </div>
+    </div> --}}
 
 
     {{-- Areas de equipamiento --}}
