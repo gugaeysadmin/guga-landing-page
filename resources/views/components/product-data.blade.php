@@ -1,5 +1,5 @@
 @props(["product", "index"])
-<div class="pro-detail block justify-center order-last lg:order-none max-lg:max-w-[608px] max-lg:mx-auto">
+<div class="pro-detail block justify-center order-last lg:order-none  max-lg:mx-auto">
     <h2 class="mb-2 font-manrope font-bold text-4xl mt-8 leading-10 text-gray-900 uppercase">
         {{ $product->name }}
     </h2>
@@ -36,7 +36,7 @@
                         <p class="font-medium text-2xl leading-8 text-gray-900 mb-4">Modelos</p>
                         <div class="w-full overflow-auto">
 
-                            <div class="w-full overflow-auto">
+                            <div class="w-full overflow-auto ">
                                 {{-- <table class="min-w-full  border border-white  shadow-sm overflow-hidden border-separate" style="border-spacing: 0 0.1rem;">
                                     <thead>
                                         <tr>
@@ -96,7 +96,7 @@
                                     </tbody>
                                 </table> --}}
 
-                                <table class="w-[40rem] border border-white shadow-sm overflow-hidden border-separate" style="border-spacing: 0 0.1rem;">
+                                <table class=" w-full max-w-[40rem] border border-white shadow-sm overflow-auto border-separate" style="border-spacing: 0 0.1rem;">
                                     <thead>
                                         <tr>
                                             @foreach ($headers as $header)

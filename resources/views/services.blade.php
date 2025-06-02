@@ -73,7 +73,7 @@
         </div>
     </div> --}}
 
-    <div class="flex justify-center my-24">
+    {{-- <div class="flex justify-center my-24">
         <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem]">
             <div class="flex items-center justify-center">
                 <img src="{{ asset('img/services-install.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
@@ -91,9 +91,9 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="flex justify-center my-24">
+    {{-- <div class="flex justify-center my-24">
         <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem]">
             <div class="font-sans px-8 md:px-12">
                 <h1 class="text-2xl font-semibold text-sky-700 mt-6 mb-4">Reinstalación</h1>
@@ -111,29 +111,48 @@
                 <img src="{{ asset('img/services-reinstall.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
             </div>
         </div>
+    </div> --}}
+
+    <div class="flex justify-center my-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem]">
+            <div class="font-sans px-8 md:px-12">
+                <h1 class="text-2xl font-semibold text-sky-700 mt-6 mb-4">Instalación, desinstalación y reacondicionamiento</h1>
+                <p class="text-sky-700">
+                    Para la instalación/desinstalación de equipos médicos se cuenta con ingenieros especializados en la tecnología médica de los equipos para brindar a los usuarios la confianza de un servicio confiable en todo momento.
+                </p>
+                <ul class="mt-4 font-sans text-sm list-disc px-4 text-sky-700 ">
+                    <li class="py-1 rounded-md"><b>Desinstalación</b> (desensamble, desconexión)</li>
+                    <li class="py-1 rounded-md mt-1"><b>Empaque</b> (embalaje de equipos)</li>
+                    <li class="py-1 rounded-md mt-1"><b>Traslado</b> (maniobras, reordenamiento y traslado)</li>
+                    <li class="py-1 rounded-md mt-1"><b>Instalación</b> (conexión, calibración y ajustes)</li>
+                </ul>
+            </div>
+            <div class="flex items-center justify-center">
+                <img src="{{ asset('img/services-install.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
+            </div>
+        </div>
     </div>
 
     
-
-    {{-- Mantenimientos correctivo y preventivo --}}
     <div class="flex justify-center my-24">
-        <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem]">
+        <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem] w-full">
             <div class="flex items-center justify-center">
                 <img src="{{ asset('img/services-maintenance.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
             </div>
-            <div class="font-sans px-8 md:px-12">
-                <h1 class="text-2xl font-semibold text-sky-700 mt-20 mb-4">Mantenimiento correctivo</h1>
+            <div class="font-sans px-8 md:px-12 justify-center items-center">
+                <h1 class="text-2xl font-semibold text-sky-700 mt-20 mb-4 text-center">Mantenimiento correctivo</h1>
                 {{-- <p class="text-sky-700">
                     Actividades no planificadas necesarias para restaurar la integridad, seguridad o función del equipo después de una falla.
                 </p> --}}
-                <h1 class="text-2xl font-semibold text-sky-700 my-4 ml-32">y</h1>
-                <h1 class="text-2xl font-semibold text-sky-700 mb-4">Mantenimiento preventivo</h1>
+                <h1 class="text-2xl font-semibold text-sky-700 my-4 text-center">y</h1>
+                <h1 class="text-2xl font-semibold text-sky-700 mb-4 text-center">Mantenimiento preventivo</h1>
                 {{-- <p class="text-sky-700">
                     Una actividad programada para asegurar que el equipo médico funcione normalmente y continúe desempeñando su función.
                 </p> --}}
             </div>
         </div>
     </div>
+
 
     {{-- Entregables --}}
     <div class="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-4 font-body text-center my-24">

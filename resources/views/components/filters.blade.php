@@ -8,7 +8,7 @@
     <form id="filterForm" method="GET" action="{{ $route ?? url()->current() }}" class="flex flex-col gap-2">
         @foreach ($filters as $key => $filter)
             <button
-                class="group relative flex w-full rounded-xl items-center border-0 bg-slate-300 px-5 py-4 text-left font-semibold text-md text-blue-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white [&:not([data-twe-collapse-collapsed])]:bg-[#8ab3cf] [&:not([data-twe-collapse-collapsed])]:text-sky-50 [&:not([data-twe-collapse-collapsed])]:shadow-border-b dark:[&:not([data-twe-collapse-collapsed])]:bg-surface-dark dark:[&:not([data-twe-collapse-collapsed])]:text-primary dark:[&:not([data-twe-collapse-collapsed])]:shadow-white/10"
+                class="group relative flex w-full rounded-xl items-center border-0 bg-slate-300 px-5 py-3 text-left font-semibold text-md text-blue-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white [&:not([data-twe-collapse-collapsed])]:bg-[#8ab3cf] [&:not([data-twe-collapse-collapsed])]:text-sky-50 [&:not([data-twe-collapse-collapsed])]:shadow-border-b dark:[&:not([data-twe-collapse-collapsed])]:bg-surface-dark dark:[&:not([data-twe-collapse-collapsed])]:text-primary dark:[&:not([data-twe-collapse-collapsed])]:shadow-white/10"
                 type="button"
                 data-twe-collapse-init
                 data-twe-target="#collapseOne{{ $key }}"
@@ -78,10 +78,26 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Enviar formulario automáticamente al cambiar checkboxes (opcional)
     const checkboxes = document.querySelectorAll('.filter-checkbox');
+
+    const params = new URLSearchParams(window.location.search);
+
+
+    const areas = params.get("filter[Áreas de ecpecialidad][]");
+
+    console.log(areas); // ["Refrigeración"] (array con todos los valores)
+
+    if(areas && areas != null){
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'filter[Áreas de ecpecialidad][]';
+        input.value = areas;
+        document.getElementById('filterForm').appendChild(input);
+    }
+
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             // Si quieres que se envíe automáticamente al seleccionar:
-            // document.getElementById('filterForm').submit();
+            //document.getElementById('filterForm').submit();
         });
     });
 

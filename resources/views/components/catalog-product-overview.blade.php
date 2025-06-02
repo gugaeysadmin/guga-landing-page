@@ -21,7 +21,7 @@
                                 <div class="hidden duration-1000 ease-in-out" data-carousel-item>
                                     <video
                                         controls
-                                        class="absolute block w-full h-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]"
+                                        class="absolute block w-full h-full object-contain -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]"
                                     >
                                         <source src="/storage/{{ $img->url }}" :type="{{ $type}}">
                                     </video>
@@ -75,7 +75,7 @@
             <div class="flex flex-row justify-center gap-14 w-full mt-8">
                 @if ($product->has_services == 1)
                     <div>
-                        <button class="h-20 w-20 rounded-full shadow-lg border flex items-center justify-center  bg-sky-500 hover:bg-sky-600 active:bg-sky-500 translate transition-300"
+                        <button class="h-20 w-20 rounded-full shadow-lg border flex items-center justify-center  bg-[#3eb8d7] hover:bg-sky-600 active:bg-sky-500 translate transition-300"
                             type="button"
                             {{-- onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')" --}}
                             data-twe-toggle="modal"
@@ -87,13 +87,13 @@
                                 <i class="bi bi-gear text-3xl text-white"></i>
                             </div>
                         </button>
-                        <p class="text-lg mt-3 font-bold text-sky-600 text-center ">Servicios</p>
+                        <p class="text-lg mt-3 font-bold text-sky-500 text-center ">Servicios</p>
                     </div>
                 @endif
                 @if ($product->has_accesrorypdf == 1)
                     <div>
 
-                        <button class="h-20 w-20 rounded-full shadow-lg border flex items-center justify-center  bg-sky-500 hover:bg-sky-600 active:bg-sky-500 translate transition-300"
+                        <button class="h-20 w-20 mx-auto rounded-full shadow-lg border flex items-center justify-center  bg-[#3eb8d7] hover:bg-sky-600 active:bg-sky-500 translate transition-300"
                             type="button"
                             {{-- onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')" --}}
                             data-twe-toggle="modal"
@@ -105,7 +105,7 @@
                                 <i class="bi bi-bookmark text-3xl text-white"></i>
                             </div>
                         </button>
-                        <p class="text-lg mt-3 font-bold text-sky-600 text-center ">Accesorios</p>
+                        <p class="text-lg mt-3 font-bold text-sky-500 text-center ">Ficha Técnica</p>
                     </div>
                 @endif
             </div>
@@ -185,7 +185,7 @@
                             <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 p-4">
                                 <!-- Modal title -->
                                 <h5 class="text-xl font-medium leading-normal text-[#0392ceff]" id="accesoryModalTitle">
-                                    Accesorios
+                                    Ficha Técnica
                                 </h5>
                                 <!-- Close button -->
                                 <button

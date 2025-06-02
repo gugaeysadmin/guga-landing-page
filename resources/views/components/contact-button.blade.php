@@ -91,7 +91,7 @@
 
 
 <div x-data="{ open: false, expanded: false }" class="fixed bottom-10 right-0 select-none z-40">
-  <div class="relative h-16 w-16 mr-12">
+  <div class="relative h-20 w-20 mr-12">
     <div class="absolute inset-0 rounded-full bg-[#4dc247] opacity-30 animate-ping-slow z-10"></div>
     <a
       href="https://api.whatsapp.com/send?phone=5567099766"

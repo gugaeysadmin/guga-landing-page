@@ -178,10 +178,10 @@
   
         <!-- Secondary phone -->
         <div class="py-2 w-full">
-          <label for="contact_phone" class="block text-md font-medium text-cyan-800">Teléfono auxiliar de la Empresa *</label>
+          <label for="contact_phone_alternative" class="block text-md font-medium text-cyan-800">Teléfono auxiliar de la Empresa *</label>
           <input
-            id="contact_phone"
-            v-model="formData.contact_phone"
+            id="contact_phone_alternative"
+            v-model="formData.contact_phone_alternative"
             required
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
           ></input>
