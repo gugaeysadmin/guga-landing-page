@@ -128,7 +128,7 @@
                 </ul>
             </div>
             <div class="flex items-center justify-center">
-                <img src="{{ asset('img/services-install.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
+                <img src="{{ asset('img/services-img-7.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
             </div>
         </div>
     </div>
@@ -137,7 +137,7 @@
     <div class="flex justify-center my-24">
         <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem] w-full">
             <div class="flex items-center justify-center">
-                <img src="{{ asset('img/services-maintenance.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
+                <img src="{{ asset('img/services-img-4.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/>
             </div>
             <div class="font-sans px-8 md:px-12 justify-center items-center">
                 <h1 class="text-2xl font-semibold text-sky-700 mt-20 mb-4 text-center">Mantenimiento correctivo</h1>

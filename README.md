@@ -1,66 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <a href="https://laravel.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
+  </a>
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Proyecto Laravel + Vue
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🧱 Stack Tecnológico
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Herramienta  | Versión |
+| ------------ | ------- |
+| PHP          | 8.3.11  |
+| Laravel      | 11.34.2 |
+| Node.js      | 22.16.0 |
+| Vite         | 5.0     |
+| Vue.js       | 3.5.13  |
+| Tailwind CSS | ^3.4.17 |
+| TW Elements  | ^2.0.0  |
+| Flowbite     | ^2.5.2  |
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## ⚙️ Instalación y Ejecución en Desarrollo
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Instalar dependencias de Node
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+# Con npm
+npm install
 
-## Laravel Sponsors
+# O con yarn
+yarn
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Instalar dependencias de Laravel
 
-### Premium Partners
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 3. (Opcional) Generar clave de la aplicación
 
-## Contributing
+```bash
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Ejecutar en entorno de desarrollo
 
-## Code of Conduct
+> Requiere **dos terminales** abiertas
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+# Terminal 1 - Backend (Laravel)
+php artisan serve
+```
 
-## Security Vulnerabilities
+```bash
+# Terminal 2 - Frontend (Vite)
+npm run dev
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# O
+yarn dev
+```
 
-## License
+### 5. En caso de error al cargar archivos grandes
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Editar `php.ini` y agregar o reemplazar los siguientes valores:
+
+```ini
+upload_max_filesize = 100M
+post_max_size = 100M
+memory_limit = 256M
+```
+
+---
+
+## 🚀 Instalación en Producción
+
+### 1. Compilar assets del frontend
+
+```bash
+npm run build
+
+# O
+
+yarn build
+```
+
+### 2. Compilar y optimizar Laravel
+
+```bash
+composer install --optimize-autoloader
+
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+php artisan optimize
+php artisan optimize:clear
+
+php artisan route:clear
+```
+
+### 3. Copiar archivos a producción
+
+Sube los archivos a la ruta:
+
+```
+/home3/gugaequi/public_html_page
+```
+
+> ⚠️ **Importante:** No eliminar ni reemplazar los siguientes elementos:
+
+* Carpeta `storage` dentro del hosting
+* Archivo `.htaccess`
+* Archivos `.zip`
+* Carpeta `.well-known`
+
+### 4. Generar enlaces simbólicos
+
+Accede en el navegador a:
+
+```
+http://{{ dominio de la página }}/link.php
+```
+
+Esto generará los enlaces simbólicos necesarios para el `storage` y las APIs.
+
+---
+

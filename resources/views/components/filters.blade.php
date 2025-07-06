@@ -55,19 +55,19 @@
         @endforeach
         
         <!-- Botones de acción -->
-        <div class="flex justify-between mt-4">
+        <div class="flex justify-between gap-2 mt-4">
             <button 
                 type="button" 
                 id="resetFilters" 
                 class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
             >
-                Limpiar filtros
+                Limpiar
             </button>
             <button 
                 type="submit" 
                 class="px-4 py-2 bg-[#4180ab] text-white rounded-md hover:bg-[#3a7399] transition"
             >
-                Aplicar filtros
+                Aplicar 
             </button>
         </div>
     </form>

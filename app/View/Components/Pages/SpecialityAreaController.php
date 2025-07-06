@@ -27,7 +27,6 @@ class SpecialityAreaController extends Controller
         //     'imageneology' => 'Imageneologia'
         // ];
 
-        
         $specareadata = $this->getFilters($specialty);
         $filters = $specareadata['filters'] ?? [];
         if($filters == null){
@@ -64,11 +63,10 @@ class SpecialityAreaController extends Controller
             ->where('speciality_areas.name', $speciality)
             ->where('products.active','=',1)
             ->orderBy('product_spec_areas.index');
-
             if (!empty($appliedFilters)) {
                 // Aplanar el array de filtros para obtener solo las categorías específicas
                 $categories = collect($appliedFilters)->flatten()->unique()->toArray();
-                
+                Log::info($categories);
                 $product->whereHas('category', function($q) use ($categories) {
                     $q->whereIn('name', $categories);
                 });

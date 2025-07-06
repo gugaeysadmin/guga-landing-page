@@ -62,7 +62,7 @@
             {{-- Contenido --}}
             <main class="relative">
                 {{-- Filtros --}}
-                <aside class=" absolute left-12 max-w-80 bg-white-100 p-4 mt-12 bg-white rounded-xl shadow-xl ">
+                <aside class=" absolute left-12 max-w-[18rem] bg-white-100 p-4 mt-12 bg-white rounded-xl shadow-xl ">
                     <x-filters  :title="'Categorias de producto'" :filters="$filters"/>
                 </aside>
                 @if (count($content) === 0)
@@ -73,8 +73,8 @@
                 @foreach ($content as $index => $product)
                     {{-- Productos --}}
                     <div class="{{ $index  === 0 ? 'pb-28' : 'py-28' }} flex  {{ $index % 2 === 0 ? 'bg-white' : 'bg-slate-200' }}">
-                        <div class="flex w-full justify-center flex-row gap-24  pr-4 xl:pr-0 ">
-                            <div class="min-w-[10rem] pl-4 h-full ">
+                        <div class="flex w-full justify-center flex-row gap-10  pr-6 xl:pr-0 ">
+                            <div class="min-w-[20rem] pl-4 h-full pr-4 ">
                             </div>
                             {{-- Descripcion y modelos --}}
                             @if ($index % 2 != 0)

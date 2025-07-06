@@ -2,7 +2,7 @@
 
  <div class="bg-slate-50 flex flex-wrap md:flex-row flex-col">
         <div class="w-full md:w-5/12  bg-slate-400 flex justify-center items-center">
-            <div class="h-full relative rounded-r-2xl w-full border-[0px] border-slate-200 shadow-5 bg-white  overflow-hidden flex items-center justify-center">
+            <div class="h-full relative w-full border-[0px] border-slate-200 shadow-5 bg-white  overflow-hidden flex items-center justify-center">
                 <img src="{{ asset('img/slider1.jpg') }}" alt="services_img" class="h-full w-full object-cover"/>
         
             </div>

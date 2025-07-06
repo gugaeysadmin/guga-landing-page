@@ -21,7 +21,6 @@ class CatalogsController extends Controller
     public function index(Request $request)
     {
         $appliedFilters = $request->input('filter', []);
-        Log::info($request);
         $pages = [
             ['name' => 'Nosotros', 'to' => '/about'],
             ['name' => 'Alianzas', 'to' => '/alliances'],
@@ -77,14 +76,15 @@ class CatalogsController extends Controller
                         $query->whereHas('productSpecAreas.specArea', function($q) use ($values) {
                             $q->whereIn('name', $values);
                         });
+                        $filters = $this->getFilters($values);
+                        array_unshift($filters, $brandsFilters);
                         break;
                         
                     default: // Para las categorías de productos
                         $query->whereHas('category', function($q) use ($section, $values) {
                             // Algunas categorías pueden venir con espacios extras
                             $cleanSection = trim($section);
-                            $q->where('name', $cleanSection)
-                            ->whereIn('name', $values);
+                            $q->whereIn('name', $values);
                         });
                         break;
                 }
@@ -163,5 +163,21 @@ class CatalogsController extends Controller
             ], 500);
         }
     }
+
+    public function getFilters($speciality){
+        try {
+            $specarea = SpecialityArea::where("name", "=", $speciality)->firstOrFail();
+            
+            $filters = json_decode($specarea->filters);
+            return $filters;
+        } catch (Exception $e) {
+            Log::error('Error al obtener área de especialidad: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Oferta no encontrada'
+            ], 404);
+        }
+    }
+
 
 }
