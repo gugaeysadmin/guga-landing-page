@@ -94,7 +94,7 @@
                             <div class="p-4 w-full">
                                 <h1 class="font-sans font-semibold text-3xl text-sky-600 uppercase">{{ $product->name}}</h1>
                                 <h2 class="font-sans font-semibold text- mt-2 text-sky-500 uppercase">{{ $product->brand->name}}</h2>
-                                <p class="font-sans text-md text-slate-900 mt-4 break-words whitespace-pre-line overflow-hidden">{{ $product->description}}</p>
+                                <p class="font-sans text-md text-slate-900 mt-4 break-words whitespace-pre-line overflow-hidden line-clamp-5 text-center">{{ $product->description}}</p>
                             </div>
                         </button>
 
