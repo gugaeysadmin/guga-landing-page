@@ -1,6 +1,6 @@
 <template>
-    <div class="h-full bg-gradient-to-b from-slate-800 via-slate-800 to-slate-700 rounded-r-md shadow-lg w-[18rem] pl-14 pr-12 pt-20">
-        <div class="h-full space-y-20 ">
+    <div class="h-full bg-gradient-to-b from-slate-800 via-slate-800 to-slate-700 shadow-lg w-[18rem] pl-14 pr-12 pt-20">
+        <div class="space-y-20 ">
             <div>
                 <!-- <img :src="'/img/logo_normal.png'" alt="Logo" class="w-[13rem] mx-auto"> -->
                  <p class="text-2xl font-bold text-[#f5fbff]">Administrador </p>
@@ -12,7 +12,7 @@
                     <div class="space-y-2">
 
                         <router-link to="/app/admin" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
-                            <i class="bi bi-houses-fill  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
+                            <i class="bi bi-houses  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                             <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                                 Inicio
                             </p>
@@ -26,7 +26,7 @@
                         </router-link> -->
 
                         <router-link to="/app/admin/promotions" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
-                            <i class="bi bi-houses-fill  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
+                            <i class="bi bi-percent  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                             <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                                 Promociones
                             </p>
@@ -38,21 +38,21 @@
 
 
                     <router-link to="/app/admin/product" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
-                            <i class="bi bi-houses-fill  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
+                            <i class="bi bi-grid  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                             <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                             Productos
                         </p>
                     </router-link>
 
                     <router-link to="/app/admin/categories" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
-                            <i class="bi bi-houses-fill  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
+                            <i class="bi bi-tags  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                             <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                             Categorías
                         </p>
                     </router-link>
 
                     <router-link to="/app/admin/speciality-areas" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
-                            <i class="bi bi-houses-fill  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
+                            <i class="bi bi-kanban  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                             <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                             Áreas de Esp.
                         </p>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-export default {
-    name: "SideBar"
-}
+    export default {
+        name: "SideBar"
+    }
 </script>

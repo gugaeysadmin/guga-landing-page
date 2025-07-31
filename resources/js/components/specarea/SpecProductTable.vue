@@ -64,7 +64,7 @@
                         <div class="text-sm font-medium text-gray-900">{{ formatCategories(specArea.product.category) }}</div>
                     </td>
 
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                         <!-- <button
                             @click="emit('edit', specArea)"
                             class="text-indigo-600 hover:text-indigo-900 mr-5"
@@ -73,9 +73,9 @@
                         </button> -->
                         <button
                             @click="emit('delete', specArea.id)"
-                            class="text-red-600 hover:text-red-900"
+                            class="text-red-600 hover:text-red-900 text-xl "
                         >
-                            Eliminar
+                            <i class="bi bi-trash"></i>
                         </button>
                     </td>
                 </tr>

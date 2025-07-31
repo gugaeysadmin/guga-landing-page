@@ -17,6 +17,8 @@ import servicespage from "../pages/ServicesPage.vue";
 import specareacategorypage from "../pages/SpecAreaCategoryPage.vue"
 import productspecareapage from "../pages/ProductSpecAreaPage.vue";
 import updateproductpage from "../pages/UpdateProductPage.vue";
+import tablecolspage from "../pages/TableColsPage.vue";
+
 const routes = [
     {
         path: '/app/homevue',
@@ -73,6 +75,10 @@ const routes = [
     {
         path: '/app/admin/enterprise/accesories-pdf',
         component: accesoriespdfpage
+    },
+    {
+        path: '/app/admin/enterprise/table-config',
+        component: tablecolspage
     },
     {
         path: '/app/admin/enterprise/alliances',

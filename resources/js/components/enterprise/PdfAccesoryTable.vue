@@ -5,8 +5,8 @@
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">Nombre</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pdf</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Pdf</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -25,7 +25,7 @@
                             v-if="pdfAccesory.pdf_url" 
                             :href="`/storage/${pdfAccesory.pdf_url}`" 
                             target="_blank"
-                            class="inline-block"
+                            class="flex justify-center"
                         >
                             <img 
                             :src="`/img/pdf.webp`" 
@@ -35,12 +35,12 @@
                         </a>
                         <span v-else class="text-sm text-gray-500">Sin imagen</span>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td class="px-6 py-4 whitespace-nowrap text-center  text-sm font-medium">
                         <button
                             @click="emit('delete', pdfAccesory.id)"
-                            class="text-red-600 hover:text-red-900"
+                            class="text-red-600 hover:text-red-900 text-xl "
                         >
-                            Eliminar
+                            <i class="bi bi-trash"></i>
                         </button>
                     </td>
                 </tr>

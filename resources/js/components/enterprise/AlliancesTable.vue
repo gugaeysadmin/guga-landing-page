@@ -17,10 +17,10 @@
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th> -->
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -49,27 +49,27 @@
                     {{ alliance.index }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium text-gray-900">{{ alliance.name }}</div>
+                        <div class="text-sm font-medium text-gray-900">{{ alliance.name }}</div>
                     </td>
-                    <td class="px-6 py-4">
-                    <div class="text-sm text-gray-500  max-w-xs truncate" :title="alliance.description">
-                        {{ truncateDescription(alliance.description) }}
-                    </div>
-                    </td>
+                    <!-- <td class="px-6 py-4">
+                        <div class="text-sm text-gray-500  max-w-xs truncate" :title="alliance.description">
+                            {{ truncateDescription(alliance.description) }}
+                        </div>
+                    </td> -->
                     <td class="px-6 py-4 whitespace-nowrap min-w-14">
-                    <a 
-                        v-if="alliance.img_url" 
-                        :href="`/storage/${alliance.img_url}`" 
-                        target="_blank"
-                        class="inline-block w-24 h-14 "
-                    >
-                        <img 
-                        :src="`/storage/${alliance.img_url}`" 
-                        class="h-10 min-w-14 rounded-xl object-contain"
-                        :alt="`Imagen de ${alliance.name}`"
+                        <a 
+                            v-if="alliance.img_url" 
+                            :href="`/storage/${alliance.img_url}`" 
+                            target="_blank"
+                            class="inline-block w-24 h-14 "
                         >
-                    </a>
-                    <span v-else class="text-sm text-gray-500">Sin imagen</span>
+                            <img 
+                            :src="`/storage/${alliance.img_url}`" 
+                            class="h-10 min-w-14 rounded-xl object-contain m-auto"
+                            :alt="`Imagen de ${alliance.name}`"
+                            >
+                        </a>
+                        <span v-else class="text-sm text-gray-500">Sin imagen</span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                     <select
@@ -81,19 +81,19 @@
                         <option :value="false">Inactivo</option>
                     </select>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <!-- <button
-                        @click="emit('edit', alliance)"
-                        class="text-indigo-600 hover:text-indigo-900 mr-3"
-                    >
-                        Editar
-                    </button> -->
-                    <button
-                        @click="emit('delete', alliance.id)"
-                        class="text-red-600 hover:text-red-900"
-                    >
-                        Eliminar
-                    </button>
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button
+                            @click="emit('edit', alliance)"
+                            class="text-indigo-600 hover:text-indigo-900 mr-5 text-lg"
+                        >
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button
+                            @click="emit('delete', alliance.id)"
+                            class="text-red-600 hover:text-red-900 text-xl "
+                        >
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </td>
                 </tr>
                 <tr v-if="alliances.length === 0">

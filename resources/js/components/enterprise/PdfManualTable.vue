@@ -5,41 +5,23 @@
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">Nombre</th>
-                    <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th> -->
-                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Logo</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Columnas</th>
                     <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 <tr 
-                    v-for="(brand, index) in paginatedBrands" 
-                    :key="brand.id"
+                    v-for="(pdfAccesory, index) in paginatedpdfManuals" 
+                    :key="pdfAccesory.id"
                 >
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">{{ brand.name }}</div>
+                        <div class="text-sm font-medium text-gray-900">{{ pdfAccesory.name }}</div>
                     </td>
-                    <!-- <td class="px-6 py-4">
-                        <div class="text-sm text-gray-500  max-w-xs truncate" :title="brand.description">
-                            {{ truncateDescription(brand.description) }}
-                        </div>
-                    </td> -->
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <a 
-                            v-if="brand.logo_file_url" 
-                            :href="`/storage/${brand.logo_file_url}`" 
-                            target="_blank"
-                            class="inline-block"
-                        >
-                            <img 
-                            :src="`/storage/${brand.logo_file_url}`" 
-                            class="h-10 w-15 rounded-xl object-cover"
-                            :alt="`Imagen de ${brand.name}`"
-                            >
-                        </a>
-                        <span v-else class="text-sm text-gray-500">Sin imagen</span>
+                        <div class="text-sm font-medium text-gray-900 ">{{ handleJson(pdfAccesory.table_json) }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                         <button
@@ -56,7 +38,7 @@
                         </button>
                     </td>
                 </tr>
-                <tr v-if="paginatedBrands.length === 0">
+                <tr v-if="paginatedpdfManuals.length === 0">
                     <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">
                         No se encontraron categorías
                     </td>
@@ -89,7 +71,7 @@
 import { ref, computed } from 'vue';
     
 const props = defineProps({
-    brands: {
+    pdfManuals: {
         type: Array,
         required: true,
         default: () => []
@@ -104,13 +86,13 @@ const itemsPerPage = ref(5); // Puedes ajustar este valor
 
 // Computed properties para paginación
 const totalPages = computed(() => {
-    return Math.ceil(props.brands.length / itemsPerPage.value);
+    return Math.ceil(props.pdfManuals.length / itemsPerPage.value);
 });
 
-const paginatedBrands = computed(() => {
+const paginatedpdfManuals = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage.value;
     const end = start + itemsPerPage.value;
-    return props.brands.slice(start, end);
+    return props.pdfManuals.slice(start, end);
 });
 
 // Variables para drag and drop (mantenidas de tu código original)
@@ -123,10 +105,19 @@ const truncateDescription = (text) => {
     if (!text) return '';
     return text.length > 50 ? text.substring(0, 50) + '...' : text;
 };
+
+const handleJson = (value) => {
+    try{
+        const object = JSON.parse(value);
+        return object.headers.join(", ");
+    }catch{
+        return "sin columnas"
+    }
+}
 </script>
 
 <script>
     export default {
-        name: "BrandTable"
+        name: "PdfManualTable"
     }
 </script>

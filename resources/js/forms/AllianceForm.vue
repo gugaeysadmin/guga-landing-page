@@ -203,26 +203,27 @@
     const previewImage = ref(null);
     
     // Cargar datos iniciales
-    // onMounted(() => {
-    //     if (props.initialData) {
-    //     formData.value = {
-    //         title: props.initialData.title || '',
-    //         details: props.initialData.details || '',
-    //         image: props.initialData.image || null,
-    //     };
+    onMounted(() => {
+        if (props.initialData) {
+        formData.value = {
+            title: props.initialData.title || '',
+            details: props.initialData.details || '',
+            image: props.initialData.image || null,
+            url: props.initialData.url || ''
+        };
     
-    //     if (props.initialData.image) {
-    //         if (typeof props.initialData.image === 'string') {
-    //         // Si es una URL (para edición)
-    //         previewImage.value = props.initialData.image;
-    //         } else if (props.initialData.image instanceof File) {
-    //         // Si es un File (después de recargar)
-    //         selectedFile.value = props.initialData.image;
-    //         previewImage.value = URL.createObjectURL(props.initialData.image);
-    //         }
-    //     }
-    //     }
-    // });
+        if (props.initialData.image) {
+            if (typeof props.initialData.image === 'string') {
+            // Si es una URL (para edición)
+              previewImage.value = props.initialData.image;
+            } else if (props.initialData.image instanceof File) {
+            // Si es un File (después de recargar)
+              selectedFile.value = props.initialData.image;
+              previewImage.value = URL.createObjectURL(props.initialData.image);
+            }
+        }
+        }
+    });
     
     // Validar formulario
     const validate = () => {

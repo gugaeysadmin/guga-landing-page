@@ -104,20 +104,22 @@
                     </td>
 
 
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                         <button
                             @click="emit('edit', specArea)"
-                            class="text-indigo-600 hover:text-indigo-900 mr-5"
+                            class="text-indigo-600 hover:text-indigo-900 mr-5 text-lg"
                         >
-                            Editar
+                            <i class="bi bi-pencil-square"></i>
                         </button>
-                        <!-- <button
+                        <button
                             @click="emit('delete', specArea.id)"
-                            class="text-red-600 hover:text-red-900"
+                            class="text-red-600 hover:text-red-900 text-xl "
                         >
-                            Eliminar
-                        </button> -->
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </td>
+
+                    
                 </tr>
                 <tr v-if="specAreas.length === 0">
                     <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">

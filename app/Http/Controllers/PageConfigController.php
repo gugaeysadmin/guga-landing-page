@@ -91,7 +91,7 @@ class PageConfigController extends Controller
     public function update(Request $request)
     {
             Log::info($request);
-            $lpconfig = LandingPageConfig::findOrFail(1);
+            $lpconfig = LandingPageConfig::findOrFail(id: 1);
             
             $validated = $request->validate([
                 'mission' => 'sometimes|string',
@@ -132,7 +132,7 @@ class PageConfigController extends Controller
                 $lpconfig->special_ofert = $validated['special_ofert'];
             }
             if (isset($validated['special_ofert_active'])) {
-                $lpconfig->active_special_ofert = $validated['special_ofert_active']? 1: 0;
+                $lpconfig->active_special_ofert = $validated['special_ofert_active'] == 'true'? 1: 0;
             }
             if (isset($validated['contact_phone'])) {
                 $lpconfig->contact_phone = $validated['contact_phone'];

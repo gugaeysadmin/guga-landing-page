@@ -3,14 +3,14 @@
         <Header></Header>
     </header> -->
     <div class="relative flex min-h-screen">
-        <aside class="inset-y-0 absolute left-0 md:relative md:-translate-x-0 transform -translate-x-full trasition duration-200 ease-in-out">
+        <aside class="inset-y-0 absolute left-0 md:relative md:-translate-x-0 transform -translate-x-full trasition duration-200 ease-in-out block">
             <SideBar/>
         </aside>
         <div class="block  w-full">
             <header class="w-full">
                 <Header></Header>
             </header>
-            <div class="flex-1">
+            <div class="flex-1 mb-14">
                 <main>
                     <div class="max-w-[56rem] px-14 mx-auto">
                         <router-view/>

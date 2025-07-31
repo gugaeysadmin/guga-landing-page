@@ -181,7 +181,6 @@
               id="name"
               type="number"
               v-model="formData.has_page"
-              
               required
               class="mt-1 rounded-md  border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
             ></input>
@@ -193,7 +192,6 @@
               <label class="block text-md font-medium text-cyan-800">ó Sube el pdf con los accesorios específicos para este producto. </label>
               <input 
                 type="file" 
-                multiple 
                 accept=".pdf" 
                 @change="handleFileUploadAccesoryPdf" 
                 class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
@@ -201,6 +199,43 @@
             </div>
         </div>
       </div>
+
+
+
+      <!-- Switch para activar/desactivar ficha tecnica -->
+      <div class="flex items-center w-full">
+        <label class="flex items-center cursor-pointer">
+          <div class="relative">
+            <input 
+              type="checkbox" 
+              class="sr-only" 
+              v-model="manualPdfEnabled"
+              @change="toggleManualPdf"
+            >
+            <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
+            <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+          </div>
+          <div class="ml-3 text-sm font-medium">Tiene ficha técnica general</div>
+        </label>
+      </div>
+
+      <!-- ficha tecnica -->
+      <div v-if="manualPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
+
+        <div class="w-full">
+          <div>
+              <label class="block text-md font-medium text-cyan-800">Sube el pdf de la ficha técnica </label>
+              <input 
+                type="file" 
+                accept=".pdf" 
+                @change="handleFileUploadMaualPdf" 
+                class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              >
+            </div>
+        </div>
+      </div>
+
+
 
       <!-- Switch para activar/desactivar servicios -->
       <div class="flex w-full">
@@ -829,6 +864,7 @@
 
 
   const accesoryPdfEnabled = ref(false)
+  const manualPdfEnabled = ref(false);
   const servicesEnabled = ref(false)
   const tableEnabled = ref(false)
   const formData = ref({
@@ -845,6 +881,8 @@
     accesorypdf: null,
     has_page: 0,
     has_services: false,
+    has_manual: false,
+    manualpdf: "",
     services_description: '',
     catalogaccesrorypdf: "",
     productImages: [],
@@ -868,6 +906,8 @@
     accesoryodf: null,
     has_page: 0,
     has_services: false,
+    has_manual: false,
+    manualpdf: null,
     services_description: '',
     catalogaccesrorypdf: null,
     productImages: [],
@@ -961,7 +1001,6 @@
     loading.value=false
   }
 
-  // Fetching data
 
   const fetchCategories = async () => {
     try {
@@ -1142,7 +1181,23 @@
 
   }
 
+  const toggleManualPdf = () => {
+    
+    if(!manualPdfEnabled.value){
+      formData.value.manualpdf = null;
+      formData.value.has_manual = false ;
+    }
+    formData.value.has_accesrorypdf = manualPdfEnabled.value;
+
+  }
+  
+
   const handleFileUploadAccesoryPdf = (event) => {
+    const file = event.target.files[0];;
+    formData.value.accesorypdf = file;
+  }
+
+  const handleFileUploadMaualPdf= (event) => {
     const file = event.target.files[0];;
     formData.value.accesorypdf = file;
   }

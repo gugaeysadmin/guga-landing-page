@@ -5,7 +5,7 @@
         <p class="underline font-medium text-lg text-blue-500 pb-1">Regresar</p>
     </button>
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
         <!-- <div>
             <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
         </div> -->
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
       <PdfAccesoryTable
           :pdfAccesories="filteredPdfAccesories"
           @search="handleSearch"

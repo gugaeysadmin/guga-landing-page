@@ -1,30 +1,41 @@
 <template>
     <div class="flex flex-row justify-between flex-wrap ">
-        <div class="mt-8 bg-white py-5 px-5 rounded-xl shadow-sm w-60 pr-9">
-            <p class="text-2xl font-semibold">Productos</p>
-            <div class="flex flex-row justify-between items-end">
-                <router-link to="/app/admin/product">
-                    <p class="text-sky-500 underline text-xs`">Ver</p>
-                </router-link>
-                <p class="text-3xl font-bold text-sky-500 text-end">{{ productsNumber }}</p>
+        <div class="mt-8 bg-white rounded-xl shadow-md w-60 flex flex-row">
+            <div class="w-2 rounded-l-full bg-sky-500"></div>
+            <div class="w-full  py-5 px-5">
+                <p class="text-2xl font-semibold">Productos</p>
+                <div class="flex flex-row justify-between items-end">
+                    <router-link to="/app/admin/product">
+                        <p class="text-sky-500 underline text-xs`">Ver</p>
+                    </router-link>
+                    <p class="text-3xl font-bold text-sky-500 text-end">{{ productsNumber }}</p>
+                </div>
             </div>
         </div>
-        <div class="mt-8 bg-white py-5 px-5 rounded-xl shadow-sm w-60 pr-9">
-            <p class="text-2xl font-semibold">Promociones</p>
-            <div class="flex flex-row justify-between items-end">
-                <router-link to="/app/admin/promotions">
-                    <p class="text-sky-500 underline text-xs`">Ver</p>
-                </router-link>
-                <p class="text-3xl font-bold text-sky-500 text-end">{{ promotionsNumber }}</p>
+        
+        <div class="mt-8 bg-white rounded-xl shadow-md w-60 flex flex-row">
+            <div class="w-2 rounded-l-full bg-sky-500"></div>
+            <div class="w-full py-5 px-5">
+                <p class="text-2xl font-semibold">Promociones</p>
+                <div class="flex flex-row justify-between items-end">
+                    <router-link to="/app/admin/promotions">
+                        <p class="text-sky-500 underline text-xs`">Ver</p>
+                    </router-link>
+                    <p class="text-3xl font-bold text-sky-500 text-end">{{ promotionsNumber }}</p>
+                </div>
             </div>
         </div>
-        <div class="mt-8 bg-white py-5 px-5 rounded-xl shadow-sm w-60 pr-9">
-            <p class="text-2xl font-semibold">Alianzas</p>
-            <div class="flex flex-row justify-between items-end">
-                <router-link to="/app/admin/enterprise">
-                    <p class="text-sky-500 underline text-xs`">Ver</p>
-                </router-link>
-                <p class="text-3xl font-bold text-sky-500 text-end">{{ alliancesNumber }}</p>
+        <div class="mt-8 bg-white rounded-xl shadow-md w-60 flex flex-row">
+
+            <div class="w-2 rounded-l-full bg-sky-500"></div>
+            <div class="w-full py-5 px-5">
+                <p class="text-2xl font-semibold">Alianzas</p>
+                <div class="flex flex-row justify-between items-end">
+                    <router-link to="/app/admin/enterprise/alliances">
+                        <p class="text-sky-500 underline text-xs`">Ver</p>
+                    </router-link>
+                    <p class="text-3xl font-bold text-sky-500 text-end">{{ alliancesNumber }}</p>
+                </div>
             </div>
         </div>
     </div>

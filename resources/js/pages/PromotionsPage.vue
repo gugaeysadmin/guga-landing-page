@@ -1,7 +1,7 @@
 <template>
     <Title content="PROMOCIONES"  />
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
         <!-- <div>
             <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
         </div> -->
@@ -47,7 +47,7 @@
     </div>
 
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
       <OffertTable
         :offerts="filteredOfferts"
         @search="handleSearch"
@@ -184,7 +184,7 @@ const handleCancel = () => {
 
 
 <script setup>
-  import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
   const showModal = ref(false);
   const showDeleteModal = ref(false);
@@ -307,6 +307,7 @@ const handleCancel = () => {
       });
       
       if (response.ok) {
+        console.log(response)
       }
     } catch (error) {
       console.error('Error updating offert:', error);

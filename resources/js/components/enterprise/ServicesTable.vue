@@ -17,9 +17,9 @@
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th> -->
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -50,17 +50,17 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm font-medium text-gray-900">{{ service.name }}</div>
                     </td>
-                    <td class="px-6 py-4">
+                    <!-- <td class="px-6 py-4">
                         <div class="text-sm text-gray-500  max-w-xs truncate" :title="service.description">
                             {{ truncateDescription(service.description) }}
                         </div>
-                    </td>
+                    </td> -->
                     <td class="px-6 py-4 whitespace-nowrap">
                         <a 
                             v-if="service.img_url" 
                             :href="`/storage/${service.img_url}`" 
                             target="_blank"
-                            class="inline-block"
+                            class=" flex justify-center"
                         >
                             <img 
                             :src="`/storage/${service.img_url}`" 
@@ -71,19 +71,19 @@
                         <span v-else class="text-sm text-gray-500">Sin imagen</span>
                     </td>
 
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <!-- <button
-                        @click="emit('edit', service)"
-                        class="text-indigo-600 hover:text-indigo-900 mr-3"
-                    >
-                        Editar
-                    </button> -->
-                    <button
-                        @click="emit('delete', service.id)"
-                        class="text-red-600 hover:text-red-900"
-                    >
-                        Eliminar
-                    </button>
+                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <button
+                            @click="emit('edit', service)"
+                            class="text-indigo-600 hover:text-indigo-900 mr-5 text-lg"
+                        >
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button
+                            @click="emit('delete', service.id)"
+                            class="text-red-600 hover:text-red-900 text-xl "
+                        >
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </td>
                 </tr>
                 <tr v-if="services.length === 0">

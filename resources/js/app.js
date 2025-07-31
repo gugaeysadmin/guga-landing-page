@@ -44,6 +44,7 @@ import navsections from './components/enterprise/NavSections.vue';
 import alliancestable from './components/enterprise/AlliancesTable.vue';
 import brandtable from './components/enterprise/BrandTable.vue';
 import pdfaccesorytable from './components/enterprise/PdfAccesoryTable.vue';
+import pdfmanualtable from './components/enterprise/PdfManualTable.vue'
 import servicestable from './components/enterprise/ServicesTable.vue';
 import allianceform from './forms/AllianceForm.vue';
 import brandform from './forms/BrandForm.vue';
@@ -81,6 +82,8 @@ app.component('NavSections', navsections);
 app.component('AlliancesTable', alliancestable);
 app.component('BrandTable', brandtable);
 app.component('PdfAccesoryTable', pdfaccesorytable);
+app.component('PdfManualTable', pdfmanualtable);
+
 app.component('ServicesTable', servicestable);
 
 app.component('AllianceForm', allianceform);
