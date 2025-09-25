@@ -15,7 +15,13 @@
             />
         </div> -->
 
-        <div class="">
+        <div>
+          <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
+            <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
+            <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+          </button>
+        </div>
+        <div class="pr-4">
           <div class="flex items-center">
               <!-- <img 
                 :src="`/storage/${offert.img_url}`" 
@@ -36,12 +42,6 @@
             </label>
             <div class="ml-3 text-sm font-medium">Promocion activa</div>
           </div>
-        </div>
-        <div>
-            <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
-                <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
-                <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
-            </button>
         </div>
 
     </div>

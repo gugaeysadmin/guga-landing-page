@@ -13,8 +13,8 @@
 
 @props(["specareas"])
 
-<h1 class="text-center text-[2.4rem] italic font-sans font-extralight text-[#0392ceff]">{{ __('Areas de especialidad') }}</h1>
-<div class="relative flex flex-wrap justify-center gap-24 mt-14" id="specareas-container">
+<h1 class="text-center text-[2.4rem] italic font-sans font-extralight text-[#0392ceff]">{{ __('Selecciona el área de especialidad') }}</h1>
+<div class="relative flex flex-wrap justify-center gap-x-24 gap-y-12 mt-14" id="specareas-container">
     @foreach ($specareas as $specarea)
         <div class="animate-fade-in-right opacity-0" data-delay="{{ $loop->index * 300 }}">
             <x-spec-area-button 

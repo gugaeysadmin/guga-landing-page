@@ -1,5 +1,4 @@
 
-
 <style>
 
     .swiper-wrapper {
@@ -47,7 +46,7 @@
         </div>
         <section>
             <div class="w-full items-center justify-center pt-12 pb-4 bg-white ">
-                <h1 class="text-slate text-center text-[3.0vw] font-medium font-sans text-sky-700 uppercase">{{ $info }}</h1>
+                <h1 class="text-slate text-center text-[3.2vw] font-bold font-sans text-sky-700 uppercase">{{ $info }}</h1>
             </div>
         </section>
         {{-- <section>
@@ -60,11 +59,18 @@
         <section class="">
 
             {{-- Contenido --}}
-            <main class="relative">
+            <main class="relative bg-white">
+
                 {{-- Filtros --}}
-                <aside class=" absolute left-12 max-w-[18rem] bg-white-100 p-4 mt-12 bg-white rounded-xl shadow-xl ">
+                {{-- <aside class=" absolute left-12 max-w-[18rem] bg-white-100 p-4 mt-12 bg-white rounded-xl shadow-xl ">
                     <x-filters  :title="'Categorias de producto'" :filters="$filters"/>
-                </aside>
+                </aside> --}}
+                @vite('resources/js/applaravel.js')
+                <div id="flipbook-container"></div>
+                <div >
+                    <x-horizontal-filters  :title="'Categorias de producto'" :filters="$filters"/>
+                </div>
+
                 @if (count($content) === 0)
                     <div class="w-full text-center pt-14 bg-white h-screen">
                         <p class="uppercase text-2xl text-gray-400 font-bold"> no se encontraron productos</p>
@@ -74,16 +80,16 @@
                     {{-- Productos --}}
                     <div class="{{ $index  === 0 ? 'pb-28' : 'py-28' }} flex  {{ $index % 2 === 0 ? 'bg-white' : 'bg-slate-200' }}">
                         <div class="flex w-full justify-center flex-row gap-10  pr-6 xl:pr-0 ">
-                            <div class="min-w-[20rem] pl-4 h-full pr-4 ">
-                            </div>
+                            {{-- <div class="min-w-[20rem] pl-4 h-full pr-4 ">
+                            </div> --}}
                             {{-- Descripcion y modelos --}}
                             @if ($index % 2 != 0)
                                 <x-product-data :index="$index" :product="$product" />
                             @endif
                             {{-- Imagenes y servicios --}}
                             <div class="sticky top-32 h-fit ">
-                                <div class="w-[21rem]  min-h-[31rem] rounded-2xl overflow-hidden bg-white items-center  shadow-xl" >
-                                    <div id="carousel-{{ $index }}" class="relative max-w-[21rem]  max-h-[31rem] bg-white rounded-2xl  overflow-hidden" data-carousel="static">
+                                <div class="w-[21rem]  min-h-[31rem] rounded-2xl overflow-hidden bg-stone-800 items-center  shadow-xl" >
+                                    <div id="carousel-{{ $index }}" class="relative max-w-[21rem]  max-h-[31rem] bg-stone-800 rounded-2xl  overflow-hidden" data-carousel="static">
                                         <!-- Carousel wrapper -->
                                         <div class=" w-[21rem]  min-h-[31rem]  overflow-hidden">
                                             @foreach ($product->product_images as $img )
@@ -94,17 +100,61 @@
                                                 @endphp
                                                 @if (str_starts_with($type, 'image'))
                                                     <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                                                        <img src="/storage/{{ $img->url }}" class=" block w-full h-full object-contain bg-white " alt="...">
+                                                        <img src="/storage/{{ $img->url }}" class=" block w-full h-full object-contain bg-stone-800 " alt="...">
                                                     </div>
                                                 @elseif(str_starts_with($type, 'video'))
-                                                    <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                                                        <video
+                                                    <div class="hidden duration-1000 ease-in-out py-8 bg-stone-800" data-carousel-item>
+                                                        {{-- <video
                                                             controls
                                                             class="absolute block w-full h-full object-contain "
                                                         >
                                                             <source src="/storage/{{ $img->url }}" :type="{{ $type}}">
-                                                        </video>
+                                                        </video> --}}
+                                                        <div class="relative w-full h-full bg-black">
+                                                            <!-- Video -->
+                                                            <video
+                                                                id="customVideo"
+                                                                controls
+                                                                class="w-full h-full object-contain"
+                                                            >
+                                                                <source src="/storage/{{ $img->url }}" type="{{ $type }}">
+                                                            </video>
+
+                                                            <!-- Controles personalizados -->
+                                                            {{-- <div 
+                                                                id="controls" 
+                                                                class="absolute bottom-0 left-0 w-full flex items-center justify-between px-4 pb-12 opacity-0 transition-opacity duration-300 bg-gradient-to-t from-black/40 to-transparent"
+                                                            >
+                                                                <!-- Play/Pause -->
+                                                                <button 
+                                                                id="playPauseBtn" 
+                                                                class="text-white text-lg hover:scale-110 transition"
+                                                                >
+                                                                ▶️
+                                                                </button>
+
+                                                                <!-- Barra de progreso -->
+                                                                <input 
+                                                                id="progress" 
+                                                                type="range" 
+                                                                value="0" 
+                                                                class="w-full mx-4 accent-white"
+                                                                />
+
+                                                                <!-- Volumen -->
+                                                                <input 
+                                                                id="volume" 
+                                                                type="range" 
+                                                                min="0" 
+                                                                max="1" 
+                                                                step="0.1" 
+                                                                value="1" 
+                                                                class="w-24 accent-white"
+                                                                />
+                                                            </div> --}}
+                                                        </div>
                                                     </div>
+                                                    
                                                 @endif
                                             @endforeach
                                             <!-- Item 1 -->
@@ -157,7 +207,11 @@
                                 <div class="flex flex-row justify-center gap-14 w-[21rem] mt-8">
                                     @if ($product->has_services == 1)
                                         <div>
-                                            <button class="h-20 w-20 rounded-full shadow-lg border flex items-center justify-center  bg-[#3eb8d7] hover:bg-sky-600 active:bg-sky-500 translate transition-300"
+                                            <button 
+                                                class="h-14 w-14 mx-auto rounded-xl shadow-lg border flex items-center justify-center
+                                                    bg-gradient-to-r from-[#3eb8d7] to-sky-600
+                                                    hover:from-[#3eb8d7] hover:to-sky-700
+                                                    transition-all duration-500  ease-in-out"  
                                                 type="button"
                                                 {{-- onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')" --}}
                                                 data-twe-toggle="modal"
@@ -165,17 +219,21 @@
                                                 data-twe-ripple-init
                                                 data-twe-ripple-color="light"
                                             >
-                                                <div class="h-16 w-16 border-2 border-white rounded-full flex items-center justify-center content-normal ">
-                                                    <i class="bi bi-gear text-3xl text-white"></i>
+                                                <div class="h-14 w-14rounded-full flex items-center justify-center content-normal ">
+                                                    <i class="bi bi-tools text-2xl text-white scale-x-90"></i>
                                                 </div>
                                             </button>
-                                            <p class="text-lg mt-3 font-bold text-sky-500 text-center ">Servicios</p>
+                                            <p class="text-md max-w-16 mt-1 font-bold text-sky-500 text-center ">Servicios</p>
                                         </div>
                                     @endif
                                     @if ($product->has_accesrorypdf == 1)
                                         <div class="">
 
-                                            <button class="h-20 w-20 mx-auto rounded-full shadow-lg border flex items-center justify-center  bg-[#3eb8d7] hover:bg-sky-600 active:bg-sky-500 translate transition-300"
+                                            <button 
+                                                 class="h-14 w-14 mx-auto rounded-xl shadow-lg border flex items-center justify-center
+                                                        bg-gradient-to-r from-[#3eb8d7] to-sky-600
+                                                        hover:from-[#3eb8d7] hover:to-sky-700
+                                                        transition-all duration-500  ease-in-out"                                                
                                                 type="button"
                                                 {{-- onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')" --}}
                                                 data-twe-toggle="modal"
@@ -183,11 +241,12 @@
                                                 data-twe-ripple-init
                                                 data-twe-ripple-color="light"
                                             >
-                                                <div class="h-16 w-16 border-2 border-white rounded-full flex items-center justify-center content-normal">
-                                                    <i class="bi bi-bookmark text-3xl text-white"></i>
+                                                <div class="h-14 w-14  rounded-full flex items-center justify-center content-normal">
+                                                    {{-- <i class="bi bi-bookmark text-3xl text-white"></i> --}}
+                                                    <i class="bi bi-file-earmark-ruled  text-3xl text-white scale-x-90"></i>
                                                 </div>
                                             </button>
-                                            <p class="text-lg mt-3 font-bold text-sky-500 text-center ">Ficha Técnica</p>
+                                            <p class="text-md max-w-16 mt-1 font-bold text-sky-500 text-center ">Ficha Técnica</p>
                                         </div>
                                     @endif
                                 </div>
@@ -205,7 +264,7 @@
                                         data-twe-modal-dialog-ref
                                         class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
                                         <div class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
-                                            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 p-4">
+                                            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 px-4 pt-2 pb-1">
                                                 <!-- Modal title -->
                                                 <h5 class="text-xl font-medium leading-normal text-[#0392ceff]" id="servicesModalTitle">
                                                     Servicios
@@ -260,9 +319,9 @@
                                     role="dialog">
                                     <div
                                         data-twe-modal-dialog-ref
-                                        class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[70%]">
-                                        <div class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
-                                            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 p-4">
+                                        class="pointer-events-none flex min-h-screen w-full translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto ">
+                                        <div class="pointer-events-auto  min-h-screen flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
+                                            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 px-4 pt-2 pb-1">
                                                 <!-- Modal title -->
                                                 <h5 class="text-xl font-medium leading-normal text-[#0392ceff]" id="accesoryModalTitle">
                                                     Ficha Técnica
@@ -291,7 +350,7 @@
                                             </div>
 
                                             <!-- Modal body -->
-                                            <div class="relative p-4">
+                                            <div class="flex flex-1 p-4">
                                                 <?php
                                                     $url = "";
                                                     $page = 0;
@@ -309,9 +368,9 @@
                                                         }
                                                     }
                                                 ?>
-                                                <div class="h-[45rem] w-full">
+                                                <div class="flex flex-1 w-full">
                                                     <iframe
-                                                        src="{{ asset("/storage/".$url) }}#page={{ $page }}"
+                                                        src="{{ asset("/storage/".$url) }}#page={{ $page }}&zoom=100"
                                                         class="w-full h-full"
                                                         frameborder="0"
                                                     ></iframe>
@@ -347,7 +406,7 @@
                 data-twe-modal-dialog-ref
                 class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
                 <div class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
-                    <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 p-4">
+                    <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 px-4 pt-2 pb-1">
                         <!-- Modal title -->
                         <h5 class="text-xl font-medium leading-normal text-[#0392ceff]" id="servicesModalTitle">
                             Servicios
@@ -402,7 +461,7 @@
                 data-twe-modal-dialog-ref
                 class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
                 <div class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
-                    <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 p-4">
+                    <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 px-4 pt-2 pb-1">
                         <!-- Modal title -->
                         <h5 class="text-xl font-medium leading-normal text-[#0392ceff]" id="accesoryModalTitle">
                             Accesorios
@@ -497,4 +556,45 @@
         // const conditionsList = document.getElementById('offertModalConditions');
         // conditionsList.innerHTML = conditions.map(c => `<li>${c}</li>`).join('');
     }
+</script>
+<script>
+  const video = document.getElementById("customVideo");
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const progress = document.getElementById("progress");
+  const volume = document.getElementById("volume");
+  const controls = document.getElementById("controls");
+
+  // Mostrar controles al mover mouse
+  let timeout;
+  video.parentElement.addEventListener("mousemove", () => {
+    controls.classList.add("opacity-100");
+    clearTimeout(timeout);
+    timeout = setTimeout(() => controls.classList.remove("opacity-100"), 2000);
+  });
+
+  // Play/Pause
+  playPauseBtn.addEventListener("click", () => {
+    if (video.paused) {
+      video.play();
+      playPauseBtn.textContent = "⏸️";
+    } else {
+      video.pause();
+      playPauseBtn.textContent = "▶️";
+    }
+  });
+
+  // Actualizar barra de progreso
+  video.addEventListener("timeupdate", () => {
+    progress.value = (video.currentTime / video.duration) * 100 || 0;
+  });
+
+  // Buscar en el video
+  progress.addEventListener("input", () => {
+    video.currentTime = (progress.value / 100) * video.duration;
+  });
+
+  // Control de volumen
+  volume.addEventListener("input", () => {
+    video.volume = volume.value;
+  });
 </script>

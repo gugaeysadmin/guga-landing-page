@@ -235,6 +235,39 @@
         </div>
       </div>
 
+      <!-- Switch para activar/desactivar consumibles -->
+      <div class="flex items-center w-full">
+        <label class="flex items-center cursor-pointer">
+          <div class="relative">
+            <input 
+              type="checkbox" 
+              class="sr-only" 
+              v-model="suppliesPdfEnabled"
+              @change="toggleSupplyPdf"
+            >
+            <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
+            <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+          </div>
+          <div class="ml-3 text-sm font-medium">Tiene consumibles</div>
+        </label>
+      </div>
+
+      <!-- consumibles -->
+      <div v-if="suppliesPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
+
+        <div class="w-full">
+          <div>
+              <label class="block text-md font-medium text-cyan-800">Sube el pdf de los consumibles </label>
+              <input 
+                type="file" 
+                accept=".pdf" 
+                @change="handleFileUploadSuppliesPdf" 
+                class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              >
+            </div>
+        </div>
+      </div>
+
 
 
       <!-- Switch para activar/desactivar servicios -->
@@ -865,6 +898,8 @@
 
   const accesoryPdfEnabled = ref(false)
   const manualPdfEnabled = ref(false);
+  const suppliesPdfEnabled = ref(false);
+
   const servicesEnabled = ref(false)
   const tableEnabled = ref(false)
   const formData = ref({
@@ -882,7 +917,9 @@
     has_page: 0,
     has_services: false,
     has_manual: false,
+    has_supply: false,
     manualpdf: "",
+    suppliespdf: "",
     services_description: '',
     catalogaccesrorypdf: "",
     productImages: [],
@@ -1187,7 +1224,18 @@
       formData.value.manualpdf = null;
       formData.value.has_manual = false ;
     }
-    formData.value.has_accesrorypdf = manualPdfEnabled.value;
+    formData.value.has_manual = manualPdfEnabled.value;
+
+  }
+  
+
+  const toggleSupplyPdf = () => {
+    
+    if(!manualPdfEnabled.value){
+      formData.value.suppliespdf = null;
+      formData.value.has_supply = false ;
+    }
+    formData.value.has_supply = manualPdfEnabled.value;
 
   }
   
@@ -1201,6 +1249,13 @@
     const file = event.target.files[0];;
     formData.value.accesorypdf = file;
   }
+
+  const handleFileUploadSuppliesPdf= (event) => {
+    const file = event.target.files[0];;
+    formData.value.suppliespdf = file;
+  }
+
+
 
   const closePdfModal = () => {
     previewImage.value = null

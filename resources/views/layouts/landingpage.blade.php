@@ -15,7 +15,7 @@
         <link rel="preload" href="{{ asset('img/logo_normal.png') }}" as="image">
 
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/applaravel.js'])
         @stack('scripts')
     </head>
     <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">

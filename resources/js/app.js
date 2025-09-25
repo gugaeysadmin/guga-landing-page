@@ -54,7 +54,7 @@ import enterpriseform from './forms/EnterpriseForm.vue';
 import producttable from './components/product/ProductTable.vue';
 import updatespecareaform from './forms/UpdateSpecAreaForm.vue';
 import specproducttable from './components/specarea/SpecProductTable.vue';
-
+import flipbook from './components/FlipBook.vue';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
@@ -94,6 +94,8 @@ app.component('EnterpriseForm', enterpriseform);
 app.component('ProductTable',producttable);
 app.component('UpdateSpecAreaForm',updatespecareaform);
 app.component('SpecProductTable',specproducttable);
+
+app.component('FlipBook',flipbook);
 
 
 

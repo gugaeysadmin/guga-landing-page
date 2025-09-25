@@ -12,7 +12,7 @@
             <h1 class="text-white text-[3.5vw] font-sans">Todos nuestros equipos</h1>
         </div>
     </div>
-    <section class="py-32 px-4 sm:px-12 bg-slate-50">
+    <section class="py-32 px-4 sm:px-12 bg-slate-200">
         <div class="max-w-[100rem] mx-auto">
             <x-equipment-areas-catalogs :specareas="$specareas"/>
         </div>
@@ -92,15 +92,15 @@
                                 <img src="{{ $img }}" alt="Producto" class="h-full w-full object-contain rounded mb-4">
                             </div>
                             <div class="p-4 w-full">
-                                <h1 class="font-sans font-semibold text-3xl text-sky-600 uppercase">{{ $product->name}}</h1>
-                                <h2 class="font-sans font-semibold text- mt-2 text-sky-500 uppercase">{{ $product->brand->name}}</h2>
-                                <p class="font-sans text-md text-slate-900 mt-4 break-words whitespace-pre-line overflow-hidden line-clamp-5 text-center">{{ $product->description}}</p>
+                                <h1 class="font-sans font-semibold text-xl text-sky-500 uppercase">{{ $product->name}}</h1>
+                                <h2 class="font-sans font-bold text-md mt-2 text-slate-400 uppercase">{{ $product->brand->name}}</h2>
+                                <p class="font-sans text-sm text-slate-900 mt-4 break-words whitespace-pre-line overflow-hidden line-clamp-5 text-start">{{ $product->description}}</p>
                             </div>
                         </button>
 
                         <div
                             data-twe-modal-init
-                            class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                            class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none "
                             id="productModal-{{ $index }}"
                             tabindex="1"
                             aria-labelledby="productModalLabel"
@@ -108,9 +108,9 @@
                             role="dialog">
                             <div
                                 data-twe-modal-dialog-ref
-                                class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] max-w-[97vw] md:max-w-[100vw] ">
-                                <div class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
-                                    <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 p-4 ml-auto">
+                                class="pointer-events-none relative flex min-h-[calc(100%)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto max-w-[97vw] md:max-w-[100vw] ">
+                                <div class="pointer-events-auto min-h-screen relative flex w-full flex-col rounded-md border-none bg-slate-200 bg-clip-padding text-current shadow-4 outline-none">
+                                    <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2  px-4 pt-2 pb-1 ml-auto">
                                         <!-- Close button -->
                                         <button
                                             type="button"
@@ -134,7 +134,7 @@
                                     </div>
 
                                     <!-- Modal body -->
-                                    <div class="flex flex-row gap-8 p-4 md:p-12">
+                                    <div class="flex flex-row gap-8 px-4 pb-4 md:px-12 md:py-4">
                                        <x-catalog-product-overview :product="$product" :index="$index" :productDecode="$productDecode" :accesoryPdf="$accesoryPdf"/>
                                     </div>
 
@@ -145,7 +145,7 @@
                     @endforeach
                 </div>
                 <div class="mt-4 m-auto">
-                    {{ $products->links() }}
+                    {{$products->appends(request()->query())->links()}}
                 </div>
             </main>
         </div>

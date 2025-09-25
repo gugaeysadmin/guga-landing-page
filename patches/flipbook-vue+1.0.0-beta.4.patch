@@ -1,0 +1,76 @@
+diff --git a/node_modules/flipbook-vue/dist/flipbook.cjs.js b/node_modules/flipbook-vue/dist/flipbook.cjs.js
+index 10f806e..fa4dc11 100644
+--- a/node_modules/flipbook-vue/dist/flipbook.cjs.js
++++ b/node_modules/flipbook-vue/dist/flipbook.cjs.js
+@@ -571,8 +571,10 @@ var script = {
+         rotate = -rotate;
+         dRotate = -dRotate;
+       }
+-      this.minX = 2e308;
+-      this.maxX = -2e308;
++      
++      // Use local variables to avoid Vue reactivity issues with minX/maxX
++      var localMinX = 2e308;
++      var localMaxX = -2e308;
+       results = [];
+       for (i = j = 0, ref = this.nPolygons; (0 <= ref ? j < ref : j > ref); i = 0 <= ref ? ++j : --j) {
+         bgPos = (i / (this.nPolygons - 1) * 100) + "% 0px";
+@@ -590,13 +592,18 @@ var script = {
+         m.rotateY(-rotate);
+         x0 = m.transformX(0);
+         x1 = m.transformX(polygonWidth);
+-        this.maxX = Math.max(Math.max(x0, x1), this.maxX);
+-        this.minX = Math.min(Math.min(x0, x1), this.minX);
++        localMaxX = Math.max(Math.max(x0, x1), localMaxX);
++        localMinX = Math.min(Math.min(x0, x1), localMinX);
+         lighting = this.computeLighting(pageRotation - rotate, dRotate);
+         radian += dRadian;
+         rotate += dRotate;
+         results.push([face + i, image, lighting, bgPos, m.toString(), Math.abs(Math.round(z))]);
+       }
++      
++      // Update the reactive properties only once at the end
++      this.minX = localMinX;
++      this.maxX = localMaxX;
++      
+       return results;
+     },
+     computeLighting: function(rot, dRotate) {
+diff --git a/node_modules/flipbook-vue/dist/flipbook.mjs b/node_modules/flipbook-vue/dist/flipbook.mjs
+index 7d9674c..0b37df8 100644
+--- a/node_modules/flipbook-vue/dist/flipbook.mjs
++++ b/node_modules/flipbook-vue/dist/flipbook.mjs
+@@ -569,8 +569,10 @@ var script = {
+         rotate = -rotate;
+         dRotate = -dRotate;
+       }
+-      this.minX = 2e308;
+-      this.maxX = -2e308;
++      
++      // Use local variables to avoid Vue reactivity issues with minX/maxX
++      var localMinX = 2e308;
++      var localMaxX = -2e308;
+       results = [];
+       for (i = j = 0, ref = this.nPolygons; (0 <= ref ? j < ref : j > ref); i = 0 <= ref ? ++j : --j) {
+         bgPos = (i / (this.nPolygons - 1) * 100) + "% 0px";
+@@ -588,13 +590,18 @@ var script = {
+         m.rotateY(-rotate);
+         x0 = m.transformX(0);
+         x1 = m.transformX(polygonWidth);
+-        this.maxX = Math.max(Math.max(x0, x1), this.maxX);
+-        this.minX = Math.min(Math.min(x0, x1), this.minX);
++        localMaxX = Math.max(Math.max(x0, x1), localMaxX);
++        localMinX = Math.min(Math.min(x0, x1), localMinX);
+         lighting = this.computeLighting(pageRotation - rotate, dRotate);
+         radian += dRadian;
+         rotate += dRotate;
+         results.push([face + i, image, lighting, bgPos, m.toString(), Math.abs(Math.round(z))]);
+       }
++      
++      // Update the reactive properties only once at the end
++      this.minX = localMinX;
++      this.maxX = localMaxX;
++      
+       return results;
+     },
+     computeLighting: function(rot, dRotate) {

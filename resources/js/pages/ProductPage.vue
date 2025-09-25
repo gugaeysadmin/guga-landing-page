@@ -116,6 +116,12 @@ export default {
       <!-- <div>
           <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
       </div> -->
+      <div>
+        <router-link to="/app/admin/product/add" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
+          <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
+          <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+        </router-link>
+      </div>
       <div class="relative">
           <i class="bi bi-search absolute left-3 top-3 text-slate-500"></i>
           <input 
@@ -124,12 +130,6 @@ export default {
               placeholder="Buscar" 
               class="pl-10 pr-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full w-full"
           />
-      </div>
-      <div>
-          <router-link to="/app/admin/product/add" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
-              <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
-              <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
-          </router-link>
       </div>
 
   </div>
