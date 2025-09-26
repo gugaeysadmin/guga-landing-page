@@ -71,7 +71,8 @@
 
 
                         ?>
-                        <button x-show="isGrid" class="productCard  p-4 text-center w-60 h-80 transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group "
+                        <button x-show="isGrid" class="productCard bg-slate-100
+                          p-4 text-center w-60 h-80 transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group "
                             data-twe-toggle="modal"
                             data-twe-target="#productModal-{{ $index }}"
                             data-twe-ripple-init
@@ -82,7 +83,7 @@
                                     <h3 class=" font-sans mt-4 font-semibold xs:text-md md:text-2xl text-sky-600 uppercase ">{{ $product->name }}</h3>
                                 </div>
                         </button>
-                        <button x-show="!isGrid" class="productCard bg-white w-full rounded-xl p-4 shadow-lg hover:shadow-xl  flex transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group"
+                        <button x-show="!isGrid" class="productCard bg-slate-100 w-full rounded-xl p-4 shadow-lg hover:shadow-xl  flex transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group"
                                 data-twe-toggle="modal"
                                 data-twe-target="#productModal-{{ $index }}"
                                 data-twe-ripple-init
@@ -110,6 +111,7 @@
                                 data-twe-modal-dialog-ref
                                 class="pointer-events-none relative flex min-h-[calc(100%)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto max-w-[97vw] md:max-w-[100vw] ">
                                 <div class="pointer-events-auto min-h-screen relative flex w-full flex-col rounded-md border-none bg-slate-200 bg-clip-padding text-current shadow-4 outline-none">
+                                    
                                     <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2  px-4 pt-2 pb-1 ml-auto">
                                         <!-- Close button -->
                                         <button

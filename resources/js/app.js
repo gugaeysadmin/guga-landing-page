@@ -58,7 +58,9 @@ import flipbook from './components/FlipBook.vue';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
+import 'vue-select/dist/vue-select.css';
 
+import VueSelect from 'vue-select';
 const app = createApp(mainVue)
 
 app.use(router)
@@ -96,6 +98,7 @@ app.component('UpdateSpecAreaForm',updatespecareaform);
 app.component('SpecProductTable',specproducttable);
 
 app.component('FlipBook',flipbook);
+app.component('v-select', VueSelect);
 
 
 

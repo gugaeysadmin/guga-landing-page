@@ -66,7 +66,7 @@
                     <x-filters  :title="'Categorias de producto'" :filters="$filters"/>
                 </aside> --}}
                 @vite('resources/js/applaravel.js')
-                <div id="flipbook-container"></div>
+                {{-- <div id="flipbook-container"></div> --}}
                 <div >
                     <x-horizontal-filters  :title="'Categorias de producto'" :filters="$filters"/>
                 </div>

@@ -19,13 +19,21 @@ class Product extends Model
         'optional3',
         'brand_id',
         'table_data',
+        'table_id',
         'has_accesrorypdf',
         'pdf_page',
         'has_services',
         'services_description',
         'accesorypdf_id',
         'accesorypdf',
-        'active'
+        'active',
+        'valid', //boolean 
+        'is_catalog', //boolean 
+        'catalogpdf', //string nullable
+        'has_manual', //boolean 
+        'manualpdf', //string nullable
+        'has_supply', //boolean
+        'supplypdf' // string nullable
     ];
 
     public function brand()
@@ -37,7 +45,7 @@ class Product extends Model
 
     public function productTableConfiguration()
     {
-        return $this->belongsTo(ProductTableConfiguration::class);
+        return $this->belongsTo(ProductTableConfiguration::class, 'table_id');
     }
 
     public function productImages()
@@ -64,6 +72,6 @@ class Product extends Model
 
     public function  accesoryPdf()
     {
-        return $this->belongsTo(AccesoryPdf::class);
+        return $this->belongsTo(AccesoryPdf::class, 'accesorypdf_id');
     }
 }

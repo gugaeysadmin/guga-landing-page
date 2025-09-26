@@ -18,9 +18,54 @@
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
           ></input>
         </div>
+
+        <!-- Switch para activar/desactivar producto como pdf -->
+        <div class="flex items-center w-full">
+          <label class="flex items-center cursor-pointer">
+            <div class="relative">
+              <input 
+                type="checkbox" 
+                class="sr-only" 
+                v-model="isCatalogPdf"
+                @change="toggleCatalogPdf"
+                
+              >
+              <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
+              <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+            </div>
+            <div class="ml-3 text-sm font-medium">El producto es un catalogo en pdf</div>
+          </label>
+        </div>
+
+        <!-- producto pdf -->
+        <div v-if="isCatalogPdf" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
+          <div class="w-full">
+            <div>
+                <label class="block text-md font-medium text-cyan-800">Sube el pdf del producto</label>
+                <div v-if="catalogPdf !== null" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
+                  <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
+                  <a
+                    :href="`/storage/${catalogPdf}`"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-500 underline text-xs"
+                  >
+                    {{ catalogPdf?.split("_82fbcc113b80e3bebe876ed5add2564d_").pop() }}
+                  </a>
+                </div>
+                <input 
+                  type="file" 
+                  accept=".pdf" 
+                  @change="handleFileUploadCatalogPdf" 
+                  @required ="isCatalogPdf && catalogPdf === null" 
+                  class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                >
+              </div>
+          </div>
+        </div>
   
         <!-- description -->
-        <div class="w-full py-2">
+        <div v-if="!isCatalogPdf" class=" w-full py-2">
           <label for="description" class="block text-md font-medium text-cyan-800">Descripción *</label>
           <textarea
             id="description"
@@ -32,23 +77,23 @@
         </div>
   
         <!-- brand -->
-        <div class="mb-6 w-full ">
+        <div  class="mb-6 w-full ">
           <label class="block text-md font-medium text-cyan-800">Marca *</label>
           <div class="flex gap-2 mt-1">
-            <select
+            <v-select
               v-model="formData.brand_id"
-              class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              :options="brands || []"
+              label="name"
+              :reduce="brand => brand.id"
+              placeholder="Selecciona una marca"
+              class="flex-1"
             >
-              <option value="" disabled selected>Selecciona una marca</option>
-              <option v-for="brand in brands" :key="brand.id" :value="brand.id">
-                {{ brand.name }}
-              </option>
-            </select>
+              <div slot="no-options">No se encontraron opciones!</div>
+            </v-select>
             <button
               type="button"
               @click="showBrandModal = true"
-              class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+              class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
             >
               + Nueva
             </button>
@@ -60,27 +105,28 @@
         <div class="mb-6 w-full ">
           <label class="block text-md font-medium text-cyan-800">Categorías *</label>
           <div class="flex gap-2 mt-1">
-            <select
+            <v-select
               v-model="selectedCategorie"
-              @change="addCategory"
-              class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              :options="categories || []"
+              label="name"
+              @update:modelValue="addCategory"
+              :reduce="category => category.id"
+              placeholder="Selecciona una categoía"
+              class="flex-1"
             >
-              <option value="" disabled selected>Selecciona una categoría</option>
-              <option v-for="category in categories" :key="category.id" :value="category.id">
-                {{ category.name }}
-              </option>
-            </select>
+              <div slot="no-options">No se encontraron opciones!</div>
+            </v-select>
             <button
               type="button"
               @click="showCategoryModal = true"
-              class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+              class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
             >
               + Nueva
             </button>
-  
+
           </div>
           
-          <div v-if="categories" class="mt-4 flex flex-wrap gap-2">
+          <div class="mt-4 flex flex-wrap gap-2">
             <div
               v-for="(category, index) in formData.categories"
               :key="index"
@@ -102,19 +148,21 @@
         <div class="mb-6 w-full  ">
           <label class="block text-md font-medium text-cyan-800">Áreas de especialidad *</label>
           <div class="flex gap-2 mt-1">
-            <select
+            <v-select
               v-model="selectedSpecArea"
-              @change="addSpecArea"
-              class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              :options="specAreas || []"
+              label="name"
+              @update:modelValue="addSpecArea"
+              :reduce="specArea => specArea.id"
+              placeholder="Selecciona un área de especialidad"
+              class="flex-1"
             >
-              <option value="" disabled selected>Selecciona una área de especialidad</option>
-              <option v-for="specArea in specAreas" :key="specArea.id" :value="specArea.id">
-                {{ specArea.name }}
-              </option>
-            </select>
+              <div slot="no-options">No se encontraron opciones!</div>
+            </v-select>
+
           </div>
           
-          <div v-if="specAreas" class="mt-4 flex flex-wrap gap-2">
+          <div class="mt-4 flex flex-wrap gap-2">
             <div
               v-for="(specArea, index) in formData.specAreas"
               :key="index"
@@ -133,7 +181,7 @@
         </div>
   
         <!-- Switch para activar/desactivar accesorios -->
-        <div class="flex items-center">
+        <div v-if="!isCatalogPdf" class="flex items-center">
           <label class="flex items-center cursor-pointer">
             <div class="relative">
               <input 
@@ -145,9 +193,10 @@
               <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
               <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
             </div>
-            <div class="ml-3 text-sm font-medium">Tiene accesorios</div>
+            <div class="ml-3 text-sm font-medium">Agregar accesorios</div>
           </label>
         </div>
+
         <!-- Accesorios -->
         <div v-if="accesoryPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
           <div class="flex gap-8 items-end">
@@ -155,20 +204,21 @@
               <label class="block text-md font-medium text-cyan-800">Selecciona el pdf con el catálogo de accesorios</label>
               <div class="flex gap-2">
                 <div class="flex gap-2 mt-1 w-full">
-                  <select
+                  <v-select
                     v-model="formData.catalogaccesrorypdf"
-                    class="flex-1 px-3 py-[0.39rem] border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    :options="accesoryDocs || []"
+                    label="name"
+                    :reduce="accesoryDoc => accesoryDoc.id"
+                    placeholder="Selecciona una pdf"
+                    class="flex-1"
                   >
-                    <option value="" disabled selected>Selecciona una pdf</option>
-                    <option v-for="accesoryDoc in accesoryDocs" :key="accesoryDoc.id" :value="accesoryDoc.id">
-                      {{ accesoryDoc.name }}
-                    </option>
-                  </select>
+                    <div slot="no-options">No se encontraron opciones!</div>
+                  </v-select>
                 </div>
                 <button
                   type="button"
                   @click="showPdfModal = true"
-                  class="px-3 py-2 mt-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors min-w-24"
+                  class="px-3 py-1 mt-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors min-w-24"
                 >
                   + Nueva
                 </button>
@@ -180,19 +230,28 @@
                 id="name"
                 type="number"
                 v-model="formData.has_page"
-                
                 required
                 class="mt-1 rounded-md  border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
               ></input>
             </div>
           </div>
-  
+
           <div class="w-full mt-4">
             <div>
-                <label class="block text-md font-medium text-cyan-800">ó Cambia la ficha técnica específico a este producto. </label>
+                <label class="block text-md font-medium text-cyan-800">ó Sube el pdf con los accesorios específicos para este producto. </label>
+                <div v-if="accesoryPdf !== null" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
+                  <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
+                  <a
+                    :href="`/storage/${accesoryPdf}`"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-500 underline text-xs"
+                  >
+                    {{ accesoryPdf?.split("_82fbcc113b80e3bebe876ed5add2564d_").pop() }}
+                  </a>
+                </div>
                 <input 
                   type="file" 
-                  multiple 
                   accept=".pdf" 
                   @change="handleFileUploadAccesoryPdf" 
                   class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
@@ -203,7 +262,7 @@
 
 
         <!-- Switch para activar/desactivar ficha tecnica -->
-        <div class="flex items-center w-full">
+        <div v-if="!isCatalogPdf" class="flex items-center w-full">
           <label class="flex items-center cursor-pointer">
             <div class="relative">
               <input 
@@ -215,19 +274,31 @@
               <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
               <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
             </div>
-            <div class="ml-3 text-sm font-medium">Tiene ficha técnica general</div>
+            <div class="ml-3 text-sm font-medium">Agregar ficha técnica general</div>
           </label>
         </div>
+
         <!-- ficha tecnica -->
         <div v-if="manualPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
-
           <div class="w-full">
             <div>
                 <label class="block text-md font-medium text-cyan-800">Sube el pdf de la ficha técnica </label>
+                <div v-if="manualpdf !== null" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
+                  <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
+                  <a
+                    :href="`/storage/${manualpdf}`"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-500 underline text-xs"
+                  >
+                    {{ manualpdf?.split("_82fbcc113b80e3bebe876ed5add2564d_").pop() }}
+                  </a>
+                </div>
                 <input 
                   type="file" 
                   accept=".pdf" 
                   @change="handleFileUploadMaualPdf" 
+                  @required="manualPdfEnabled && manualpdf === null"
                   class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 >
               </div>
@@ -235,40 +306,51 @@
         </div>
 
         <!-- Switch para activar/desactivar consumibles -->
-      <div class="flex items-center w-full">
-        <label class="flex items-center cursor-pointer">
-          <div class="relative">
-            <input 
-              type="checkbox" 
-              class="sr-only" 
-              v-model="suppliesPdfEnabled"
-              @change="toggleSupplyPdf"
-            >
-            <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
-            <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
-          </div>
-          <div class="ml-3 text-sm font-medium">Tiene consumibles</div>
-        </label>
-      </div>
-
-      <!-- consumibles -->
-      <div v-if="suppliesPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
-
-        <div class="w-full">
-          <div>
-              <label class="block text-md font-medium text-cyan-800">Sube el pdf de los consumibles </label>
+        <div v-if="!isCatalogPdf" class="flex items-center w-full">
+          <label class="flex items-center cursor-pointer">
+            <div class="relative">
               <input 
-                type="file" 
-                accept=".pdf" 
-                @change="handleFileUploadSuppliesPdf" 
-                class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                type="checkbox" 
+                class="sr-only" 
+                v-model="suppliesPdfEnabled"
+                @change="toggleSupplyPdf"
               >
+              <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
+              <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
             </div>
+            <div class="ml-3 text-sm font-medium">Agregar consumibles</div>
+          </label>
         </div>
-      </div>
+
+        <!-- consumibles -->
+        <div  v-if="suppliesPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
+          <div class="w-full">
+            <div>
+                <label class="block text-md font-medium text-cyan-800">Sube el pdf de los consumibles </label>
+                <div v-if="suppliespdf !== null" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
+                  <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
+                  <a
+                    :href="`/storage/${suppliespdf}`"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-500 underline text-xs"
+                  >
+                    {{ suppliespdf?.split("_82fbcc113b80e3bebe876ed5add2564d_").pop() }}
+                  </a>
+                </div>
+                <input 
+                  type="file" 
+                  accept=".pdf" 
+                  @change="handleFileUploadSuppliesPdf" 
+                  @required="suppliesPdfEnabled && suppliespdf === null"
+                  class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                >
+              </div>
+          </div>
+        </div>
   
         <!-- Switch para activar/desactivar servicios -->
-        <div class="flex w-full">
+        <div v-if="!isCatalogPdf" class="flex w-full">
           <label class="flex items-center cursor-pointer">
             <div class="relative">
               <input 
@@ -280,9 +362,10 @@
               <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
               <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
             </div>
-            <div class="ml-3 text-sm font-medium">Tiene servicios</div>
+            <div class="ml-3 text-sm font-medium">Agregar servicios</div>
           </label>
         </div>
+
         <div v-if="servicesEnabled" class=" flex pl-8  flex-col w-full">
           <label class="block text-md font-medium text-cyan-800">Ingresa la descripción de los servicios</label>
           <QuillEditor 
@@ -290,7 +373,7 @@
             content-type="html"
             theme="snow" 
             :toolbar="[
-               [{ 'font': [] }, { 'size': [] }],
+              [{ 'font': [] }, { 'size': [] }],
                 [ 'bold', 'italic', 'underline', 'strike' ],
                 [{ 'color': [] }, { 'background': [] }],
                 [, 'blockquote' ],
@@ -304,7 +387,7 @@
         </div>
   
         <!-- Switch para activar/desactivar la tabla -->
-        <div class="flex w-full">
+        <div v-if="!isCatalogPdf" class="flex w-full">
           <label class="flex items-center cursor-pointer">
             <div class="relative">
               <input 
@@ -316,107 +399,149 @@
               <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
               <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
             </div>
-            <div class="ml-3 text-sm font-medium">Tiene tabla</div>
+            <div class="ml-3 text-sm font-medium">Agregar tabla de especificaciónes</div>
           </label>
         </div>
+
         <!-- Tabla -->
-        <div v-if="tableEnabled" class="flex pl-8 flex-col w-full">
-  
+        <div  v-if="tableEnabled" class="flex pl-8 flex-col w-full">
           <div class="mb-6 w-full ">
             <label class="block text-md font-medium text-cyan-800">Selecciona las columnas de la tabla *</label>
             <div class="flex gap-2 mt-1">
-              <select
-                @change = "handleSelectTableHeader"
+              <v-select
                 v-model="selectedTableHeader"
-                class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                
+                :options="tableHeaders || []"
+                label="name"
+                :reduce="tableHeader => tableHeader.id"
+                @update:modelValue="handleSelectTableHeader"
+                placeholder="Selecciona una configuracion de tabla"
+                class="flex-1"
               >
-                <option value="" disabled selected>Selecciona una configuración de columnas</option>
-                <option v-for="tableHeader in tableHeaders" :key="tableHeader.id" :value="tableHeader.id">
-                  {{ tableHeader.name }}
-                </option>
-                
-              </select>
+                <div slot="no-options">No se encontraron opciones!</div>
+              </v-select>
               <button
                 type="button"
                 @click="showTableConfigModal = true"
-                class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+                class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
               >
                 + Nueva
               </button>
+              <!-- to="/app/admin/enterprise/table-config" -->
+              <button
+                type="button"
+                @click="()=> router.push('/app/admin/enterprise/table-config')"
+                class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+              >
+                ver todas
+              </button>
             </div>
           </div>
-  
-          <div v-if="selectedTableHeader !== null" class="overflow-x-auto">
+
+          <div v-if="selectedTableHeader !== ''" class="overflow-x-auto">
             <label for="newTableName" class="block text-md font-medium text-cyan-800 mb-1">Vista previa de la tabla</label>
             <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
+              <thead v-if="formData.table_data.headers" class="bg-gray-50">
                 <tr>
                   <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Eliminar</th>
                   <th v-for="(header, index) in formData.table_data.headers" :key="index" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ header }}</th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="(row, rowIndex) in formData.table_data.table" :key="rowIndex">
-                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                      <button
-                          @click="handleRemoveTableRow( rowIndex)"
-                          class="text-red-600 hover:text-red-900"
+              <tbody v-if="formData.table_data.table" class="bg-white divide-y divide-gray-200">
+                <tr 
+                  v-for="(row, rowIndex) in formData.table_data.table" 
+                  :key="rowIndex"
+                  draggable="true"
+                  @dragstart="handleTableDragStart($event, rowIndex)"
+                  @dragover.prevent="handleTableDragOver($event, rowIndex)"
+                  @dragenter.prevent="handleTableDragEnter($event, rowIndex)"
+                  @dragleave="handleTableDragLeave"
+                  @drop="handleTableDrop($event, rowIndex)"
+                  @dragend="handleTableDragEnd"
+                  :class="{
+                    'bg-blue-50': dragOverIndex === rowIndex,
+                    'cursor-move': !isDragging,
+                    'opacity-50': isDragging && draggedItemIndex === rowIndex
+                  }"
+                >
+                  <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                    <button
+                        @click="handleRemoveTableRow( rowIndex)"
+                        class="text-red-600 hover:text-red-900"
+                    >
+                        Eliminar
+                    </button>
+                  </td>
+                  <td v-for="(header, headerIndex) in formData.table_data.headers" :key="headerIndex">
+                    <div v-if="header == 'imagen'" class="flex items-center gap-2 px-1">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        @change="handleRowImgUpload($event, rowIndex)"
+                        class="hidden"
+                        :id="'image-upload-'+rowIndex"
                       >
-                          Eliminar
-                      </button>
-                    </td>
-                    <td v-for="(header, headerIndex) in formData.table_data.headers" :key="headerIndex">
-                      <div v-if="header == 'imagen'" class="flex items-center gap-2 px-1">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          @change="handleRowImgUpload($event, rowIndex)"
-                          class="hidden"
-                          :id="'image-upload-'+rowIndex"
+                      <label 
+                        :for="'image-upload-'+rowIndex"
+                        class="cursor-pointer w-28 inline-flex justify-center rounded-md border border-transparent bg-indigo-400 disabled:bg-indigo-300 py-1 px-4 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        {{ row.imagen ? 'Cambiar Imagen' : 'Subir Imagen' }}
+                      </label>
+                      <span v-if="row.imagen && row.imagen.name" class="text-xs text-gray-500">
+                        {{ row.imagen.name || 'Imagen adjunto' }}
+                      </span>
+                      <span v-else-if="row.imagen && row.imagen !== 'null' " class="text-xs text-gray-500 min-w-20">
+                        <a
+                          :href="`/storage/${row.imagen}`"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-blue-500 underline text-xs truncate"
                         >
-                        <label 
-                          :for="'image-upload-'+rowIndex"
-                          class="cursor-pointer w-28 inline-flex justify-center rounded-md border border-transparent bg-indigo-400 disabled:bg-indigo-300 py-1 px-4 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          {{  row.imagen?.split("_82fbcc113b80e3bebe876ed5add2564d_").pop() }}
+                        </a>
+                      </span>
+                    </div>
+                    <div v-else-if="header == 'pdf'" class="flex items-center gap-2 px-1">
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        @change="handleRowPdfUpload($event, rowIndex)"
+                        class="hidden"
+                        :id="'pdf-upload-'+rowIndex"
+                      >
+                      <label 
+                        :for="'pdf-upload-'+rowIndex"
+                        class="cursor-pointer w-28 inline-flex justify-center rounded-md border border-transparent bg-indigo-400 disabled:bg-indigo-300 py-1 px-4 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        {{ row.pdf ? 'Cambiar PDF' : 'Subir PDF' }}
+                      </label>
+                      <span v-if="row.pdf && row.pdf.name" class="text-xs text-gray-500 min-w-20">
+                        {{ row.pdf.name || 'PDF adjunto' }}
+                      </span>
+                      <span v-else-if="row.pdf && row.pdf !== 'null'" class="text-xs text-gray-500 min-w-20">
+                        <a
+                          :href="`/storage/${row.pdf}`"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-blue-500 underline text-xs"
                         >
-                          {{ row.imagen ? 'Cambiar Imagen' : 'Subir Imagen' }}
-                        </label>
-                        <span v-if="row.imagen" class="text-xs text-gray-500">
-                          {{ row.imagen.name || 'Imagen adjunto' }}
-                        </span>
-                      </div>
-                      <div v-else-if="header == 'pdf'" class="flex items-center gap-2 px-1">
-                        <input
-                          type="file"
-                          accept=".pdf"
-                          @change="handleRowPdfUpload($event, rowIndex)"
-                          class="hidden"
-                          :id="'pdf-upload-'+rowIndex"
-                        >
-                        <label 
-                          :for="'pdf-upload-'+rowIndex"
-                          class="cursor-pointer w-28 inline-flex justify-center rounded-md border border-transparent bg-indigo-400 disabled:bg-indigo-300 py-1 px-4 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                          {{ row.pdf ? 'Cambiar PDF' : 'Subir PDF' }}
-                        </label>
-                        <span v-if="row.pdf" class="text-xs text-gray-500 min-w-20">
-                          {{ row.pdf.name || 'PDF adjunto' }}
-                        </span>
-                      </div>
-                      <div v-else class="px-1">
-                        <input
-                          v-model="row[header]"
-                          :placeholder="tupla"
-                          class="mt-1 block rounded-md  w-40 min-w-40 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
-                        ></input>
-  
-                      </div>
-                  
-                    </td>
+                          {{ row.pdf?.split("_82fbcc113b80e3bebe876ed5add2564d_").pop() }}
+                        </a>
+                      </span>
+                    </div>
+                    <div v-else class="px-1">
+                      <input
+                        v-model="row[header]"
+                        placeholder="Ingresa"
+                        class="mt-1 block rounded-md  w-40 min-w-40 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+                      ></input>
+
+                    </div>
+                
+                  </td>
                 </tr>
               </tbody>
             </table>
-            <div v-if="selectedTableHeader !== null" class=" py-3 px-1 flex justify-center text-sm text-gray-500">
+            <div v-if="selectedTableHeader !== ''" class=" py-3 px-1 flex justify-center text-sm text-gray-500">
               <button
                 type="button"
                 @click="handleAddTableRow"
@@ -428,9 +553,8 @@
           </div>
         </div>
   
-  
         <!-- image or url upload -->
-        <div class="w-full mt-8"> 
+        <div v-if="!isCatalogPdf" class="w-full mt-8"> 
           <!-- Uploads -->
           <div class="mb-6">
             <label class="block text-md font-medium text-cyan-800">Multimedia (Imágenes/Videos)</label>
@@ -505,16 +629,21 @@
                     </td>
                     <td class="px-4 py-3 whitespace-nowrap">
                       <img 
-                        v-if="item.type && item.type.startsWith('image')" 
+                        v-if="item.type && item.type.startsWith('image') && !item.external" 
                         :src="item.preview" 
                         class="h-10 w-10 object-cover rounded"
                       >
                       <div 
-                        v-else-if="item.type && item.type.startsWith('video')" 
+                        v-else-if="item.type && item.type.startsWith('video') && !item.external" 
                         class="flex items-center"
                       >
-                        <span class="text-blue-500 underline truncate max-w-xs">{{ item.name }}</span>
+                        <span class="text-blue-500 underline truncate max-w-xs">{{ item.name }} </span>
                       </div>
+                      <img 
+                        v-if="item.external && !item.type.startsWith('url')" 
+                        :src="'/storage/' + item.external"
+                        class="h-10 w-10 object-cover rounded"
+                      >
                       <div v-else-if="item.url" class="flex items-center">
                         <span class="text-blue-500 underline truncate max-w-xs">{{ item.url }}</span>
                       </div>
@@ -536,7 +665,6 @@
               </table>
             </div>
           </div>
-  
         </div>
   
         <!-- Botones  -->
@@ -635,7 +763,7 @@
   
       <div v-if="showTableConfigModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-lg shadow-xl w-full max-w-xl">
-          <form  class="p-6 w-full">
+          <div  class="p-6 w-full">
             <h2 class="text-xl font-bold mb-4">Agregar nueva tabla</h2>
             
             <div class="mb-4">
@@ -644,9 +772,10 @@
                 v-model="newTableConf.name"
                 type="text"
                 id="newTableName"
+                @change="errorsTable.title = ''"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
               >
+              <p v-if="errorsTable.title !== ''" class="mt-1 text-xs font-medium text-red-600  pl-2">{{ errorsTable.title }}</p>
             </div>
             <div class="w-full  py-2">
               <div>
@@ -655,7 +784,6 @@
                   <input
                     id="name"
                     v-model="newHeader"
-                    required
                     class="mt-1 block flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
                   ></input>
                   <button
@@ -676,17 +804,39 @@
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
-                    <th v-for="(item, index) in newTableConf.headers" :key="index" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ item }}</th>
+                    <th
+                      v-for="(item, index) in newTableConf.headers"
+                      :key="index"
+                      :draggable="item !== 'pdf' && item !== 'IMAGEN'" 
+                      @dragstart="item !== 'pdf' && item !== 'IMAGEN' ? handleHeaderDragStart($event, index) : null"
+                      @dragover.prevent="item !== 'pdf' && item !== 'IMAGEN' ? handleHeaderDragOver($event, index) : null"
+                      @drop="item !== 'pdf' && item !== 'IMAGEN' ? handleHeaderDrop($event, index) : null"
+                      class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      :class="{'cursor-move': item !== 'pdf' && item !== 'IMAGEN', 'cursor-default': item === 'pdf' || item === 'IMAGEN'}"
+                    >
+                      <div class="flex flex-row gap-1 px-4 content-center items-center">
+                        <button
+                          v-if="item !== 'pdf' && item !== 'IMAGEN'" 
+                          @click="removeTableHeader(index)"  
+                          class="p-1"                        
+                        >
+                          <i class="bi bi-x-circle text-md  text-red-600"></i>
+                        </button>
+                        {{ item }}
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                   <tr>
-                    <td colspan="4" class="px-4 py-3 text-center text-sm text-gray-500">Datos de la tabla</td>
+                    <td :colspan="newTableConf.headers.length" class="px-4 py-3 text-center text-sm text-gray-500">
+                      Datos de la tabla
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            
+            <p v-if="errorsTable.rows !== ''" class="mt-1 text-xs font-medium text-red-600  pl-2">{{ errorsTable.rows }}</p>
             <div class="flex justify-end gap-2">
               <button
                 type="button"
@@ -697,14 +847,13 @@
               </button>
               <button
                 @click="createTableHeader"
-                type="submit"
                 :disabled = "loading"
                 class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 {{ loading? "Guardando" : "Guardar" }}
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
   
@@ -883,19 +1032,29 @@
     const draggedItemIndex = ref(null);
     const dragOverIndex = ref(null);
     const isDragging = ref(false);
+
+    const tableDraggedIndex = ref(null)
+    const tableDragOverIndex = ref(null)
+    const isTableDragging = ref(false)
+
   
   
     const dragOver = ref(false);
     const fileInput = ref(null);
     const selectedFile = ref(null);
     const previewImage = ref(null);
-  
-  
-    const manualPdfEnabled = ref(false);
+
+    const isCatalogPdf = ref(false)
+    const catalogPdf = ref(null)
     const accesoryPdfEnabled = ref(false)
+    const accesoryPdf = ref(null)
+    const manualPdfEnabled = ref(false);
+    const manualpdf = ref(null);
+    const suppliesPdfEnabled = ref(false);
+    const suppliespdf = ref(null);
+
     const servicesEnabled = ref(false)
     const tableEnabled = ref(false)
-    const suppliesPdfEnabled = ref(false);
 
     const product_id = ref(null);
 
@@ -916,10 +1075,12 @@
       has_page: 0,
       has_services: false,
       has_supply: false,
+      is_catalog: false,
       services_description: '',
       catalogaccesrorypdf: "",
       has_manual: false,
       manualpdf: "",
+      catalogpdf: "",
       suppliespdf: "",
       productImages: [],
       categories: [],
@@ -952,9 +1113,14 @@
     });
   
     const errorsPdf = ref({
-        title: '',
-        image: '',
+      title: '',
+      image: '',
     });
+
+    const errorsTable = ref({
+      title: '',
+      rows: '',
+    })
   
   
     const router = useRouter();
@@ -978,6 +1144,7 @@
         try {
             const response = await fetch(`/api/product/${product_id.value}`);
             const data = await response.json();
+            // console.log(data.data);
             if (data.success) {
                 console.log(data);
                 formData.value.name = data.data.name;
@@ -991,7 +1158,10 @@
                     accesoryPdfEnabled.value = true;
                     formData.value.catalogaccesrorypdf = data.data.accesorypdf_id;
                     formData.value.has_page = data.data.pdf_page;
-                    formData.value.accesorypdf = data.data.accesorypdf;
+                    // formData.value.accesorypdf = data.data.accesorypdf
+                    if(data.data.accesorypdf !== null || data.data.accesorypdf !== ""){
+                      accesoryPdf.value = data.data.accesorypdf;
+                    }
                 }
                 if(data.data.has_services === 1){
                     formData.value.has_services = true;
@@ -1002,17 +1172,47 @@
                 if(data.data.has_table === 1){
                     formData.value.has_table = true;
                     tableEnabled.value = true;
+                    selectedTableHeader.value = data.data.table_id;
                     formData.value.table_data = JSON.parse(data.data.table_data)
                     console.log(JSON.parse(data.data.table_data))
                 }
 
+                if(data.data.is_catalog === 1){
+                    formData.value.is_catalog = true;
+                    isCatalogPdf.value = true;
+                    // formData.value.catalogpdf =  data.data.catalogpdf;
+                    formData.value.has_page = data.data.pdf_page;
+                    
+                    catalogPdf.value =  data.data.catalogpdf;
+                }
+
+                if(data.data.has_manual === 1){
+                    formData.value.has_manual = true;
+                    manualPdfEnabled.value = true;
+                    // formData.value.manualpdf = data.data.manualpdf;
+                    formData.value.has_page = data.data.pdf_page;
+
+                    manualpdf.value = data.data.manualpdf
+                }
+
+                if(data.data.has_supply === 1){
+                    formData.value.has_supply = true;
+                    suppliesPdfEnabled.value = true;
+                    // formData.value.suppliespdf = data.data.suppliespdf;
+                    formData.value.has_page = data.data.pdf_page;
+
+                    suppliespdf.value = data.data.supplypdf
+                }
+
                 if(data.data.product_images && data.data.product_images.length > 0){
-                    formData.value.productImages =  data.data.product_images.map(element => {
+                    formData.value.productImages =  data.data.product_images.sort((a, b) => a.index - b.index).map(element => {
                         return {
                             id: Date.now() + Math.random(),
+                            pid: element.id,
                             url: element.url,
                             name: element.url,
-                            type: element.type,
+                            type: JSON.parse(element.type),
+                            external: element.url,
                             index: element.index,
                         }
                     })
@@ -1043,6 +1243,7 @@
         form.append('categories', JSON.stringify(formData.value.categories));
         form.append('specAreas', JSON.stringify(formData.value.specAreas));
         form.append('table_data', formData.value.table_data.table);
+        form.append('table_id', selectedTableHeader.value);
         formData.value.table_data.table.forEach((row,index) => {
           formData.value.table_data.headers.forEach((header, HeaderIndex) => {
             form.append(`table_data[${index}][${header}]`, row[header]);
@@ -1055,8 +1256,17 @@
           form.append(`productImages[${index}][url]`, image.url);
           form.append(`productImages[${index}][type]`, image.type);
           form.append(`productImages[${index}][index]`, image.index);
+          form.append(`productImages[${index}][id]`, image.pid);
           // ... otros metadatos
         });
+
+        //nuevos campos
+        form.append('has_manual', manualPdfEnabled.value);
+        form.append('manualpdf', formData.value.manualpdf);
+        form.append('has_supply', suppliesPdfEnabled.value);
+        form.append('supplypdf', formData.value.suppliespdf);
+        form.append('is_catalog', isCatalogPdf.value);
+        form.append('catalogpdf', formData.value.catalogpdf);
   
         const response = await fetch(`/api/product/${product_id.value}`, {
           method: 'POST',
@@ -1131,6 +1341,7 @@
       try {
         const response = await fetch('/api/th-conf');
         const data = await response.json();
+        console.log(data)
         if (data.success) {
           tableHeaders.value = data.data;
         }
@@ -1203,7 +1414,7 @@
     }
   
     const getCategoryName = (id)=> {
-      const category = categories.value.find(c => c.id == id);
+      const category = categories.value?.find(c => c.id == id);
       return category ? category.name : '';
     }
   
@@ -1238,7 +1449,7 @@
   
     };
   
-  
+
     // SpecArea
     const addSpecArea= ()=> {
       if (selectedSpecArea && !formData.value.specAreas.includes(selectedSpecArea.value)) {
@@ -1261,10 +1472,10 @@
     const toggleAccesoryPdf = () => {
       
       if(!accesoryPdfEnabled.value){
-        // formData.value.catalogaccesrorypdf = "";
-        // formData.value.has_page = 0;
+        formData.value.catalogaccesrorypdf = "";
+        formData.value.has_page = 0;
         formData.value.has_accesrorypdf = false ;
-        // formData.value.accesorypdf = null
+        formData.value.accesorypdf = null
       }
       formData.value.has_accesrorypdf = accesoryPdfEnabled.value;
   
@@ -1279,13 +1490,23 @@
     }
   
     const toggleSupplyPdf = () => {
-      if(!manualPdfEnabled.value){
+      if(!suppliesPdfEnabled.value){
         formData.value.suppliespdf = null;
         formData.value.has_supply = false ;
       }
-      formData.value.has_supply = manualPdfEnabled.value;
+      formData.value.has_supply = suppliesPdfEnabled.value;
 
     }
+
+    const toggleCatalogPdf = () => {
+      
+      if(!isCatalogPdf.value){
+        formData.value.catalogpdf = null;
+        formData.value.is_catalog = false ;
+      }
+      formData.value.is_catalog = isCatalogPdf.value;
+    }
+
     const handleFileUploadAccesoryPdf = (event) => {
       const file = event.target.files[0];;
       formData.value.accesorypdf = file;
@@ -1293,12 +1514,17 @@
 
     const handleFileUploadMaualPdf= (event) => {
       const file = event.target.files[0];;
-      formData.value.accesorypdf = file;
+      formData.value.manualpdf = file;
     }
 
     const handleFileUploadSuppliesPdf= (event) => {
       const file = event.target.files[0];;
       formData.value.suppliespdf = file;
+    }
+
+    const handleFileUploadCatalogPdf= (event) => {
+      const file = event.target.files[0];;
+      formData.value.catalogpdf = file;
     }
 
   
@@ -1468,8 +1694,8 @@
         newTableConf.value.headers.push("pdf");
       }
       newHeader.value = null
-  
-    }
+      errorsTable.value.rows = ''
+    } 
   
     const createTableHeader = async () => {
       loading.value=true
@@ -1478,25 +1704,40 @@
         const headers = {
           headers: ["imagen",...newTableConf.value.headers]
         }
-        form.append('name',newTableConf.value.name );
-        form.append('table_json', JSON.stringify(headers))
-  
-        const response = await fetch('/api/th-conf/create', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-          },
-          body: form
-        });
-  
-        if (!response.ok) throw new Error('Error al guardar');
-        showTableConfigModal.value = false;
-        loading.value=false;
-        newTableConf.value.name = null;
-        newTableConf.value.headers = ["pdf"]
-  
-        await fetchTableHeaders();
+        
+        if(!newTableConf.value.name && newTableConf.value.name === ""){
+          errorsTable.value.title = "El nombre de la tabla es requerido"
+        } else if (newTableConf.value.name.trim() === "") {
+          errorsTable.value.title = "El nombre de la tabla es requerido"
+        }  else {
+          const exist  = tableHeaders.value.some((e) => e.name == newTableConf.value.name.trim());
+          if(!exist){
+            form.append('name',newTableConf.value.name );
+            form.append('table_json', JSON.stringify(headers))
+      
+            const response = await fetch('/api/th-conf/create', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+              },
+              body: form
+            });
+      
+            if (!response.ok) throw new Error('Error al guardar');
+            showTableConfigModal.value = false;
+            loading.value=false;
+            newTableConf.value.name = null;
+            newTableConf.value.headers = ["pdf"]
+      
+            await fetchTableHeaders();
+          } else {
+            errorsTable.value.title = "Ya existe una tabla con ese nombre"
+          }
+
+        }
+
+
         
       } catch (error) {
         console.error('Error:', error);
@@ -1580,6 +1821,8 @@
           .map((item, idx) => ({ ...item, index: idx + 1 }));
     }
   
+
+    // drag tabla imagenes
     const handleDragStart = (event, index) => {
         draggedItemIndex.value = index;
         isDragging.value = true;
@@ -1624,20 +1867,117 @@
         dragOverIndex.value = null;
     };
   
-  
+
+    // drat tabla config
+
+    const handleTableDragStart = (event, index) => {
+      tableDraggedIndex.value = index
+      isTableDragging.value = true
+      event.dataTransfer.effectAllowed = "move"
+    }
+
+    const handleTableDragOver = (event, index) => {
+      tableDragOverIndex.value = index
+    }
+
+    const handleTableDragEnter = (event, index) => {
+      tableDragOverIndex.value = index
+    }
+
+    const handleTableDragLeave = () => {
+      tableDragOverIndex.value = null
+    }
+
+    const handleTableDrop = (event, index) => {
+      if (tableDraggedIndex.value === null) return
+
+      const draggedRow = formData.value.table_data.table[tableDraggedIndex.value]
+      formData.value.table_data.table.splice(tableDraggedIndex.value, 1)
+      formData.value.table_data.table.splice(index, 0, draggedRow)
+
+      tableDraggedIndex.value = null
+      tableDragOverIndex.value = null
+      isTableDragging.value = false
+    }
+
+    const handleTableDragEnd = () => {
+      tableDraggedIndex.value = null
+      tableDragOverIndex.value = null
+      isTableDragging.value = false
+    }
+
+    // add table conf
+
+    const draggedHeaderIndex = ref(null);
+
+    const handleHeaderDragStart = (event, index) => {
+      draggedHeaderIndex.value = index;
+    };
+
+    const handleHeaderDragOver = (event, index) => {
+      event.preventDefault();
+    };
+
+    const handleHeaderDrop = (event, index) => {
+      if (draggedHeaderIndex.value === null) return;
+
+      const movedItem = newTableConf.value.headers[draggedHeaderIndex.value];
+
+      // Evitar mover pdf o imagen
+      if (movedItem === "pdf" || movedItem === "imagen") return;
+
+      // Evitar reemplazar pdf o imagen al hacer drop
+      if (newTableConf.value.headers[index] === "pdf" || newTableConf.value.headers[index] === "imagen") return;
+
+      newTableConf.value.headers.splice(draggedHeaderIndex.value, 1);
+      newTableConf.value.headers.splice(index, 0, movedItem);
+
+      draggedHeaderIndex.value = null;
+    };
+
+    const removeTableHeader = (index) => {
+      const item = newTableConf.value.headers[index];
+      if (item === "pdf" || item === "imagen") return;
+      newTableConf.value.headers.splice(index, 1);
+    };
+
+
+    const fetchFileFromStorage = async (url) => {
+      try {
+        // Reemplaza con la URL de tu endpoint
+        const response = await fetch(`/storage/${url}`);
+        const blob = await response.blob();
+
+        // Crear un File a partir del Blob
+        const file = new File([blob], { type: blob.type });
+
+        return file;
+      } catch (error) {
+        console.error("Error fetching file:", error);
+        return null;
+      }
+    };
+    
   
   
   </script>
   
   <style scoped>
     @import "quill/dist/quill.snow.css";
-  
+    @import "vue-select/dist/vue-select.css";
+
     input[type="checkbox"]:checked ~ .dot {
       transform: translateX(100%);
       background-color: #3B82F6;
     }
     input[type="checkbox"]:checked ~ .block {
       background-color: #93C5FD;
+    }
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity 0.5s ease;
+    }
+    .fade-enter-from, .fade-leave-to {
+      opacity: 0;
     }
   </style>
   
