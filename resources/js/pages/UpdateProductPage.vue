@@ -700,9 +700,10 @@
                 v-model="newBrand"
                 type="text"
                 id="nuevaMarca"
+                @change="errorsBrand.title = ''"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
               >
+              <p v-if="errorsBrand.title !== ''" class="mt-1 text-xs font-medium text-red-600  pl-2">{{ errorsBrand.title }}</p>
             </div>
             
             <div class="flex justify-end gap-2">
@@ -735,10 +736,10 @@
               <input
                 v-model="newCategory"
                 type="text"
-                id="newCategory"
+                @change="errorsCategory.title = ''"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
               >
+              <p v-if="errorsCategory.title !== ''" class="mt-1 text-xs font-medium text-red-600  pl-2">{{ errorsCategory.title }}</p>
             </div>
             
             <div class="flex justify-end gap-2">
@@ -859,7 +860,7 @@
   
       <div v-if="showPdfModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-lg shadow-xl w-full max-w-xl">
-          <form  class="p-6 w-full">
+          <div  class="p-6 w-full">
             <h2 class="text-xl font-bold mb-4">Agregar nuevo catálogo de accesorios</h2>
             <div  class="space-y-6">
               <div>
@@ -868,12 +869,11 @@
                 >
                 <input
                   type="text"
-                  id="title"
                   v-model="formDataPdf.title"
-                  required
+                  @change="errorsPdf.title=''"
                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
-                <p v-if="errors.title" class="mt-1 text-sm text-red-600">
+                <p v-if="errorsPdf.title !==''" class="mt-1 text-sm text-red-600">
                   {{ errorsPdf.title }}
                 </p>
               </div>
@@ -977,14 +977,13 @@
               </button>
               <button
                 @click="handleSubmitPdf"
-                type="submit"
                 :disabled = "loading"
                 class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 {{ loading? "Guardando" : "Guardar" }}
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
   
@@ -1058,8 +1057,6 @@
 
     const product_id = ref(null);
 
-
-
     const formData = ref({
       name: '',
       description: '',
@@ -1120,6 +1117,19 @@
     const errorsTable = ref({
       title: '',
       rows: '',
+    })
+
+    const errorsBrand = ref({
+      title: '',
+    })
+
+    const errorsCategory = ref({
+      title: '',
+    })
+
+    const errorsCatAccesory = ref({
+      title: '',
+      file: ''
     })
   
   
@@ -1367,36 +1377,43 @@
   
     const createBrand = async () => {
       loading.value=true
-      try {
-        const form = new FormData();
-        form.append('name', newBrand.value);
-  
-        const response = await fetch('/api/brand/create-on', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-          },
-          body: form
-        });
-  
-        if (!response.ok) throw new Error('Error al guardar');
-  
-        const data = await response.json();
-        showBrandModal.value = false;
-        loading.value=false;
-        newBrand.value = null;
-        await fetchBrands();
-        
-      } catch (error) {
-        console.error('Error:', error);
-        // Mostrar error al usuario
-        errors.value.submit = 'Error al guardar la marca';
-        loading.value=false
-  
+      if(!newBrand.value || newBrand.value === "" || newBrand.value.trim() === ""){
+        errorsBrand.value.title = 'Ingrese el nombre de la marca';
+      } else if(brands.value && brands.value.length > 0 && brands.value.find(brand => brand.name.toLowerCase() === newBrand.value.trim().toLowerCase())) {
+        errorsBrand.value.title = 'Ya existe una marca con ese nombre';
+      } else {
+        try {
+          const form = new FormData();
+          form.append('name', newBrand.value.trim());
+    
+          const response = await fetch('/api/brand/create-on', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: form
+          });
+    
+          if (!response.ok) throw new Error('Error al guardar');
+    
+          const data = await response.json();
+          showBrandModal.value = false;
+          loading.value=false;
+          newBrand.value = null;
+          await fetchBrands();
+          
+        } catch (error) {
+          console.error('Error:', error);
+          // Mostrar error al usuario
+          errors.value.submit = 'Error al guardar la marca';
+          loading.value=false
+    
+        }
+
       }
       loading.value=false
-  
+
     };
   
   
@@ -1538,23 +1555,28 @@
     }
   
     const validatePdf = () => {
-        let valid = true;
-        errorsPdf.value = { title: '', image: '' };
-    
-        if (!formDataPdf.value.title.trim()) {
+      let valid = true;
+      errorsPdf.value = { title: '', image: '' };
+
+      if (formDataPdf.value.title == null || formDataPdf.value.title == '') {
         errorsPdf.value.title = 'El título es obligatorio';
-        valid = false;
-        }
-    
-        if (!selectedFile.value) {
-        errorsPdf.value.image = 'El pdf es obligatorio';
-        valid = false;
-        }
-    
-        return valid;
-    };
+        return false;
+      }
+      if(accesoryDocs.value && accesoryDocs.value.length > 0 && accesoryDocs.value.some(doc => doc.name == formDataPdf.value.title)){
+        errorsPdf.value.title = 'Ya existe un pdf con el mismo nombre';
+        return false;
+      }
   
+      if (!selectedFile.value) {
+        errorsPdf.value.image = 'El pdf es obligatorio';
+        return  false;
+      }
+  
+      return true;
+    };
+    
     const openFilePicker = () => {
+        errorsPdf.value.image = '';
         fileInput.value.click();
     };
   
@@ -1564,6 +1586,7 @@
     };
   
     const handleDropPdf = (e) => {
+        errorsPdf.value.image = '';
         dragOver.value = false;
         const file = e.dataTransfer.files[0];
         processFile(file);
@@ -1705,7 +1728,7 @@
           headers: ["imagen",...newTableConf.value.headers]
         }
         
-        if(!newTableConf.value.name && newTableConf.value.name === ""){
+        if(!newTableConf.value.name || newTableConf.value.name === ""){
           errorsTable.value.title = "El nombre de la tabla es requerido"
         } else if (newTableConf.value.name.trim() === "") {
           errorsTable.value.title = "El nombre de la tabla es requerido"
