@@ -1,8 +1,8 @@
 <template>
     <Title content="Configuraciones de Tablas" />
     <button @click="goBack" class="py-2 mt-4 flex flex-row items-center justify-center align-middle content-center gap-2">
-        <i class="bi bi-arrow-left-circle-fill text-xl text-blue-500"></i>
-        <p class="underline font-medium text-lg text-blue-500 pb-1">Regresar</p>
+        <i class="bi bi-arrow-left-circle-fill text-xl text-[#3e8ad5]"></i>
+        <p class="underline font-medium text-lg text-[#3e8ad5] pb-[1px]">Regresar</p>
     </button>
 
     <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
@@ -11,8 +11,8 @@
         </div> -->
         <div>
           <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
-            <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
-            <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+            <i class="bi bi-plus-square-fill text-[#0392ce] text-2xl"></i>
+            <P class="text-lg text-[#0392ce] font-medium pt-[1px] align-middle">Agregar</P>
           </button>
         </div>
         <div class="relative">
@@ -64,9 +64,19 @@
                 <button
                   type="button"
                   @click="addTableHeader"
-                  class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+                  class="px-3 py-1 rounded-md transition-colors w-24 flex flex-row items-center gap-1 bg-gradient-to-r 
+                        from-[#4fd8e2] 
+                        to-[#3eb8d7] 
+                        hover:from-[#54e4ee] 
+                        hover:to-[#3eb8d7]
+                    "
                 >
-                  + Nueva
+                  <div>
+                    <div class="bg-white flex justify-center items-center content-center h-5 w-5 max-w-5 max-h-5 my-1 rounded-full mr-1">
+                   <p class="font-bold text-[#80d6b2] text-xl pb-[2px] pl-[1px]">+</p>
+                </div>
+                  </div>
+                  <p class=" text-slate-50 font-semibold">Nueva</p>
                 </button>
               </div>
             </div>
@@ -77,7 +87,7 @@
           <div class="overflow-x-auto mt-5">
             <label for="newTableName" class="block text-md font-medium text-cyan-800 mb-1">Vista previa de la tabla</label>
             <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
+              <thead class=" bg-gradient-to-br from-[#3065b5] to-[#0392ce]">
                 <tr>
                   <th v-for="(item, index) in newTableConf.headers" :key="index" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ item }}</th>
                 </tr>
@@ -94,7 +104,12 @@
             <button
               type="button"
               @click="closeTableHeaderConf"
-              class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+              class="px-4 py-2 text-white font-medium text-sm rounded-md transition-colors bg-gradient-to-r 
+                        from-[#969595]
+                        to-[#727270] 
+                        hover:from-[#969595]
+                        hover:to-[#888885]
+                    "
             >
               Cancelar
             </button>
@@ -102,7 +117,12 @@
               @click="createTableHeader"
               type="submit"
               :disabled = "loading"
-              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="inline-flex justify-center rounded-md   py-2 px-4 text-sm font-medium text-white shadow-sm bg-gradient-to-r 
+                        from-[#0392ce]
+                        to-[#3065b5] 
+                        hover:from-[#16a8e7]
+                        hover:to-[#3c74c7]
+                    "
             >
               {{ loading? "Guardando" : "Guardar" }}
             </button>

@@ -1,11 +1,11 @@
 <template>
     <div class="flex flex-col gap-4 mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
-        <h1 class="text-2xl font-semibold text-[#4180ab]">TODAS LAS CATEGORÍAS</h1>
+        <!-- <h1 class="text-2xl font-semibold text-[#4180ab]">TODAS LAS CATEGORÍAS</h1> -->
         <div class="flex flex-row justify-between items-center">
           <div>
             <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
-              <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
-              <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+              <i class="bi bi-plus-square-fill text-[#0392ce] text-2xl"></i>
+              <P class="text-lg text-[#0392ce] font-medium pt-[1px] align-middle">Agregar</P>
             </button>
           </div>
           <div class="relative">
@@ -18,15 +18,18 @@
               />
           </div>
         </div>
+        
+      </div>
+      
+      <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
+        
         <CategoriesTable
           :categories="filteredOfferts"
           @search="handleSearch"
           @edit="handleEdit"
           @delete="confirmDelete"
         />
-
     </div>
-
 
     <Modal :visible="showModal" @close="showModal = false" title="Nueva categoría">
       <CategoryForm

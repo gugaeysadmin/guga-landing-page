@@ -111,15 +111,18 @@ export default {
 
 <template>
   <Title content="TODOS LOS PRODUCTOS"  />
-
+  <button @click="goBack" class="py-2 mt-4 flex flex-row items-center justify-center align-middle content-center gap-2">
+      <i class="bi bi-arrow-left-circle-fill text-xl text-[#3e8ad5]"></i>
+      <p class="underline font-medium text-lg text-[#3e8ad5] pb-[1px]">Regresar</p>
+  </button>
   <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
       <!-- <div>
           <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
       </div> -->
       <div>
         <router-link to="/app/admin/product/add" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
-          <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
-          <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+          <i class="bi bi-plus-square-fill text-[#0392ce] text-2xl"></i>
+          <P class="text-lg text-[#0392ce] font-medium pt-[1px] align-middle">Agregar</P>
         </router-link>
       </div>
       <div class="relative">
@@ -197,6 +200,9 @@ export default {
     image: null,
   };
 
+  const  goBack = () => {
+    router.back()
+  }
 
   onMounted(async () => {
 

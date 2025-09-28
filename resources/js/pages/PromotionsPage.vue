@@ -17,8 +17,8 @@
 
         <div>
           <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
-            <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
-            <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+            <i class="bi bi-plus-square-fill text-[#0392ce] text-2xl"></i>
+            <P class="text-lg text-[#0392ce] font-medium pt-[1px] align-middle">Agregar</P>
           </button>
         </div>
         <div class="pr-4">

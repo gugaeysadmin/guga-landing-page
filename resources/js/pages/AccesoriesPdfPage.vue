@@ -1,8 +1,8 @@
 <template>
     <Title content="PDF DE ACCESORIOS" />
     <button @click="goBack" class="py-2 mt-4 flex flex-row items-center justify-center align-middle content-center gap-2">
-        <i class="bi bi-arrow-left-circle-fill text-xl text-blue-500"></i>
-        <p class="underline font-medium text-lg text-blue-500 pb-1">Regresar</p>
+        <i class="bi bi-arrow-left-circle-fill text-xl text-[#3e8ad5]"></i>
+        <p class="underline font-medium text-lg text-[#3e8ad5] pb-[1px]">Regresar</p>
     </button>
 
     <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
@@ -11,8 +11,8 @@
         </div> -->
         <div>
           <button @click="showModal = true" class="px-3 py-2 flex flex-row gap-2 hover:bg-slate-100 rounded-lg active:bg-slate-200 transition-all duration-100">
-            <i class="bi bi-plus-square-fill text-[#4180ab] text-2xl"></i>
-            <P class="text-lg text-[#4180ab] align-middle">Agregar</P>
+            <i class="bi bi-plus-square-fill text-[#0392ce] text-2xl"></i>
+            <P class="text-lg text-[#0392ce] font-medium pt-[1px] align-middle">Agregar</P>
           </button>
         </div>
         <div class="relative">

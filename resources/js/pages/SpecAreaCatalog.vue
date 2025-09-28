@@ -89,9 +89,19 @@
               <button
                 type="button"
                 @click="addSection"
-                class="px-3 py-2 bg-[#4180ab] hover:bg-[#5ca6d8] text-white text-semibold rounded-md transition-colors w-24"
+                class="px-3 py-1 rounded-md transition-colors w-24 flex flex-row items-center gap-1 bg-gradient-to-r 
+                        from-[#4fd8e2] 
+                        to-[#3eb8d7] 
+                        hover:from-[#54e4ee] 
+                        hover:to-[#3eb8d7]
+                    "
               >
-                + Nueva
+                <div>
+                  <div class="bg-white flex justify-center items-center content-center h-5 w-5 max-w-5 max-h-5 my-1 rounded-full mr-1">
+                   <p class="font-bold text-[#80d6b2] text-xl pb-[2px] pl-[1px]">+</p>
+                </div>
+                </div>
+                <p class=" text-slate-50 font-semibold">Nueva</p>
               </button>
             </div>
         </div>

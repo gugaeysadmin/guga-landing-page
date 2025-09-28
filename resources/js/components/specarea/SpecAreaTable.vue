@@ -13,15 +13,15 @@
 
       <!-- Tabla -->
       <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+            <thead class=" bg-gradient-to-br from-[#3065b5] to-[#0392ce]">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nómbre</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Icono</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categorias</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Productos</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">#</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Nómbre</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Descripción</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Icono</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Filtros</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Productos</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Acciones</th>
 
                 </tr>
             </thead>
@@ -82,7 +82,7 @@
                         </button> -->
                         <button
                             @click="sendToFilters(specArea.id, specArea.name)"
-                            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-500 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            class="inline-flex justify-center rounded-md border border-transparent bg-[#0392ce] disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#06a0e2] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Ver
                         </button>
@@ -97,7 +97,7 @@
                         </button> -->
                         <button
                              @click="sendToProduct(specArea.id, specArea.name)"
-                            class="inline-flex justify-center  rounded-md border border-transparent bg-cyan-600  disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            class="inline-flex justify-center  rounded-md border border-transparent bg-[#3eb8d7]  disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#44c8e9] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Ver
                         </button>

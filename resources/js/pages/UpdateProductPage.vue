@@ -1,8 +1,8 @@
 <template>
     <Title content="EDITAR PRODUCTO"  />
     <button @click="goBack" class="py-2 mt-4 flex flex-row items-center justify-center align-middle content-center gap-2">
-        <i class="bi bi-arrow-left-circle-fill text-xl text-blue-500"></i>
-        <p class="underline font-medium text-lg text-blue-500 pb-1">Regresar</p>
+        <i class="bi bi-arrow-left-circle-fill text-xl text-[#3e8ad5]"></i>
+        <p class="underline font-medium text-lg text-[#3e8ad5] pb-[1px]">Regresar</p>
     </button>
     
     <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
@@ -93,9 +93,19 @@
             <button
               type="button"
               @click="showBrandModal = true"
-              class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+              class="px-3 py-1 rounded-md transition-colors w-24 flex flex-row items-center gap-1 bg-gradient-to-r 
+                      from-[#4fd8e2] 
+                      to-[#3eb8d7] 
+                      hover:from-[#54e4ee] 
+                      hover:to-[#3eb8d7]
+                  "
             >
-              + Nueva
+              <div>
+                <div class="bg-white flex justify-center items-center content-center h-5 w-5 max-w-5 max-h-5 my-1 rounded-full mr-1">
+                   <p class="font-bold text-[#80d6b2] text-xl pb-[2px] pl-[1px]">+</p>
+                </div>
+              </div>
+              <p class=" text-slate-50 font-semibold">Nueva</p>
             </button>
           </div>
           <p v-if="errors.marca" class="mt-1 text-sm text-red-600">{{ errors.marca }}</p>
@@ -119,9 +129,19 @@
             <button
               type="button"
               @click="showCategoryModal = true"
-              class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+              class="px-3 py-1 rounded-md transition-colors w-24 flex flex-row items-center gap-1 bg-gradient-to-r 
+                      from-[#4fd8e2] 
+                      to-[#3eb8d7] 
+                      hover:from-[#54e4ee] 
+                      hover:to-[#3eb8d7]
+                  "
             >
-              + Nueva
+              <div>
+                <div class="bg-white flex justify-center items-center content-center h-5 w-5 max-w-5 max-h-5 my-1 rounded-full mr-1">
+                   <p class="font-bold text-[#80d6b2] text-xl pb-[2px] pl-[1px]">+</p>
+                </div>
+              </div>
+              <p class=" text-slate-50 font-semibold">Nueva</p>
             </button>
 
           </div>
@@ -130,7 +150,7 @@
             <div
               v-for="(category, index) in formData.categories"
               :key="index"
-              class="flex items-center bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm"
+              class="flex items-center bg-[#a2eaf4] text-[#258ba8] font-medium px-4 py-1 rounded-full text-sm"
             >
               {{ getCategoryName(category) }}
               <button
@@ -166,7 +186,7 @@
             <div
               v-for="(specArea, index) in formData.specAreas"
               :key="index"
-              class="flex items-center bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm"
+              class="flex items-center bg-[#a2eaf4] text-[#258ba8] font-medium px-4 py-1 rounded-full text-sm"
             >
               {{ getSpecAreaName(specArea) }}
               <button
@@ -179,7 +199,51 @@
             </div>
           </div>
         </div>
-  
+
+        <!-- Switch para activar/desactivar ficha tecnica -->
+        <div v-if="!isCatalogPdf" class="flex items-center w-full">
+          <label class="flex items-center cursor-pointer">
+            <div class="relative">
+              <input 
+                type="checkbox" 
+                class="sr-only" 
+                v-model="manualPdfEnabled"
+                @change="toggleManualPdf"
+              >
+              <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
+              <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+            </div>
+            <div class="ml-3 text-sm font-medium">Agregar ficha técnica general</div>
+          </label>
+        </div>
+
+        <!-- ficha tecnica -->
+        <div v-if="manualPdfEnabled && !isCatalogPdf" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
+          <div class="w-full">
+            <div>
+                <label class="block text-md font-medium text-cyan-800">Sube el pdf de la ficha técnica </label>
+                <div v-if="manualpdf !== null" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
+                  <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
+                  <a
+                    :href="`/storage/${manualpdf}`"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-500 underline text-xs"
+                  >
+                    {{ manualpdf?.split("_82fbcc113b80e3bebe876ed5add2564d_").pop() }}
+                  </a>
+                </div>
+                <input 
+                  type="file" 
+                  accept=".pdf" 
+                  @change="handleFileUploadMaualPdf" 
+                  @required="manualPdfEnabled && manualpdf === null"
+                  class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                >
+              </div>
+          </div>
+        </div>
+
         <!-- Switch para activar/desactivar accesorios -->
         <div v-if="!isCatalogPdf" class="flex items-center">
           <label class="flex items-center cursor-pointer">
@@ -198,7 +262,7 @@
         </div>
 
         <!-- Accesorios -->
-        <div v-if="accesoryPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
+        <div v-if="accesoryPdfEnabled && !isCatalogPdf" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
           <div class="flex gap-8 items-end">
             <div class="w-full">
               <label class="block text-md font-medium text-cyan-800">Selecciona el pdf con el catálogo de accesorios</label>
@@ -218,9 +282,19 @@
                 <button
                   type="button"
                   @click="showPdfModal = true"
-                  class="px-3 py-1 mt-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors min-w-24"
+                  class="px-3 py-1 rounded-md transition-colors w-24 flex flex-row items-center gap-1 bg-gradient-to-r 
+                          from-[#4fd8e2] 
+                          to-[#3eb8d7] 
+                          hover:from-[#54e4ee] 
+                          hover:to-[#3eb8d7]
+                      "
                 >
-                  + Nueva
+                  <div>
+                    <div class="bg-white flex justify-center items-center content-center h-5 w-5 max-w-5 max-h-5 my-1 rounded-full mr-1">
+                   <p class="font-bold text-[#80d6b2] text-xl pb-[2px] pl-[1px]">+</p>
+                </div>
+                  </div>
+                  <p class=" text-slate-50 font-semibold">Nueva</p>
                 </button>
               </div>
             </div>
@@ -260,51 +334,6 @@
           </div>
         </div>
 
-
-        <!-- Switch para activar/desactivar ficha tecnica -->
-        <div v-if="!isCatalogPdf" class="flex items-center w-full">
-          <label class="flex items-center cursor-pointer">
-            <div class="relative">
-              <input 
-                type="checkbox" 
-                class="sr-only" 
-                v-model="manualPdfEnabled"
-                @change="toggleManualPdf"
-              >
-              <div class="block bg-gray-300 w-10 h-6 rounded-full"></div>
-              <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
-            </div>
-            <div class="ml-3 text-sm font-medium">Agregar ficha técnica general</div>
-          </label>
-        </div>
-
-        <!-- ficha tecnica -->
-        <div v-if="manualPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
-          <div class="w-full">
-            <div>
-                <label class="block text-md font-medium text-cyan-800">Sube el pdf de la ficha técnica </label>
-                <div v-if="manualpdf !== null" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
-                  <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
-                  <a
-                    :href="`/storage/${manualpdf}`"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-blue-500 underline text-xs"
-                  >
-                    {{ manualpdf?.split("_82fbcc113b80e3bebe876ed5add2564d_").pop() }}
-                  </a>
-                </div>
-                <input 
-                  type="file" 
-                  accept=".pdf" 
-                  @change="handleFileUploadMaualPdf" 
-                  @required="manualPdfEnabled && manualpdf === null"
-                  class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                >
-              </div>
-          </div>
-        </div>
-
         <!-- Switch para activar/desactivar consumibles -->
         <div v-if="!isCatalogPdf" class="flex items-center w-full">
           <label class="flex items-center cursor-pointer">
@@ -323,7 +352,7 @@
         </div>
 
         <!-- consumibles -->
-        <div  v-if="suppliesPdfEnabled" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
+        <div  v-if="suppliesPdfEnabled && !isCatalogPdf" class="mb-4 pl-8 w-full md:gap-4 flex flex-col ">
           <div class="w-full">
             <div>
                 <label class="block text-md font-medium text-cyan-800">Sube el pdf de los consumibles </label>
@@ -366,7 +395,7 @@
           </label>
         </div>
 
-        <div v-if="servicesEnabled" class=" flex pl-8  flex-col w-full">
+        <div v-if="servicesEnabled && !isCatalogPdf" class=" flex pl-8  flex-col w-full">
           <label class="block text-md font-medium text-cyan-800">Ingresa la descripción de los servicios</label>
           <QuillEditor 
             v-model:content="formData.services_description" 
@@ -404,7 +433,7 @@
         </div>
 
         <!-- Tabla -->
-        <div  v-if="tableEnabled" class="flex pl-8 flex-col w-full">
+        <div  v-if="tableEnabled && !isCatalogPdf" class="flex pl-8 flex-col w-full">
           <div class="mb-6 w-full ">
             <label class="block text-md font-medium text-cyan-800">Selecciona las columnas de la tabla *</label>
             <div class="flex gap-2 mt-1">
@@ -422,25 +451,35 @@
               <button
                 type="button"
                 @click="showTableConfigModal = true"
-                class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+                class="px-3 py-1 rounded-md transition-colors w-24 flex flex-row items-center gap-1 bg-gradient-to-r 
+                        from-[#4fd8e2] 
+                        to-[#3eb8d7]
+                        hover:from-[#54e4ee]
+                        hover:to-[#3eb8d7]
+                    "
               >
-                + Nueva
+                <div>
+                  <div class="bg-white flex justify-center items-center content-center h-5 w-5 max-w-5 max-h-5 my-1 rounded-full mr-1">
+                   <p class="font-bold text-[#80d6b2] text-xl pb-[2px] pl-[1px]">+</p>
+                </div>
+                </div>
+                <p class=" text-slate-50 font-semibold">Nueva</p>
               </button>
               <!-- to="/app/admin/enterprise/table-config" -->
-              <button
+              <!-- <button
                 type="button"
                 @click="()=> router.push('/app/admin/enterprise/table-config')"
                 class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
               >
                 ver todas
-              </button>
+              </button> -->
             </div>
           </div>
 
           <div v-if="selectedTableHeader !== ''" class="overflow-x-auto">
             <label for="newTableName" class="block text-md font-medium text-cyan-800 mb-1">Vista previa de la tabla</label>
             <table class="min-w-full divide-y divide-gray-200">
-              <thead v-if="formData.table_data.headers" class="bg-gray-50">
+              <thead v-if="formData.table_data.headers" class="bg-gray-100">
                 <tr>
                   <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Eliminar</th>
                   <th v-for="(header, index) in formData.table_data.headers" :key="index" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ header }}</th>
@@ -482,7 +521,7 @@
                       >
                       <label 
                         :for="'image-upload-'+rowIndex"
-                        class="cursor-pointer w-28 inline-flex justify-center rounded-md border border-transparent bg-indigo-400 disabled:bg-indigo-300 py-1 px-4 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        class="cursor-pointer w-28 inline-flex justify-center rounded-md border border-transparent bg-[#3eb8d7] disabled:bg-indigo-300 py-1 px-4 text-xs font-medium text-white shadow-sm hover:bg-[#27a6c5] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
                         {{ row.imagen ? 'Cambiar Imagen' : 'Subir Imagen' }}
                       </label>
@@ -545,9 +584,17 @@
               <button
                 type="button"
                 @click="handleAddTableRow"
-                class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="px-3 py-1 rounded-md transition-colors flex flex-row items-center gap-1 bg-gradient-to-r 
+                        from-[#4fd8e2] 
+                        to-[#3eb8d7] 
+                        hover:from-[#54e4ee] 
+                        hover:to-[#3eb8d7]
+                    "
               >
-                + Nueva fila
+                <div class="bg-white flex justify-center items-center content-center h-5 w-5 max-w-5 max-h-5 my-1 rounded-full mr-1">
+                   <p class="font-bold text-[#80d6b2] text-xl pb-[2px] pl-[1px]">+</p>
+                </div>
+                <p class=" text-slate-50 font-semibold">Nueva fila</p>
               </button>
             </div >
           </div>
@@ -571,7 +618,7 @@
                 >
               </div>
               
-              <div>
+              <!-- <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1 mt-4">O ingresar URL</label>
                 <div class="flex gap-2 ">
                   <input 
@@ -588,7 +635,7 @@
                     Agregar URL
                   </button>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
     
@@ -598,7 +645,7 @@
             
             <div class="overflow-x-auto mt-2">
               <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class="bg-gray-100">
                   <tr>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orden</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
@@ -640,10 +687,13 @@
                         <span class="text-blue-500 underline truncate max-w-xs">{{ item.name }} </span>
                       </div>
                       <img 
-                        v-if="item.external && !item.type.startsWith('url')" 
+                        v-if="item.external && !item.type.startsWith('url') && !item.type.startsWith('video')" 
                         :src="'/storage/' + item.external"
                         class="h-10 w-10 object-cover rounded"
                       >
+                      <div v-else-if="item.url && item.type.startsWith('video')" class="flex items-center">
+                        <span class="text-blue-500 underline truncate max-w-xs">{{ item.url }}</span>
+                      </div>
                       <div v-else-if="item.url" class="flex items-center">
                         <span class="text-blue-500 underline truncate max-w-xs">{{ item.url }}</span>
                       </div>
@@ -681,8 +731,14 @@
             <button
               type="submit"
               :disabled = "loading"
-              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="inline-flex justify-center rounded-md   py-2 px-4 text-sm font-medium text-white shadow-sm bg-gradient-to-r 
+                        from-[#0392ce]
+                        to-[#3065b5] 
+                        hover:from-[#16a8e7]
+                        hover:to-[#3c74c7]
+                    "
             >
+            
               {{ loading? "Actualizando" : "Actualizar" }}
             </button>
           </div>
@@ -710,14 +766,25 @@
               <button
                 type="button"
                 @click="showBrandModal = false, newBrand = null"
-                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+                class="px-4 py-2 text-white font-medium text-sm rounded-md transition-colors bg-gradient-to-r 
+                        from-[#969595]
+                        to-[#727270] 
+                        hover:from-[#969595]
+                        hover:to-[#888885]
+                    "
               >
                 Cancelar
               </button>
               <button
                 @click="createBrand"
                 :disabled = "loading"
-                class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="inline-flex justify-center rounded-md   py-2 px-4 text-sm font-medium text-white shadow-sm bg-gradient-to-r 
+                        from-[#0392ce]
+                        to-[#3065b5] 
+                        hover:from-[#16a8e7]
+                        hover:to-[#3c74c7]
+                    "
+            
               >
                 {{ loading? "Guardando" : "Guardar" }}
               </button>
@@ -746,14 +813,25 @@
               <button
                 type="button"
                 @click="showCategoryModal = false, newCategory = null"
-                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+                class="px-4 py-2 text-white font-medium text-sm rounded-md transition-colors bg-gradient-to-r 
+                        from-[#969595]
+                        to-[#727270] 
+                        hover:from-[#969595]
+                        hover:to-[#888885]
+                    "
               >
                 Cancelar
               </button>
               <button
                 @click="createCategories"
                 :disabled = "loading"
-                class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="inline-flex justify-center rounded-md   py-2 px-4 text-sm font-medium text-white shadow-sm bg-gradient-to-r 
+                        from-[#0392ce]
+                        to-[#3065b5] 
+                        hover:from-[#16a8e7]
+                        hover:to-[#3c74c7]
+                    "
+            
               >
                 {{ loading? "Guardando" : "Guardar" }}
               </button>
@@ -790,10 +868,20 @@
                   <button
                     type="button"
                     @click="addTableHeader"
-                    class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors w-24"
+                    class="px-3 py-1 rounded-md transition-colors  flex flex-row items-center gap-1 bg-gradient-to-r 
+                            from-[#4fd8e2] 
+                            to-[#3eb8d7] 
+                            hover:from-[#54e4ee] 
+                            hover:to-[#3eb8d7]
+                        "
                   >
-                    + Nueva
-                  </button>
+                    <div>
+                      <div class="bg-white flex justify-center items-center content-center h-5 w-5 max-w-5 max-h-5 my-1 rounded-full mr-1">
+                   <p class="font-bold text-[#80d6b2] text-xl pb-[2px] pl-[1px]">+</p>
+                </div>
+                    </div>
+                    <p class=" text-slate-50 font-semibold">Nueva</p>
+              </button>
                 </div>
               </div>
             </div>
@@ -803,7 +891,7 @@
             <div class="overflow-x-auto mt-5">
               <label for="newTableName" class="block text-md font-medium text-cyan-800 mb-1">Vista previa de la tabla</label>
               <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class=" bg-gray-100">
                   <tr>
                     <th
                       v-for="(item, index) in newTableConf.headers"
@@ -842,14 +930,25 @@
               <button
                 type="button"
                 @click="closeTableHeaderConf"
-                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+                class="px-4 py-2 text-white font-medium text-sm rounded-md transition-colors bg-gradient-to-r 
+                        from-[#969595]
+                        to-[#727270] 
+                        hover:from-[#969595]
+                        hover:to-[#888885]
+                    "
               >
                 Cancelar
               </button>
               <button
                 @click="createTableHeader"
                 :disabled = "loading"
-                class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="inline-flex justify-center rounded-md  py-2 px-4 text-sm font-medium text-white shadow-sm bg-gradient-to-r 
+                        from-[#0392ce]
+                        to-[#3065b5] 
+                        hover:from-[#16a8e7]
+                        hover:to-[#3c74c7]
+                    "
+            
               >
                 {{ loading? "Guardando" : "Guardar" }}
               </button>
@@ -971,14 +1070,25 @@
               <button
                 type="button"
                 @click="closePdfModal"
-                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+                class="px-4 py-2 text-white font-medium text-sm rounded-md transition-colors bg-gradient-to-r 
+                        from-[#969595]
+                        to-[#727270] 
+                        hover:from-[#969595]
+                        hover:to-[#888885]
+                    "
               >
                 Cancelar
               </button>
               <button
                 @click="handleSubmitPdf"
                 :disabled = "loading"
-                class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 disabled:bg-indigo-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="inline-flex justify-center rounded-md   py-2 px-4 text-sm font-medium text-white shadow-sm bg-gradient-to-r 
+                        from-[#0392ce]
+                        to-[#3065b5] 
+                        hover:from-[#16a8e7]
+                        hover:to-[#3c74c7]
+                    "
+            
               >
                 {{ loading? "Guardando" : "Guardar" }}
               </button>

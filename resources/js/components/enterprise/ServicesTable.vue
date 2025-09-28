@@ -13,13 +13,13 @@
 
       <!-- Tabla -->
       <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+            <thead class=" bg-gradient-to-br from-[#3065b5] to-[#0392ce]">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
-                    <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th> -->
-                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
-                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">#</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Título</th>
+                    <!-- <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Descripción</th> -->
+                    <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Imagen</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
