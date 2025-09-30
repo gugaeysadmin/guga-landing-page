@@ -131,7 +131,6 @@ class SpecAreaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Log::info($request);
         try {
             $specarea = SpecialityArea::findOrFail($id);
             
@@ -167,7 +166,7 @@ class SpecAreaController extends Controller
 
             if ($request->hasFile('video')) {
                 // Eliminar la imagen anterior si existe
-                if ($specarea->video_url) {
+                if ($specarea->video_url && Storage::disk('public')->exists($specarea->video_url)) {
                     Storage::disk('public')->delete($specarea->video_url);
                 }
                 

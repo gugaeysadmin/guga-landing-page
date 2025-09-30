@@ -36,7 +36,6 @@
             <input 
                 id="url"
                 v-model="formData.url" 
-                type="url" 
                 placeholder="https://ejemplo.com" 
                 class="flex-1 px-3 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
@@ -45,6 +44,17 @@
       <!-- Campo Imagen -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Imagen *</label>
+        <div v-if="imageUrl !== null && imageUrl !== '' && props.editing" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
+            <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
+            <a
+              :href="`/storage/${imageUrl}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-blue-500 underline text-xs"
+            >
+              {{ imageUrl?.split("/").pop() }}
+            </a>
+          </div>
         <div
           @click="openFilePicker"
           @dragover.prevent="dragOver = true"
@@ -186,6 +196,10 @@
         loading: {
           type:  Boolean,
           default: false
+        },
+        editing: {
+          type:  Boolean,
+          default: false
         }
     });
     
@@ -208,26 +222,29 @@
     const selectedFile = ref(null);
     const previewImage = ref(null);
     
+    const imageUrl = ref(null);
+
     // Cargar datos iniciales
     onMounted(() => {
         if (props.initialData) {
-        formData.value = {
-            title: props.initialData.title || '',
-            details: props.initialData.details || '',
-            image: props.initialData.image || null,
-            url: props.initialData.url || ''
-        };
+          formData.value = {
+              title: props.initialData.title || '',
+              details: props.initialData.details || '',
+              image: props.initialData.image || null,
+              url: props.initialData.url || ''
+          };
+          imageUrl.value = props.initialData.image;
     
-        if (props.initialData.image) {
-            if (typeof props.initialData.image === 'string') {
-            // Si es una URL (para edición)
-              previewImage.value = props.initialData.image;
-            } else if (props.initialData.image instanceof File) {
-            // Si es un File (después de recargar)
-              selectedFile.value = props.initialData.image;
-              previewImage.value = URL.createObjectURL(props.initialData.image);
-            }
-        }
+        // if (props.initialData.image) {
+        //     if (typeof props.initialData.image === 'string') {
+        //     // Si es una URL (para edición)
+        //       previewImage.value = props.initialData.image;
+        //     } else if (props.initialData.image instanceof File) {
+        //     // Si es un File (después de recargar)
+        //       selectedFile.value = props.initialData.image;
+        //       previewImage.value = URL.createObjectURL(props.initialData.image);
+        //     }
+        // }
         }
     });
     
@@ -237,13 +254,13 @@
         errors.value = { title: '', image: '' };
     
         if (!formData.value.title.trim()) {
-        errors.value.title = 'El título es obligatorio';
-        valid = false;
+          errors.value.title = 'El título es obligatorio';
+          valid = false;
         }
     
-        if (!selectedFile.value && !props.initialData?.image) {
-        errors.value.image = 'La imagen es obligatoria';
-        valid = false;
+        if (!selectedFile.value && !props.editing) {
+          errors.value.image = 'La imagen es obligatoria';
+          valid = false;
         }
     
         return valid;
@@ -256,7 +273,7 @@
             title: formData.value.title,
             details: formData.value.details,
             image: selectedFile.value || props.initialData?.image,
-            url: formData.url,
+            url: formData.value.url,
         };
         props.onSubmit(dataToSubmit);
         }

@@ -1,3 +1,6 @@
+
+
+
 <x-layouts.landingpage-layout>
     <x-slot name="header"> <x-header :pages="$pages"/></x-slot>
     {{-- Titulo --}}
@@ -129,7 +132,7 @@
             </div>
             <div class="flex items-center justify-center">
                 {{-- <img src="{{ asset('img/services-img-7.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/> --}}
-                <div id="carousel-1" class="relative min-w-[80%] max-w-full h-[20rem] bg-white rounded-2xl  overflow-hidden" data-carousel="statc">
+                <div id="carousel-1" class="relative min-w-[80%] max-w-full h-[20rem] bg-white rounded-2xl  overflow-hidden" data-carousel="slide" data-carousel-interval="5000">
                     <!-- Carousel wrapper -->
                     <div class=" w-full h-[20rem]  overflow-hidden">
                         <div class="hidden duration-1000 ease-in-out" data-carousel-item>
@@ -163,7 +166,7 @@
                     </div>
                     <!-- Slider indicators -->
                     <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                            <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="1"></button>
+                            {{-- <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="1"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 2" data-carousel-slide-to="2"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 3" data-carousel-slide-to="3"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 4" data-carousel-slide-to="4"></button>
@@ -171,27 +174,27 @@
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 6" data-carousel-slide-to="6"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 7" data-carousel-slide-to="7"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 8" data-carousel-slide-to="8"></button>
-                            <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 9" data-carousel-slide-to="9"></button>
+                            <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 9" data-carousel-slide-to="9"></button> --}}
 
                         {{-- 
                         <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button> --}}
                     </div>
                     <!-- Slider controls -->
                     <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        {{-- <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                             <svg class="w-4 h-4 text-slate-200 dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                             </svg>
                             <span class="sr-only">Previous</span>
-                        </span>
+                        </span> --}}
                     </button>
                     <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        {{-- <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                             <svg class="w-4 h-4 text-slate-200 dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                             </svg>
                             <span class="sr-only">Next</span>
-                        </span>
+                        </span> --}}
                     </button>
                 </div>
             </div>
@@ -203,7 +206,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 max-w-[70rem] w-full">
             <div class="flex items-center justify-center">
                 {{-- <img src="{{ asset('img/services-img-4.jpg') }}" alt="services_img" class=" w-[80%] h-[20rem] object-cover rounded-2xl"/> --}}
-                <div id="carousel-2" class="relative min-w-[80%] max-w-full h-[20rem] bg-white rounded-2xl  overflow-hidden" data-carousel="statc">
+                <div id="carousel-2" class="relative min-w-[80%] max-w-full h-[20rem] bg-white rounded-2xl  overflow-hidden" data-carousel="slide" data-carousel-interval="5500">
                     <!-- Carousel wrapper -->
                     <div class=" w-full h-[20rem]  overflow-hidden">
                         <div class="hidden duration-1000 ease-in-out" data-carousel-item>
@@ -233,33 +236,33 @@
                     </div>
                     <!-- Slider indicators -->
                     <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                            <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="1"></button>
+                            {{-- <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="1"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 2" data-carousel-slide-to="2"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 3" data-carousel-slide-to="3"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 4" data-carousel-slide-to="4"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 5" data-carousel-slide-to="5"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 6" data-carousel-slide-to="6"></button>
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 7" data-carousel-slide-to="7"></button>
-                            <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 8" data-carousel-slide-to="8"></button>
+                            <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 8" data-carousel-slide-to="8"></button> --}}
                         {{-- 
                         <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button> --}}
                     </div>
                     <!-- Slider controls -->
                     <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        {{-- <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                             <svg class="w-4 h-4 text-slate-200 dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                             </svg>
                             <span class="sr-only">Previous</span>
-                        </span>
+                        </span> --}}
                     </button>
                     <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        {{-- <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                             <svg class="w-4 h-4 text-slate-200 dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                             </svg>
                             <span class="sr-only">Next</span>
-                        </span>
+                        </span> --}}
                     </button>
                 </div>
             </div>
@@ -276,48 +279,207 @@
             </div>
         </div>
     </div>
-
-
     {{-- Entregables --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-4 font-body text-center my-24">
-        <div class="p-8 flex justify-center bg-sky-300 text-sky-800">
-            <div class="block">
-                <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-800 mx-auto flex justify-center items-center">
-                    <i class="bi bi-book-half text-[3.4rem]"></i>
-                </div>
-                <h1 class="font-semibold mt-8 text-lg">PÓLIZA DE MANTENIMIENTO</h1>
-                <p class="text-sm mt-4">Durante el período de vigencia de la póliza, el equipo puede recibir servicios de mantenimiento correctivo y / o preventivo y estos pueden diferirse a mensuales, bimestrales, semestrales o anuales según aplique el tipo de equipo y como sea requerido.</p>
-            </div>
-        </div>
-        <div class="p-8 flex justify-center bg-sky-500 text-sky-50">
-            <div class="block">
-                <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-200 mx-auto flex justify-center items-center">
-                    <i class="bi bi-calendar2-event text-[3.4rem]"></i>
-                </div>
-                <h1 class="font-semibold mt-8 text-lg">SERVICIO POR EVENTO</h1>
-                <p class="text-sm mt-4">Servicio que puede ser en carácter de urgencia  en modalidad  correctiva.</p>
-            </div>
-        </div>
-        <div class="p-8 flex justify-center bg-sky-700 text-sky-50">
-            <div class="block">
-                <div class="h-24 w-24 rounded-full border-solid border-4 mx-auto flex justify-center items-center">
-                    <i class="bi bi-gear text-[3.4rem]"></i>
-                </div>
-                <h1 class="font-semibold mt-8 text-lg">CALIBRACIONES</h1>
-                <p class="text-sm mt-4">Algunos equipos médicos en los que se realizan mediciones de entrada y/o salida de energía requieren de calibración periódica. Toda la instrumentación utilizada cuenta con Certificado de Calibración Vigente, con trazabilidad a patrones Pruebas de Funcionamiento.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 font-body text-center my-24 gap-4 px-4">
 
-            </div>
-        </div>
-        <div class="p-8 flex justify-center bg-sky-200 text-sky-800">
-            <div class="block">
-                <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-800 mx-auto flex justify-center items-center">
-                    <i class="bi bi-graph-up text-[3.4rem]"></i>
+        <div class="card-container h-80 w-full cursor-pointer group"
+            data-title="PÓLIZA DE MANTENIMIENTO"
+            data-content='
+                <h3 class="text-xl font-semibold mb-4 text-sky-700">Cobertura Integral mediante Póliza</h3>
+                <p class="mb-4">En GUGA Equipos y Servicios, ofrecemos pólizas flexibles diseñadas para asegurar la continuidad operativa de su tecnología médica. Nuestro enfoque está orientado a anticiparnos a posibles fallas y asegurar un desempeño confiable.</p>
+
+                <h4 class="text-lg font-semibold mb-2 mt-4 text-sky-700">Modalidades y Características:</h4>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong>Cobertura Flexible:</strong> Las pólizas cubren mantenimientos tanto <strong>correctivos</strong> como <strong>preventivos</strong> durante su periodo de vigencia.</li>
+                    <li><strong>Programación Adaptable:</strong> Los servicios pueden programarse en intervalos mensuales, bimestrales, semestrales o anuales, adaptándose al tipo de equipo y el entorno clínico.</li>
+                    <li><strong>Mantenimiento Preventivo Programado:</strong> Intervenciones periódicas planificadas para mantener los equipos en condiciones óptimas, evitando fallas inesperadas.</li>
+                </ul>
+
+                <h4 class="text-lg font-semibold mb-2 mt-4 text-sky-700">¿Qué incluyen los mantenimientos bajo póliza?</h4>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>Limpieza detallada y revisión de todos los componentes.</li>
+                    <li>Ajuste de mecanismos de protección y sistemas de seguridad.</li>
+                    <li>Comprobación del funcionamiento eléctrico y mecánico.</li>
+                    <li>Reparación de circuitos, tarjetas electrónicas y componentes eléctricos.</li>
+                    <li>Reemplazo de refacciones (nacionales e importadas, aplican restricciones según póliza).</li>
+                    <li>Actualización de software y reacondicionamiento general.</li>
+                </ul>
+            '>
+            <div class="w-full h-full px-4 flex justify-center items-center bg-sky-300 text-sky-800 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                <div class="block">
+                    <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-800 mx-auto flex justify-center items-center">
+                        <i class="bi bi-book-half text-[3.4rem]"></i>
+                    </div>
+                    <h1 class="font-semibold mt-8 text-lg">PÓLIZA DE MANTENIMIENTO</h1>
+                    <p class="text-sm mt-4">Cobertura flexible para mantenimientos correctivos y preventivos programados, asegurando la continuidad operativa...</p>
                 </div>
-                <h1 class="font-semibold mt-8 text-lg">DIAGNÓSTICOS</h1>
-                <p class="text-sm mt-4">Utilizamos analizadores y tecnología de ingeniería para diagnosticar fallas y ubicaciones de errores en los equipos para resolver los errores. Todo se hace según la orden de servicio.</p>
             </div>
         </div>
+
+        <div class="card-container h-80 w-full cursor-pointer group"
+            data-title="SERVICIO POR EVENTO"
+            data-content='
+                    <h3 class="text-xl font-semibold mb-4 text-sky-700">Atención por Evento o Urgencia (Mantenimiento Correctivo)</h3>
+                    <p class="mb-4">Brindamos soporte técnico bajo demanda, ideal para situaciones urgentes, fallas críticas o equipos que no están cubiertos por una póliza. Este servicio se contrata por evento único, bajo un esquema correctivo inmediato.</p>
+
+                    <p class="mb-4">Nuestro objetivo es restaurar el correcto funcionamiento y seguridad de los equipos en el menor tiempo posible, restableciendo la operación clínica sin comprometer la calidad.</p>
+
+                    <h4 class="text-lg font-semibold mb-2 mt-4 text-sky-700">Alcance del Servicio Correctivo por Evento:</h4>
+                    <p class="mb-4">Acciones técnicas enfocadas en recuperar la funcionalidad total del equipo:</p>
+
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Inspección y Verificación:</strong> Revisión eléctrica y mecánica completa e inspección detallada de partes internas y externas.</li>
+                        <li><strong>Diagnóstico y Reparación:</strong> Uso de analizadores avanzados para detectar fallas y reparar componentes electrónicos (tarjetas, módulos, cables).</li>
+                        <li><strong>Reemplazo de Partes:</strong> Reemplazo de refacciones (nacionales e importadas).</li>
+                        <li><strong>Ajustes y Pruebas:</strong> Configuración de los sistemas de seguridad y pruebas funcionales post-reparación.</li>
+                    </ul>
+                    <p class="mt-4">Todo procedimiento se documenta bajo una orden de servicio específica, asegurando trazabilidad y control.</p>
+            '>
+            <div class="w-full h-full p-8 flex justify-center items-center bg-sky-500 text-sky-50 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                <div class="block">
+                    <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-200 mx-auto flex justify-center items-center">
+                        <i class="bi bi-calendar2-event text-[3.4rem]"></i>
+                    </div>
+                    <h1 class="font-semibold mt-8 text-lg">SERVICIO POR EVENTO</h1>
+                    <p class="text-sm mt-4">Soporte técnico bajo demanda para situaciones urgentes o fallas críticas en modalidad correctiva inmediata.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container h-80 w-full cursor-pointer group"
+            data-title="CALIBRACIONES"
+            data-content='
+    <h3 class="text-xl font-semibold mb-4 text-sky-700">Calibraciones Técnicas Certificadas</h3>
+    <p class="mb-4">Los equipos que miden variables críticas (energía, presión, tiempo, corriente, etc.) requieren calibraciones periódicas para garantizar mediciones precisas, lo cual es fundamental en el entorno médico.</p>
+
+    <h4 class="text-lg font-semibold mb-2 mt-4 text-sky-700">Nuestro Compromiso con la Calidad:</h4>
+    <p class="mb-4">En GUGA garantizamos que:</p>
+    <ul class="list-disc pl-5 space-y-2">
+        <li><strong>Instrumental Certificado:</strong> Todo nuestro instrumental de prueba está debidamente calibrado y certificado.</li>
+        <li><strong>Trazabilidad Garantizada:</strong> Contamos con trazabilidad a normas y patrones nacionales e internacionales reconocidos.</li>
+        <li><strong>Reporte Detallado:</strong> Entregamos un reporte de calibración detallado que documenta los resultados (si aplica).</li>
+        <li><strong>Etiquetado:</strong> Colocamos una etiqueta en el equipo indicando la vigencia y la trazabilidad (si aplica).</li>
+    </ul>
+            '>
+            <div class="w-full h-full p-8 flex justify-center items-center bg-sky-700 text-sky-50 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                <div class="block">
+                    <div class="h-24 w-24 rounded-full border-solid border-4 mx-auto flex justify-center items-center">
+                        <i class="bi bi-gear text-[3.4rem]"></i>
+                    </div>
+                    <h1 class="font-semibold mt-8 text-lg">CALIBRACIONES</h1>
+                    <p class="text-sm mt-4">Calibraciones periódicas con instrumental certificado y trazabilidad a patrones nacionales e internacionales.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container h-80 w-full cursor-pointer group"
+            data-title="DIAGNÓSTICOS"
+            data-content='
+    <h3 class="text-xl font-semibold mb-4 text-sky-700">Diagnóstico y Verificación Funcional</h3>
+    <p class="mb-4">Antes de cualquier intervención, realizamos evaluaciones y diagnósticos técnicos precisos para identificar el estado real de los equipos y localizar fallas de manera eficaz.</p>
+
+    <h4 class="text-lg font-semibold mb-2 mt-4 text-sky-700">Nuestro Proceso de Diagnóstico:</h4>
+    <ul class="list-disc pl-5 space-y-2">
+        <li><strong>Evaluaciones Funcionales Completas:</strong> Realizamos pruebas exhaustivas para comprobar que el equipo cumple con sus parámetros operativos y verificar su rendimiento.</li>
+        <li><strong>Tecnología de Análisis:</strong> Utilizamos analizadores avanzados e ingeniería especializada para detectar fallas y realizar un diagnóstico técnico exacto.</li>
+        <li><strong>Resolución Eficaz:</strong> Nuestros métodos nos permiten localizar y resolver fallas de manera eficiente.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mb-2 mt-4 text-sky-700">Documentación y Control:</h4>
+    <p class="mb-4">Todo procedimiento se documenta y ejecuta bajo una orden de servicio validada, asegurando trazabilidad y control de calidad.</p>
+            '>
+            <div class="w-full h-full p-8 flex justify-center items-center bg-sky-200 text-sky-800 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                <div class="block">
+                    <div class="h-24 w-24 rounded-full border-solid border-4 border-sky-800 mx-auto flex justify-center items-center">
+                        <i class="bi bi-graph-up text-[3.4rem]"></i>
+                    </div>
+                    <h1 class="font-semibold mt-8 text-lg">DIAGNÓSTICOS</h1>
+                    <p class="text-sm mt-4">Utilizamos analizadores y tecnología de ingeniería avanzada para diagnósticos precisos y verificación funcional.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    <div id="detailModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 items-center justify-center p-4 transition-opacity duration-300">
+        
+        <div class="modal-content bg-white rounded-xl shadow-2xl max-w-3xl w-full p-8 m-4 max-h-[90vh] overflow-y-auto">
+            
+            <div class="flex justify-between items-start mb-6">
+                
+                <h2 id="modalTitle" class="text-3xl font-bold text-sky-800"></h2>
+
+                <button id="closeModalButton" class="text-gray-500 hover:text-gray-800 text-3xl transition duration-150 focus:outline-none ml-4 flex-shrink-0" aria-label="Cerrar">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <div id="modalBodyContent" class="text-gray-700 text-left">
+                </div>
+        
+            </div>
+    </div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Seleccionar elementos del DOM
+            const cards = document.querySelectorAll('.card-container');
+            const modal = document.getElementById('detailModal');
+            const closeModalButton = document.getElementById('closeModalButton');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBodyContent = document.getElementById('modalBodyContent');
+    
+            function openModal(title, content) {
+                // 1. Poblar texto e información
+                modalTitle.textContent = title;
+                modalBodyContent.innerHTML = content; 
+
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
+            }
+
+            // Función para cerrar el modal
+            function closeModal() {
+                // 1. Ocultar el modal
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                
+                // 2. Limpiar el contenido
+                modalTitle.textContent = '';
+                modalBodyContent.innerHTML = '';
+
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            // Añadir listeners a las tarjetas
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Obtenemos los datos de los atributos data-*
+                    const title = card.getAttribute('data-title');
+                    const content = card.getAttribute('data-content');
+    
+                    openModal(title, content);
+                });
+            });
+
+            closeModalButton.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+    @endpush
 
     {{-- Servicios de mantenimiento --}}
     <div class="flex justify-center mb-24">

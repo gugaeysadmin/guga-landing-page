@@ -19,23 +19,23 @@
     <div class="relative md:h-64">
         <div class="md:absolute z-10 -top-1/3 flex justify-around w-full xl:px-24 sm:flex-wrap xs:flex-wrap xs:mx-autoxs:py-4">
             <div class="relative flex flex-wrap gap-20 md:gap-0 ">
-                <div class="relative w-80 h-60 rounded-lg bg-white shadow-xl mx-auto md:mx-0">
+                <div class="relative w-80 h-56 rounded-lg bg-gray-50  shadow-xl mx-auto md:mx-0">
                     <div class="absolute flex justify-center w-full -top-12">
-                        <div class="h-24 w-24 flex justify-center items-center bg-white rounded-full shadow-md">
-                            <i class="bi bi-geo-alt text-blue-400  text-[2.2rem]"></i>
+                        <div class="h-24 w-24 flex justify-center items-center rounded-full shadow-md bg-gradient-to-br from-sky-500 via-sky-700 to-sky-600">
+                            <i class="bi bi-geo-alt text-white pt-[1px] text-[2.2rem]"></i>
                         </div>
                     </div>
                     <div class="pt-20 flex justify-center h-full">
                         <div class="block">
-                            <h1 class="font-sans font-semibold text-xl text-center text-blue-500">Oficina central</h1>
+                            <h1 class="font-sans font-semibold text-xl text-center text-blue-500">OFICINA</h1>
                             <p class="font-sans text-center mt-2 font-semibold text-slate-500">Tultitlán, Estado de México</p>
                         </div>
                     </div>
                 </div>
-                <div class="relative w-80 h-60 rounded-lg bg-white shadow-xl mx-auto md:mx-12">
+                <div class="relative w-80 h-56 rounded-lg bg-gray-50 shadow-xl mx-auto md:mx-12">
                     <div class="absolute flex justify-center w-full -top-12">
-                        <div class="h-24 w-24 flex justify-center items-center bg-white rounded-full shadow-md">
-                            <i class="bi bi-envelope-at text-blue-400  text-[2.2rem]"></i>
+                        <div class="h-24 w-24 flex justify-center items-center bg-gradient-to-br from-sky-500 via-sky-700 to-sky-600 rounded-full shadow-md">
+                            <i class="bi bi-envelope-at text-white  text-[2.2rem]"></i>
                         </div>
                     </div>
                     <div class="pt-20 flex justify-center h-full">
@@ -45,10 +45,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="relative w-80 h-60 rounded-lg bg-white shadow-xl mx-auto md:mx-0">
+                <div class="relative w-80 h-56 rounded-lg bg-gray-50 shadow-xl mx-auto md:mx-0">
                     <div class="absolute flex justify-center w-full -top-12">
-                        <div class="h-24 w-24 flex justify-center items-center bg-white rounded-full shadow-md">
-                            <i class="bi bi-headset text-blue-400  text-[2.2rem]"></i>
+                        <div class="h-24 w-24 flex justify-center items-center bg-white rounded-full shadow-md bg-gradient-to-br from-sky-500 via-sky-700 to-sky-600">
+                            <i class="bi bi-headset text-white  text-[2.2rem]"></i>
                         </div>
                     </div>
                     <div class="pt-20 flex justify-center h-full">
@@ -68,32 +68,37 @@
         <!-- Formulario -->
         <div class="lg:relative xs:w-full lg:w-[40vw] h-[50rem] mx-4  sm:mx-auto">
             <div class=" z-10 h-full flex items-center">
-                <div class=" bg-sky-200 shadow-lg p-6 xs:w-full  border rounded-lg ">
-                    <h2 class="text-md text-center font-sans font-semibold mb-2 text-blue-500">CONTACTA CON NOSOTROS</h2>
-                    <h2 class="text-3xl text-center font-sans font-semibold mb-12 text-blue-950">Formulario de contacto</h2>
+                <div class=" bg-gradient-to-b from-[#0392ce] via-[#3065b5] to-[#3065b5] shadow-lg p-6 xs:w-full  border rounded-lg ">
+                    <h2 class="text-md text-center font-sans font-semibold mb-2 text-blue-100">CONTACTA CON NOSOTROS</h2>
+                    <h2 class="text-3xl text-center font-sans font-semibold mb-12 text-blue-50">Formulario de contacto</h2>
                     <form action="{{ route('contact.sendContact') }}" method="post">
                     @csrf
                     <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-gray-700">Nombre completo</label>
+                        <label for="name" class="block text-sm font-medium text-white">Nombre completo</label>
                         <input id="name" name="name" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div class="mb-4">
-                        <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+                        <label for="email" class="block text-sm font-medium text-white">Correo electrónico</label>
                         <input id="email" name="email" type="email" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div class="mb-4">
-                        <label for="company" class="block text-sm font-medium text-gray-700">Empresa</label>
+                        <label for="company" class="block text-sm font-medium text-white">Empresa</label>
                         <input id="company" name="company" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div class="mb-4">
-                        <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                        <label for="phone" class="block text-sm font-medium text-white">Teléfono</label>
                         <input id="phone" name="phone" type="text" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div class="mb-4">
-                        <label for="comments" class="block text-sm font-medium text-gray-700">Comentario</label>
+                        <label for="comments" class="block text-sm font-medium text-white">Comentario</label>
                         <textarea id="comments" name="comments" rows="4" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-4">Enviar</button>
+                    <button type="submit" class="w-full  text-white py-2 px-4 rounded mb-4 bg-gradient-to-b 
+                        from-[#55dcfd] 
+                        to-[#339eb9]
+                        hover:from-[#55dcfd]
+                        hover:to-[#42b6d3]
+                    ">Enviar</button>
                     </form>
                 </div>
             </div>

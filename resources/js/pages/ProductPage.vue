@@ -115,7 +115,7 @@ export default {
       <i class="bi bi-arrow-left-circle-fill text-xl text-[#3e8ad5]"></i>
       <p class="underline font-medium text-lg text-[#3e8ad5] pb-[1px]">Regresar</p>
   </button>
-  <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
+  <div class="flex flex-row justify-between  items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
       <!-- <div>
           <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
       </div> -->
@@ -138,7 +138,7 @@ export default {
   </div>
   
 
-  <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
+  <div class="flex flex-row justify-between  items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
     <ProductTable
       :products="filteredProducts"
       :brands="brands"
@@ -153,7 +153,7 @@ export default {
   </div>
 
 
-  <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+  <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="" disableHeader>
     <div>
       <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar este producto?</h2>
       <div class="flex justify-center space-x-8">

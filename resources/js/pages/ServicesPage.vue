@@ -5,7 +5,7 @@
         <p class="underline font-medium text-lg text-[#3e8ad5] pb-[1px]">Regresar</p>
     </button>
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+    <div class="flex flex-row justify-between md:min-w-[54rem]  items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
         <!-- <div>
             <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
         </div> -->
@@ -27,7 +27,7 @@
 
     </div>
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+    <div class="flex flex-row justify-between md:min-w-[54rem]  items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
       <ServicesTable
         :services="filteredServices"
         @search="handleSearch"
@@ -43,13 +43,24 @@
       <ServiceForm
         :onSubmit="createService"
         :initialData="emptyOffert"
-        :onCancel="() => { showModal = false; currentOffert = null; }"
+        :onCancel="() => { showModal = false; currentService = null; }"
         :submitText="Crear"
         :loading="loading"
       />
     </Modal>
 
-    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+    <Modal :visible="showModalEdut" @close="showModalEdut = false" title="Nuevo servicio">
+      <ServiceForm
+        :onSubmit="updateService"
+        :initialData="currentService"
+        :onCancel="() => { showModal = false; currentService = null; }"
+        :submitText="Editar"
+        :loading="loading"
+        :editing="true"
+      />
+    </Modal>
+
+    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="" disableHeader>
       <div>
         <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar este servicio?</h2>
         <div class="flex justify-center space-x-8">
@@ -77,8 +88,10 @@
     import { useRouter } from 'vue-router';
 
     const showModal = ref(false);
+    const showModalEdut = ref(false);
+
     const showDeleteModal = ref(false);
-    const currentOffert = ref(null);
+    const currentService = ref(null);
     const services = ref([]);
     const searchTerm = ref('');
     const deleteId = ref(null);
@@ -129,12 +142,13 @@
 
 
   const handleEdit = (service) => {
-    currentOffert.value = {
+    currentService.value = {
       ...service,
       title: service.name,
-      details: service.description
+      details: service.description,
+      image: service.img_url
     };
-    showModal.value = true;
+    showModalEdut.value = true;
   };
 
   const confirmDelete = (id) => {
@@ -201,18 +215,24 @@
 
   const updateService = async (formData) => {
     try {
-      const response = await fetch(`/api/services/${currentOffert.value.id}`, {
-        method: 'PUT',
+      console.log(formData)
+      const form = new FormData();
+      form.append('title', formData.title);
+      form.append('details', formData.details);
+      form.append('image', formData.image);
+
+      const response = await fetch(`/api/services/update/${currentService.value.id}`, {
+        method: 'POST',
         headers: {
           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         },
-        body: formData
+        body: form
       });
       
       if (response.ok) {
         await fetchServices();
-        showModal.value = false;
-        currentOffert.value = null;
+        showModalEdut.value = false;
+        currentService.value = null;
       }
     } catch (error) {
       console.error('Error updating service:', error);

@@ -49,6 +49,26 @@
         $tableData = json_decode($product->table_data, true);
         $headers   = $tableData['headers'] ?? [];
         $rows      = $tableData['table']   ?? [];
+        
+        $haspdf = false ;
+
+        $pdfIndex = array_search("pdf", $headers);
+        echo "<script>console.log(". json_encode($pdfIndex) .");</script>";
+
+        if ($pdfIndex !== false || $pdfIndex !== null || $pdfIndex !== 'false') {
+            foreach ($rows as $row) {
+                if ((!empty($row["pdf"]) || isset($row["pdf"])) && $row["pdf"] !== 'null') {
+                    $haspdf = true;
+                    break;
+                }
+            }
+
+            if (!$haspdf) {
+                unset($headers[$pdfIndex]); // elimina header
+                $headers = array_values($headers); // reindexa
+            }
+        }
+
         echo "<script>console.log(". json_encode($rows) .");</script>";
     @endphp
         @if ($rows != [] && $headers != [])
@@ -151,7 +171,7 @@
                                                                 group-hover:bg-[#bdd1de] transition transition-300">
                                                                 {{ $row[$header] ?? 'N/A' }}
                                                             </td>
-                                                        @elseif ($header === 'pdf')
+                                                        @elseif ($header === 'pdf' && $haspdf)
                                                             <td class="px-6 py-2 whitespace-nowrap text-xs text-gray-900 
                                                                 @if($loop->parent->last) first:rounded-bl-lg last:rounded-br-lg @endif
                                                                 @if($rowindex % 2 === 0) bg-[#d4e0e9] @else bg-[#e4ebf0] @endif
@@ -177,7 +197,7 @@
                                                                     {{ 'N/A' }}
                                                                 @endif
                                                             </td>
-                                                        @elseif ($header === 'pdf')
+                                                        @elseif ($header === 'pdf' && $haspdf)
                                                             <td class="px-6 py-2 whitespace-nowrap text-xs text-gray-900 
                                                                 @if($loop->parent->last) first:rounded-bl-lg last:rounded-br-lg @endif
                                                                 @if($rowindex % 2 === 0) bg-[#d4e0e9] @else bg-[#e4ebf0] @endif

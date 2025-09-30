@@ -9,11 +9,11 @@
 </a> --}}
 
 <a href="{{ $href }}" class="cursor-pointer flex flex-col transition-transform duration-300 hover:-translate-y-5 hover:border-blue-600 group">
-    <div class="my-0 py-0 rounded-full border-2 border-[#0392ceff] group-hover:border-blue-600 m-auto">
-        <img src="/storage/{{ $image }}" alt="esterilization_icon" class="w-28 h-28 my-0 py-0"/>
+    <div class="my-0 py-0 rounded-full border-2 border-[#0392ceff] group-hover:border-[3px] m-auto">
+        <img src="/storage/{{ $image }}" alt="esterilization_icon" class="w-28 h-28 my-0 py-0 rounded-full"/>
     </div>
-    <div class="text-center mx-7 mt-4">
-        <p class="text-[1.1rem] max-w-32 text-[#0392ceff] font-sans font-semibold group-hover:text-blue-600">{{ $text }}</p>
+    <div class="text-center mx-7 mt-3">
+        <p class="text-[1.1rem] max-w-32 text-[#0392ceff] font-sans font-medium">{{ $text }}</p>
         {{-- <i class="bi bi-caret-down-fill text-[#0392ceff] group-hover:text-blue-600"></i> --}}
     </div>
 </a>

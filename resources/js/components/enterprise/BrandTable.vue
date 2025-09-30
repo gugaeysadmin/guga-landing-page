@@ -6,7 +6,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">#</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider w-full">Nombre</th>
                     <!-- <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Descripción</th> -->
-                    <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Logo</th>
+                    <!-- <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Logo</th> -->
                     <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
@@ -26,7 +26,7 @@
                             {{ truncateDescription(brand.description) }}
                         </div>
                     </td> -->
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <!-- <td class="px-6 py-4 whitespace-nowrap">
                         <a 
                             v-if="brand.logo_file_url" 
                             :href="`/storage/${brand.logo_file_url}`" 
@@ -40,14 +40,14 @@
                             >
                         </a>
                         <span v-else class="text-sm text-gray-500">Sin imagen</span>
-                    </td>
+                    </td> -->
                     <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                        <button
+                        <!-- <button
                             @click="emit('edit', brand)"
                             class="text-indigo-600 hover:text-indigo-900 mr-5 text-lg"
                         >
                             <i class="bi bi-pencil-square"></i>
-                        </button>
+                        </button> -->
                         <button
                             @click="emit('delete', brand.id)"
                             class="text-red-600 hover:text-red-900 text-xl "

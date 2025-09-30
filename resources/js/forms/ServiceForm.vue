@@ -33,6 +33,17 @@
       <!-- Campo Imagen -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Imagen *</label>
+        <div v-if="iconUrl !== null && iconUrl !== '' && props.editing" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
+          <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
+          <a
+            :href="`/storage/${iconUrl}`"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-500 underline text-xs"
+          >
+            {{ iconUrl?.split("/").pop() }}
+          </a>
+        </div>
         <div
           @click="openFilePicker"
           @dragover.prevent="dragOver = true"
@@ -173,6 +184,10 @@
         loading: {
           type:  Boolean,
           default: false
+        },
+        editing: {
+          type:  Boolean,
+          default: false
         }
     });
     
@@ -193,28 +208,30 @@
     const fileInput = ref(null);
     const selectedFile = ref(null);
     const previewImage = ref(null);
-    
+    const iconUrl = ref(null);
     // Cargar datos iniciales
-    // onMounted(() => {
-    //     if (props.initialData) {
-    //     formData.value = {
-    //         title: props.initialData.title || '',
-    //         details: props.initialData.details || '',
-    //         image: props.initialData.image || null,
-    //     };
+    onMounted(() => {
+        if (props.initialData) {
+          console.log(props.initialData)
+          formData.value = {
+              title: props.initialData.title || '',
+              details: props.initialData.details || '',
+              image: props.initialData.image || null,
+          };
+          iconUrl.value = props.initialData.image;
     
-    //     if (props.initialData.image) {
-    //         if (typeof props.initialData.image === 'string') {
-    //         // Si es una URL (para edición)
-    //         previewImage.value = props.initialData.image;
-    //         } else if (props.initialData.image instanceof File) {
-    //         // Si es un File (después de recargar)
-    //         selectedFile.value = props.initialData.image;
-    //         previewImage.value = URL.createObjectURL(props.initialData.image);
-    //         }
-    //     }
-    //     }
-    // });
+        // if (props.initialData.image) {
+        //     if (typeof props.initialData.image === 'string') {
+        //     // Si es una URL (para edición)
+        //     previewImage.value = props.initialData.image;
+        //     } else if (props.initialData.image instanceof File) {
+        //     // Si es un File (después de recargar)
+        //     selectedFile.value = props.initialData.image;
+        //     previewImage.value = URL.createObjectURL(props.initialData.image);
+        //     }
+        // }
+        }
+    });
     
     // Validar formulario
     const validate = () => {

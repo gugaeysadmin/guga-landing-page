@@ -5,7 +5,7 @@
         <p class="underline font-medium text-lg text-[#3e8ad5] pb-[1px]">Regresar</p>
     </button>
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
+    <div class="flex flex-row justify-between md:min-w-[54rem]  items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
         <!-- <div>
             <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
         </div> -->
@@ -28,7 +28,7 @@
     </div>
     
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
+    <div class="flex flex-row justify-between md:min-w-[54rem]  items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
       <BrandTable
         :brands="filteredOfferts"
         @search="handleSearch"
@@ -49,7 +49,7 @@
       />
     </Modal>
 
-    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="" disableHeader>
       <div>
         <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta marca?</h2>
         <div class="flex justify-center space-x-8">
@@ -168,11 +168,11 @@
       loading.value=true
       try {
         const form = new FormData();
-        form.append('title', formData.title);
-        form.append('details', formData.details);
-        form.append('image', formData.image);
-
-        const response = await fetch('/api/brand/create', {
+        // form.append('title', formData.title);
+        // form.append('details', formData.details);
+        // form.append('image', formData.image);
+        form.append('name', formData.title);
+        const response = await fetch('/api/brand/create-on', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -191,7 +191,7 @@
         console.error('Error:', error);
         // Mostrar error al usuario
         loading.value=false
-        errors.value.submit = 'Error al guardar la marca';
+        // errors.value.submit = 'Error al guardar la marca';
       }
       loading.value=false
 

@@ -1406,7 +1406,7 @@
         // })
         if(response.ok){
           console.log(response);
-          // router.back()
+          router.back()
         }
   
       } catch (error) {
@@ -1547,6 +1547,12 @@
   
     const createCategories = async (formData) => {
       loading.value=true
+
+    if(!newCategory.value || newCategory.value === "" || newCategory.value.trim() === ""){
+      errorsCategory.value.title = 'Ingrese el nombre de la categoria';
+    } else if(categories.value && categories.value.length > 0 && categories.value.find(category => category.name.toLowerCase() === newCategory.value.trim().toLowerCase())) {
+      errorsCategory.value.title = 'Ya existe una categoria con ese nombre';
+    } else {
       try {
         const form = new FormData();
         form.append('title',newCategory.value );
@@ -1572,7 +1578,9 @@
         loading.value=false
   
       }
-      loading.value=false
+
+    }
+    loading.value=false
   
     };
   
@@ -1821,7 +1829,7 @@
     }
   
     const addTableHeader = () => {
-      if(newTableConf.value.headers && newTableConf.value.headers !== "" && !newTableConf.value.headers.includes(newHeader.value)){
+      if(newTableConf.value.headers && newTableConf.value.headers !== "" && !newTableConf.value.headers.includes(newHeader.value)&& newHeader.value !== null && newHeader.value !== "" && newHeader.value.trim() !== ""){
         newTableConf.value.headers.pop();
         newTableConf.value.headers.push(newHeader.value);
         newTableConf.value.headers.push("pdf");

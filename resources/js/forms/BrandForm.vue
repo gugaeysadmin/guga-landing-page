@@ -18,7 +18,7 @@
       </div>
   
       <!-- Campo Detalles -->
-      <div>
+      <!-- <div>
         <label for="details" class="block text-sm font-medium text-gray-700"
           >Detalles</label
         >
@@ -28,10 +28,10 @@
           rows="6"
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         ></textarea>
-      </div>
+      </div> -->
   
       <!-- Campo Imagen -->
-      <div>
+      <!-- <div>
         <label class="block text-sm font-medium text-gray-700">Logo *</label>
         <div
           @click="openFilePicker"
@@ -118,7 +118,7 @@
           {{ errors.image }}
         </p>
       </div>
-  
+   -->
       <!-- Botones -->
       <div class="flex justify-end space-x-3">
         <!-- <button
@@ -173,6 +173,10 @@
         loading: {
           type:  Boolean,
           default: false
+        },
+        editing: {
+          type:  Boolean,
+          default: false
         }
     });
     
@@ -194,6 +198,8 @@
     const selectedFile = ref(null);
     const previewImage = ref(null);
     
+    const logoUrl = ref(null);
+
     // Cargar datos iniciales
     // onMounted(() => {
     //     if (props.initialData) {
@@ -226,10 +232,10 @@
         valid = false;
         }
     
-        if (!selectedFile.value && !props.initialData?.image) {
-        errors.value.image = 'La imagen es obligatoria';
-        valid = false;
-        }
+        // if (!selectedFile.value && !props.initialData?.image && !props.editing) {
+        // errors.value.image = 'La imagen es obligatoria';
+        // valid = false;
+        // }
     
         return valid;
     };

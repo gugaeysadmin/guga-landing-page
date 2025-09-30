@@ -35,7 +35,7 @@
               <div class="">
                 <div class="mt-3 text-center sm:m-4 sm:mt-0 sm:text-left">
                     <!-- Encabezado -->
-                    <div class=" flex flex-row justify-between items-center">
+                    <div v-if="!disableHeader" class=" flex flex-row justify-between items-center">
                         <h3
                           id="modal-title"
                           class="text-lg font-semibold leading-6 text-gray-900"
@@ -65,6 +65,8 @@
 </template>
   
   <script setup>
+import { type } from 'jquery';
+
     defineProps({
         title: {
             type: String,
@@ -78,6 +80,10 @@
           type: Function,
           default: null,
         },
+        disableHeader: {
+          type: Boolean,
+          default: false
+        }
     });
   </script>
 

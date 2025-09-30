@@ -122,14 +122,13 @@ class ServiceController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        Log::info($request);
         try {
             $service = Service::findOrFail($id);
             
             $validated = $request->validate([
                 'title' => 'sometimes|string|max:100',
-                'details' => 'nullable|string',
-                'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:500',
-                'index' => 'sometimes|integer'
+                'details' => 'sometimes|string',
             ]);
 
             // Actualizar campos básicos
@@ -142,14 +141,14 @@ class ServiceController extends Controller
             // Manejar la imagen si se proporciona
             if ($request->hasFile('image')) {
                 // Eliminar la imagen anterior si existe
-                if ($service->img_url) {
+                if ($service->img_url && Storage::disk('public')->exists($service->img_url)) {
                     Storage::disk('public')->delete($service->img_url);
                 }
                 
                 // Guardar la nueva imagen
                 $imageName = time().'_'.Str::slug($validated['title'] ?? $service->name).'.'.$request->image->extension();
                 $imagePath = $request->image->storeAs('specarea', $imageName, 'public');
-                $service->icon_file_url = $imagePath;
+                $service->img_url = $imagePath;
             }
             
             // Manejar el índice si se proporciona

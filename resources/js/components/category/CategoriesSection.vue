@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-4 mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
+    <div class="flex flex-col md:min-w-[54rem]  gap-4 mt-8 bg-white py-5 px-5 rounded-xl shadow-sm ">
         <!-- <h1 class="text-2xl font-semibold text-[#4180ab]">TODAS LAS CATEGORÍAS</h1> -->
         <div class="flex flex-row justify-between items-center">
           <div>
@@ -21,7 +21,7 @@
         
       </div>
       
-      <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
+      <div class="flex flex-row md:min-w-[54rem]  justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
         
         <CategoriesTable
           :categories="filteredOfferts"
@@ -41,7 +41,7 @@
       />
     </Modal>
 
-    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="" disableHeader>
       <div>
         <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta categoría?</h2>
         <div class="flex justify-center space-x-8">

@@ -1,6 +1,6 @@
 <template>
-    <div class="h-full bg-gradient-to-b from-slate-800 via-slate-800 to-slate-700 shadow-lg w-[18rem]">
-        <div class="h-full bg-gradient-to-b from-slate-800 via-slate-800 to-slate-700 shadow-lg w-[18rem] pl-14 pr-12 pt-20 ">
+    <div class="h-screen bg-gradient-to-b from-[#224881] via-[#224881] to-[#142b50] shadow-lg w-[18rem]">
+        <div class="h-full  pl-14 pr-12 pt-20 ">
             <div class="space-y-20 ">
                 <div>
                     <!-- <img :src="'/img/logo_normal.png'" alt="Logo" class="w-[13rem] mx-auto"> -->
@@ -12,7 +12,7 @@
                         <h5 class="font-mono  text-lg text-[#f5fbff]">LANDING PAGE</h5>
                         <div class="space-y-2">
     
-                            <router-link to="/app/admin" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
+                            <router-link to="/app/admin" class="flex flex-row items-center gap-4 px-5 py-4 bg-[#224881] hover:bg-[#1c3a69]  active:bg-[#224881] rounded-md transition duration-200 group">
                                 <i class="bi bi-houses  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                                 <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                                     Inicio
@@ -26,7 +26,7 @@
                                 </p>
                             </router-link> -->
     
-                            <router-link to="/app/admin/promotions" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
+                            <router-link to="/app/admin/promotions" class="flex flex-row items-center gap-4 px-5 py-4 bg-[#224881] hover:bg-[#1c3a69]  active:bg-[#224881]0 rounded-md transition duration-200 group">
                                 <i class="bi bi-percent  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                                 <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                                     Promociones
@@ -38,21 +38,21 @@
                         <h5 class="font-mono  text-lg text-[#f5fbff]">ADMINISTRACIÓN</h5>
     
     
-                        <router-link to="/app/admin/product" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
+                        <router-link to="/app/admin/product" class="flex flex-row items-center gap-4 px-5 py-4  hover:bg-[#1c3a69]  active:bg-[#224881]0 rounded-md transition duration-200 group">
                                 <i class="bi bi-grid  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                                 <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                                 Productos
                             </p>
                         </router-link>
     
-                        <router-link to="/app/admin/categories" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
+                        <router-link to="/app/admin/categories" class="flex flex-row items-center gap-4 px-5 py-4  hover:bg-[#1c3a69]  active:bg-[#224881]0 rounded-md transition duration-200 group">
                                 <i class="bi bi-tags  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                                 <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                                 Categorías
                             </p>
                         </router-link>
     
-                        <router-link to="/app/admin/speciality-areas" class="flex flex-row items-center gap-4 px-5 py-4 bg-slate-800 hover:bg-slate-700  active:bg-gray-900 rounded-md transition duration-200 group">
+                        <router-link to="/app/admin/speciality-areas" class="flex flex-row items-center gap-4 px-5 py-4 hover:bg-[#1c3a69]  active:bg-[#224881]0 rounded-md transition duration-200 group">
                                 <i class="bi bi-kanban  group-acitve:text-black text-md text-[#f5fbff] transition duration-200"></i>
                                 <p class="group-hover:font-bold  group-active:font-bold  font-medium text-[#f5fbff] font-sans text-md transition duration-200">
                                 Áreas de Esp.
@@ -73,7 +73,15 @@
         </div>
     </div>
 </template>
+<script setup>
+    import { defineProps } from 'vue'
 
+    const props = defineProps({
+        showSidebar: Boolean,          
+        closeSidebar: Function      
+    })
+
+</script>
 <script>
     export default {
         name: "SideBar"

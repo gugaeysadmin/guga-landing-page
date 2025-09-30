@@ -80,7 +80,7 @@ class CatalogsController extends Controller
                         array_unshift($filters, $brandsFilters);
                         break;
                         
-                    default: // Para las categorías de productos
+                    default: 
                         $query->whereHas('category', function($q) use ($section, $values) {
                             // Algunas categorías pueden venir con espacios extras
                             $cleanSection = trim($section);

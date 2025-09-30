@@ -1,5 +1,5 @@
 
-<div {{ $attributes->merge(['class'=> 'relative']) }}>
+<div class="relative">
 
     {{-- <div  class="block">
         <!-- iframe que consume la api de google para mostrar en mapa la ubicacion -->
@@ -13,10 +13,12 @@
         referrerpolicy="no-referrer-when-downgrade"
         ></iframe>
     </div> --}}
-    <img src="{{ asset('img/footerbg2.jpg') }}" alt="services_img" class="w-full  xs:object-fill sm:max-h-[25rem] md:object-cover" style="object-position: 0 10%;"/>
-    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+    <div class="absolute inset-0 -z-20">
+        <img src="{{ asset('img/footerbg2.jpg') }}" alt="services_img"  class="w-full h-full object-cover object-[0_10%]" />
+    </div>
+    <div class="absolute inset-0 -z-10 bg-black bg-opacity-60"></div>
     <!-- Informacion de la empresa -->
-    <div class=" absolute inset-0 grid grid-cols-1 md:grid-cols-2  gap-20 py-12 sm:px-4 md:px-12 lg:px-32 pt-20">
+    <div class="grid grid-cols-1 md:grid-cols-2  gap-20 py-12 xs:px-2 sm:px-4 md:px-12 lg:px-32 pt-20">
         <div class="block text-gray-200 max-w-[30rem]" >
             <img src="{{ asset('img/logo_white.png') }}" class="mb-8" alt="" />
             <p class="mt-2 mb-4 pr-12">

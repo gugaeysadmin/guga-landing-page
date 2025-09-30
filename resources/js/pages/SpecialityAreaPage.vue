@@ -60,7 +60,7 @@
       />
     </Modal>
 
-    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="" disableHeader>
       <div>
         <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta área de especialidad?</h2>
         <div class="flex justify-center space-x-8">
@@ -220,8 +220,6 @@
   const updateSpecArea = async (formData) => {
     loading.value=true
 
-    console.log(currentSpecArea.value)
-    console.log(formData)
     try {
       const form = new FormData();
       form.append('title', formData.title);

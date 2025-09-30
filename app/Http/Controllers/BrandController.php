@@ -40,13 +40,16 @@ class BrandController extends Controller
     {
         // // Calcular el próximo índice (máximo actual + 1)
         // // Guardar la imagen
+        $imagePath = null;
 
-        $imagePath = $request->file('image')->store('brands', 'public');
+        if(!$request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('brands', 'public');
+        }
 
         
         $brand = Brand::create([
             'name' => $request['title'],
-            'description' => $request['details'],
+            'description' => $request['details'] || null,
             'logo_file_url' => $imagePath,
         ]);
 

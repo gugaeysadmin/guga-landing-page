@@ -231,6 +231,11 @@ export default {
       showCover: false,
       mobileScrollSupport: true,
       swipeDistance: 10,
+      showPageCorners: false,
+      autoSize: true,
+      disableFlipByClick: false,
+      drawShadow: true,
+
     });
 
     this.flipbook.loadFromHTML(pagesHTML);

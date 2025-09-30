@@ -76,7 +76,23 @@ class TableHeaderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $thconf = ProductTableConfiguration::findOrFail($id);
+
+        // Actualizar solo los campos que vengan en la request
+        if ($request->filled('name')) {
+            $thconf->name = $request->input('name');
+        }
+
+        if ($request->filled('table_json')) {
+            $thconf->table_json = $request->input('table_json');
+        }
+
+        $thconf->save();
+
+        return response()->json([
+            'message' => 'Configuración de tabla actualizada exitosamente',
+            'data' => $thconf
+        ], 200);
     }
 
     /**

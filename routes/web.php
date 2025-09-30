@@ -70,6 +70,7 @@ Route::post('/api/alliances/reorder-table', [AllianceController::class, 'reorder
 Route::get('/api/alliances', [AllianceController::class, 'index']);
 Route::get('/api/alliances/{id}', [AllianceController::class, 'show']);
 Route::put('/api/alliances/{id}', [AllianceController::class, 'update']);
+Route::post('/api/alliances/update/{id}', [AllianceController::class, 'update']);
 Route::delete('/api/alliances/{id}', [AllianceController::class, 'destroy']);
 Route::get('/api/alliances-count/', [AllianceController::class, 'counting']);
 
@@ -89,6 +90,7 @@ Route::post('/api/services/reorder-table', [ServiceController::class, 'reorder']
 Route::get('/api/services', [ServiceController::class, 'index']);
 Route::get('/api/services/{id}', [ServiceController::class, 'show']);
 Route::put('/api/services/{id}', [ServiceController::class, 'update']);
+Route::post('/api/services/update/{id}', [ServiceController::class, 'update']);
 Route::delete('/api/services/{id}', [ServiceController::class, 'destroy']);
 
 
@@ -97,6 +99,7 @@ Route::post('/api/brand/create', [BrandController::class, 'store']);
 Route::get('/api/brand', [BrandController::class, 'index']);
 Route::get('/api/brand/{id}', [BrandController::class, 'show']);
 Route::put('/api/brand/{id}', [BrandController::class, 'update']);
+Route::post('/api/brand/update/{id}', [BrandController::class, 'update']);
 Route::delete('/api/brand/{id}', [BrandController::class, 'destroy']);
 Route::post('/api/brand/create-on', [BrandController::class, 'onlyname']);
 
@@ -133,6 +136,7 @@ Route::post('/api/th-conf/create', [TableHeaderController::class, 'store']);
 Route::get('/api/th-conf', [TableHeaderController::class, 'index']);
 Route::get('/api/th-conf/{id}', [TableHeaderController::class, 'show']);
 Route::post('/api/th-conf/{id}', [TableHeaderController::class, 'update']);
+Route::post('/api/th-conf/update/{id}', [TableHeaderController::class, 'update']);
 Route::delete('/api/th-conf/{id}', [TableHeaderController::class, 'destroy']);
 
 

@@ -35,6 +35,17 @@
       <div>
         <label for="details" class="block text-sm font-medium text-gray-700"
           >Video de inicio</label>
+          <div v-if="videoUrl !== null && videoUrl !== '' && props.editing" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
+            <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
+            <a
+              :href="`/storage/${videoUrl}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-blue-500 underline text-xs"
+            >
+              {{ videoUrl?.split("/").pop() }}
+            </a>
+          </div>
         <input 
           type="file" 
           multiple 
@@ -48,6 +59,17 @@
       <!-- Campo Imagen -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Icono *</label>
+        <div v-if="iconUrl !== null && iconUrl !== '' && props.editing" class="flex flex-row flex-1 items-center content-center bg-emerald-100  border-2 border-emerald-200   gap-3 mt-2 mb-3 rounded-lg py-2 px-4   ">
+          <p class="text-sm font-semibold text-emerald-700">Archivo actual:</p>
+          <a
+            :href="`/storage/${iconUrl}`"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-500 underline text-xs"
+          >
+            {{ iconUrl?.split("/").pop() }}
+          </a>
+        </div>
         <div
           @click="openFilePicker"
           @dragover.prevent="dragOver = true"
@@ -123,7 +145,7 @@
                   </svg>
                 </button>
               </div>
-              <p class="text-xs text-gray-500">
+              <p v-if="selectedFile" class="text-xs text-gray-500">
                 {{ selectedFile }} ({{ formatFileSize(selectedFile.size) }})
               </p>
             </template>
@@ -200,6 +222,9 @@
         title: '',
         image: '',
     });
+
+    const iconUrl = ref(null);
+    const videoUrl = ref(null);
     
     const dragOver = ref(false);
     const fileInput = ref(null);
@@ -215,6 +240,8 @@
               image: props.initialData.image || null,
               video: props.initialData.video
           };
+          iconUrl.value = props.initialData.image;
+          videoUrl.value = props.initialData.video;
           // if (props.initialData.image) {
           //     if (typeof props.initialData.image === 'string') {
           //     // Si es una URL (para edición)
@@ -238,7 +265,7 @@
         valid = false;
         }
     
-        if (!selectedFile.value && !props.initialData?.image) {
+        if (!selectedFile.value && !props.initialData?.image && !props.editing) {
         errors.value.image = 'La imagen es obligatoria';
         valid = false;
         }

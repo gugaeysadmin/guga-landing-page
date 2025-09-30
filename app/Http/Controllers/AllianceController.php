@@ -150,17 +150,16 @@ class AllianceController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Log::info($request);
         try {
             $alliance = Alliance::findOrFail($id);
             
             $validated = $request->validate([
                 'title' => 'sometimes|string|max:100',
                 'details' => 'nullable|string',
-                'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:500',
                 'active' => 'sometimes|boolean',
                 'index' => 'sometimes|integer',
                 'url'=> 'nullable|string',
-
             ]);
 
             // Actualizar campos básicos
@@ -183,7 +182,7 @@ class AllianceController extends Controller
             // Manejar la imagen si se proporciona
             if ($request->hasFile('image')) {
                 // Eliminar la imagen anterior si existe
-                if ($alliance->img_url) {
+                if ($alliance->img_url && Storage::disk('public')->exists($alliance->img_url)) {
                     Storage::disk('public')->delete($alliance->img_url);
                 }
                 

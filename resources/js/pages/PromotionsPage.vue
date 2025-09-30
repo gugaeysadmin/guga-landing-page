@@ -1,6 +1,9 @@
 <template>
     <Title content="PROMOCIONES"  />
-
+    <button @click="goBack" class="py-2 mt-4 flex flex-row items-center justify-center align-middle content-center gap-2">
+        <i class="bi bi-arrow-left-circle-fill text-xl text-[#3e8ad5]"></i>
+        <p class="underline font-medium text-lg text-[#3e8ad5] pb-[1px]">Regresar</p>
+    </button>
     <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
         <!-- <div>
             <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
@@ -87,7 +90,7 @@
       />
     </Modal>
 
-    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="" disableHeader>
       <div>
         <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta oferta?</h2>
         <div class="flex justify-center space-x-8">
@@ -184,8 +187,10 @@ const handleCancel = () => {
 
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
 
+  const router = useRouter();
   const showModal = ref(false);
   const showDeleteModal = ref(false);
   const showPromoteModal = ref(false);
@@ -210,6 +215,10 @@ import { ref, computed, onMounted } from 'vue';
     image: null,
     active: true
   };
+
+  const  goBack = () => {
+    router.back()
+  }
 
 
   onMounted(async () => {

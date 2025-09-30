@@ -37,7 +37,7 @@
 
             <!-- Page Footer -->
             @isset($footer)
-                <footer class="bg-white dark:bg-gray-800 shadow">
+                <footer class="">
                     {{ $footer }}
                 </footer>
             @endisset

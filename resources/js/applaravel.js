@@ -42,8 +42,8 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 
 
-const laravelapp = createApp(flipbook)
-// laravelapp.component('FlipBook', flipbook)
-laravelapp.component('Title', title);
+const laravelapp = createApp({})
+laravelapp.component('flipbook-container', flipbook)
+// laravelapp.component('Title', title);
 
-laravelapp.mount('#flipbook-container')
+laravelapp.mount('#appFlipbook')

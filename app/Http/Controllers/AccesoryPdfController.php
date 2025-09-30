@@ -81,7 +81,31 @@ class AccesoryPdfController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $specarea = AccesoryPdf::findOrFail($id);
+
+        // Si hay un archivo nuevo
+        if ($request->hasFile('image')) {
+            // Eliminar el archivo anterior si existe
+            if ($specarea->pdf_url && \Storage::disk('public')->exists($specarea->pdf_url)) {
+                \Storage::disk('public')->delete($specarea->pdf_url);
+            }
+
+            // Guardar el nuevo archivo
+            $imagePath = $request->file('image')->store('accesorypdfs', 'public');
+            $specarea->pdf_url = $imagePath;
+        }
+
+        // Actualizar el nombre si viene en la request
+        if ($request->filled('title') && $request['title']  !== null && $request['title'] !== 'null') {
+            $specarea->name = $request['title'];
+        }
+
+        $specarea->save();
+
+        return response()->json([
+            'message' => 'Accesorio actualizado exitosamente',
+            'data' => $specarea
+        ], 200);
     }
 
     /**

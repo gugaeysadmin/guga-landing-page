@@ -25,13 +25,13 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                         <button
-                            @click="emit('edit', brand)"
+                            @click="emit('edit', pdfAccesory)"
                             class="text-indigo-600 hover:text-indigo-900 mr-5 text-lg"
                         >
                             <i class="bi bi-pencil-square"></i>
                         </button>
                         <button
-                            @click="emit('delete', brand.id)"
+                            @click="emit('delete', pdfAccesory.id)"
                             class="text-red-600 hover:text-red-900 text-xl "
                         >
                             <i class="bi bi-trash"></i>

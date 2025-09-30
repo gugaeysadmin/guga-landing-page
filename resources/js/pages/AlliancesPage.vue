@@ -5,7 +5,7 @@
         <p class="underline font-medium text-lg text-[#3e8ad5] pb-[1px]">Regresar</p>
     </button>
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
+    <div class="flex flex-row lg:w-[54rem] justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
         <!-- <div>
             <input v-model="searchTerm" id="search" placeholder="Buscar" class="px-6 py-2 text-xl text-slate-700 bg-slate-50 border-slate-400 rounded-full"/>
         </div> -->
@@ -27,7 +27,7 @@
 
     </div>
 
-    <div class="flex flex-row justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
+    <div class="flex flex-row lg:w-[54rem] justify-between items-center mt-8 bg-white py-5 px-5 rounded-xl shadow-md ">
       <AlliancesTable
         :alliances="filteredAlliances"
         @search="handleSearch"
@@ -61,7 +61,7 @@
       />
     </Modal>
 
-    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="" disableHeader>
       <div>
         <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar esta alianza?</h2>
         <div class="flex justify-center space-x-8">
@@ -166,7 +166,8 @@
     currentAlliance.value = {
       ...alliance,
       title: alliance.name,
-      details: alliance.description
+      details: alliance.description,
+      image: alliance.img_url,
     };
     showModalEdit.value = true;
   };
@@ -207,7 +208,6 @@
       form.append('image', formData.image);
       form.append('active', true);
       form.append('url', formData.url)
-
       const response = await fetch('/api/alliances/create', {
         method: 'POST',
         headers: {
@@ -234,21 +234,23 @@
   };
 
   const updateAlliance = async (formData) => {
+    loading.value=true
     const form = new FormData();
       form.append('title', formData.title);
       form.append('details', formData.details);
       form.append('image', formData.image);
-      form.append('active', true);
-      form.append('url', formData.url)
+      form.append('url', formData.url);
+      console.log(formData.url)
 
     try {
-      const response = await fetch(`/api/alliances/${currentAlliance.value.id}`, {
-        method: 'PUT',
+      const response = await fetch(`/api/alliances/update/${currentAlliance.value.id}`, {
+        method: 'POST',
         headers: {
           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         },
         body: form
       });
+
       
       if (response.ok) {
         await fetchAlliances();
@@ -256,8 +258,10 @@
         currentAlliance.value = null;
       }
     } catch (error) {
+      loading.value=false
       console.error('Error updating alliance:', error);
     }
+    loading.value=false
   };
 
   const handleReorder = (newOrder) => {

@@ -15,7 +15,7 @@
         
     </div>
 
-    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="">
+    <Modal :visible="showDeleteModal" @close="showDeleteModal = false" title="" disableHeader>
         <div>
             <h2 class="text-lg font-medium mb-4 text-center">¿Estás seguro de eliminar este producto de {{ specarea }}?</h2>
             <div class="flex justify-center space-x-8">

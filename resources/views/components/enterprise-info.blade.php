@@ -29,7 +29,7 @@
             <div class="bg-white w-6 h-[0.08rem]"></div>
             <div class="rounded-full full h-[6rem] flex flex-row items-center bg-[#000000CC] gap-6 px-16">
                 <div><h1 class="font-bold text-white text-3xl font-sans">Vision</h1></div>
-                <div><h1 class="text-[#5ddae5] font-medium text-lg font-sans">{{ $mision }}</h1></div>
+                <div><h1 class="text-[#5ddae5]  font-medium text-[2vw] sm:text-lg font-sans">{{ $mision }}</h1></div>
             </div>
         </div>
 
@@ -44,7 +44,7 @@
             <div class="bg-white w-6 h-[0.08rem]"></div>
             <div class="rounded-full full h-[6rem] flex flex-row items-center bg-[#000000CC] gap-6 px-16">
                 <div><h1 class="font-bold text-white text-3xl font-sans">Misión</h1></div>
-                <div><h1 class="text-[#5ddae5] font-medium text-lg font-sans">{{ $vision }}</h1></div>
+                <div><h1 class="text-[#5ddae5] font-medium text-[2vw] sm:text-lg font-sans">{{ $vision }}</h1></div>
             </div>
         </div>
 
@@ -59,7 +59,7 @@
             <div class="bg-white w-6 h-[0.08rem]"></div>
             <div class="rounded-full full h-[6rem] flex flex-row items-center bg-[#000000CC] gap-6 px-16">
                 <div><h1 class="font-bold text-white text-3xl font-sans">Valores</h1></div>
-                <div><h1 class="text-[#5ddae5] font-medium text-lg font-sans">{{ $values }}</h1></div>
+                <div><h1 class="text-[#5ddae5] font-medium text-[2vw] sm:text-lg font-sans">{{ $values }}</h1></div>
             </div>
         </div>
     </div>
