@@ -34,7 +34,7 @@ class CatalogsController extends Controller
 
         $brandsFilters = (object) [
             'section' => 'Marcas', 
-            'categories' => $this->getBrands()
+            'categories' => []
         ];
 
         // $specAreaFilters = (object) [
@@ -62,8 +62,74 @@ class CatalogsController extends Controller
                 $query->orderBy('index'); 
             },
             'productImages:id,product_id,url,type,index,active'
-        ]);
+        ])->where('is_catalog', '=', 0);
+
+        // if (!empty($appliedFilters)) {
+        //     foreach ($appliedFilters as $section => $values) {
+        //         switch ($section) {
+        //             case 'Áreas de ecpecialidad': // Por si hay typo
+        //                 $query->whereHas('productSpecAreas.specArea', function($q) use ($values) {
+        //                     $q->whereIn('name', $values);
+        //                 });
+
+        //                 $brands = (clone $query) // importante clonar si no quieres alterar el original
+        //                     ->join('brands', 'brands.id', '=', 'products.brand_id')
+        //                     ->select('brands.name')
+        //                     ->distinct()
+        //                     ->get();
+
+        //                 $brandsFilters->categories = $brands->pluck('name')->toArray();
+
+        //                 $filters = $this->getFilters($values[0]); 
+        //                 array_unshift($filters, $brandsFilters);
+        //                 break;
+        //             case 'Marcas':
+        //                 $query->whereHas('brand', function($q) use ($values) {
+        //                     $q->whereIn('name', $values);
+        //                 });
+        //                 break;
+                        
+                        
+        //             default: 
+        //                 $query->whereHas('category', function($q) use ($section, $values) {
+        //                     // Algunas categorías pueden venir con espacios extras
+        //                     $cleanSection = trim($section);
+        //                     $q->whereIn('name', $values);
+        //                 });
+        //                 break;
+        //         }
+        //     }
+        // }
+        
+
         if (!empty($appliedFilters)) {
+            // 1. Procesar primero las áreas de especialidad
+            if (!empty($appliedFilters['Áreas de ecpecialidad'])) {
+                $values = $appliedFilters['Áreas de ecpecialidad'];
+
+                $query->whereHas('productSpecAreas.specArea', function($q) use ($values) {
+                    $q->whereIn('name', $values);
+                });
+
+                // Obtener marcas filtradas a partir del query parcial
+                $brands = (clone $query)
+                    ->join('brands', 'brands.id', '=', 'products.brand_id')
+                    ->select('brands.name')
+                    ->distinct()
+                    ->get();
+
+                $brandsFilters->categories = $brands->pluck('name')->toArray();
+
+                // Cargar los filtros de la especialidad
+                $filters = $this->getFilters($values[0]); 
+                array_unshift($filters, $brandsFilters);
+
+                // Ya lo procesamos → eliminarlo del array para que no se procese otra vez
+                unset($appliedFilters['Áreas de ecpecialidad']);
+            }
+
+            $selectedCategories = [];
+
             foreach ($appliedFilters as $section => $values) {
                 switch ($section) {
                     case 'Marcas':
@@ -71,26 +137,20 @@ class CatalogsController extends Controller
                             $q->whereIn('name', $values);
                         });
                         break;
-                        
-                    case 'Áreas de ecpecialidad': // Por si hay typo
-                        $query->whereHas('productSpecAreas.specArea', function($q) use ($values) {
-                            $q->whereIn('name', $values);
-                        });
-                        $filters = $this->getFilters($values);
-                        array_unshift($filters, $brandsFilters);
-                        break;
-                        
+                    
                     default: 
-                        $query->whereHas('category', function($q) use ($section, $values) {
-                            // Algunas categorías pueden venir con espacios extras
-                            $cleanSection = trim($section);
-                            $q->whereIn('name', $values);
-                        });
+                        $selectedCategories = array_merge($selectedCategories, $values);
                         break;
                 }
             }
         }
 
+        if (!empty($selectedCategories)) {
+            $cleanCategories = array_map('trim', $selectedCategories);
+            $query->whereHas('category', function($q) use ($cleanCategories) {
+                $q->whereIn('name', $cleanCategories);
+            });
+        }
 
         $products = $query->paginate(20);
         return view('catalogs',compact('pages', 'products', 'filters' , 'accesoryPdf', 'specareas'));

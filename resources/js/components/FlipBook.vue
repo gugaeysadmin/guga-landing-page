@@ -107,7 +107,7 @@ export default {
 
 
 <template>
-  <div class="bg-slate-700 pt-4 pb-6 relative overflow-hidden h-[45rem] max-h-[45rem]"
+  <div class="bg-gray-300 pt-4 pb-6 relative overflow-hidden h-[75vh] max-h-[75vh]"
     @mousedown="startDrag"
     @mousemove="onDrag"
     @mouseup="endDrag"
@@ -199,7 +199,7 @@ export default {
       currentPage: 1,
       currentPageInput: 1,
       totalPages: 0,
-      zoomScale: 1.5,
+      zoomScale: 1,
       isFullscreen: false,
       zoomLevel: 1, 
       panX: 0,
@@ -225,8 +225,9 @@ export default {
 
     // 3. Inicializar flipbook
     this.flipbook = new PageFlip(this.$refs.flipbook, {
-      height: 500,
-      width: 300,
+      height: 750,
+      width: 550,
+      autoSize: true,
       size: "stretch",
       showCover: false,
       mobileScrollSupport: true,

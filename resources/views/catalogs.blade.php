@@ -3,20 +3,28 @@
     <x-slot name="header"> <x-header :pages="$pages"/></x-slot>
     <div class="block relative">
         <!-- Imagen de cabecera -->
-        <img src="{{ asset('img/catalogsbg.webp') }}" alt="services_img" class="w-full max-h-[25rem] object-cover" style="object-position: 0 10%;"/>
+        <img src="{{ asset('img/catalogos-wf.jpg') }}" alt="services_img" class="w-full h-[60vh] object-fill" style="object-position: 0 10%;"/>
 
         <!-- Capa de opacidad -->
-        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-0"></div>
         <!-- Título -->
-        <div class="absolute inset-0 flex items-center justify-center ">
+        {{-- <div class="absolute inset-0 flex items-center justify-center ">
             <h1 class="text-white text-[3.5vw] font-sans">Todos nuestros equipos</h1>
-        </div>
+        </div> --}}
     </div>
-    <section class="py-32 px-4 sm:px-12 bg-slate-200">
-        <div class="max-w-[100rem] mx-auto">
+    <section>
+        <div class="w-full items-center justify-center py-32 bg-gradient-to-b  from-sky-800 via-sky-700 to-sky-800  ">
+            <h1 class="text-slate text-center text-[3.2vw] font-bold font-sans text-white uppercase pb-4">TODOS NUESTROS EQUIPOS</h1>
+            <p class="text-white  text-[1.5vw] xs:max-w-[90vw] md:max-w-[70vw] mx-auto font-sans text-center pb-12">Ponemos a tu alcance la mejor selección de equipos de nuestras áreas de especialidad, diseñados para responder a tus necesidades profesionales.</p>
             <x-equipment-areas-catalogs :specareas="$specareas"/>
         </div>
     </section>
+    {{-- <section class="py-32 px-4 sm:px-12 bg-slate-200">
+        <div class="max-w-[100rem] mx-auto">
+            <x-equipment-areas-catalogs :specareas="$specareas"/>
+        </div>
+        
+    </section> --}}
 
     @php
         $filtroEspecialidad = request()->input('filter.Áreas de ecpecialidad.0');

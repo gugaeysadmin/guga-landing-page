@@ -4,7 +4,7 @@
   <form id="filterForm" method="GET" action="{{ $route ?? url()->current() }}" class="max-w-6xl mx-auto px-4">
     
     <!-- Fila 1: Dropdowns -->
-    <div class="flex items-center gap-4 py-3">
+    <div class="flex items-center xs:flex-col md:flex-row gap-4 py-3">
       @foreach ($filters as $key => $filter)
         <div class="relative" data-dropdown>
           <button

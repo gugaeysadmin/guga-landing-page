@@ -4,20 +4,33 @@
 <x-layouts.landingpage-layout>
     <x-slot name="header"> <x-header :pages="$pages"/></x-slot>
     {{-- Titulo --}}
-    <div class="block relative">
-        <!-- Imagen de cabecera -->
+    {{-- <div class="block relative">
         <img src="{{ asset('img/servicesbg.webp') }}" alt="services_img" class="w-full max-h-[35rem] object-cover" style="object-position: 0 10%;"/>
 
-        <!-- Capa de opacidad -->
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-        <!-- Título -->
         <div class="absolute inset-0 flex items-center justify-center ">
             <div>
                 <h1 class="text-white text-[3.5vw] font-sans text-center">Nuestros servicios</h1>
                 <p class="text-white text-[1.3vw] font-sans text-center">En GUGA Equipos y Servicios ofrecemos la instalación, reinstalacion, mantenimiento correctivo y preventivo de sus equipos.</p>
             </div>
         </div>
+    </div> --}}
+
+    <div class="relative max-h-[50rem]  w-full overflow-hidden flex bg-black">
+        <div class="w-full max-h-[50rem]  object-fill">
+            <video autoplay muted loop playsinline preload="auto" class="w-full max-h-[50rem]  object-cover">
+                <source src="{{ asset('vid/ServicesViceo.webm') }}" type="video/webm">
+            </video>
+        </div>
+        <div class="absolute w-full max-h-[50rem] inset-0  block bg-opacity-40 bg-black">
+        </div>
     </div>
+    <section>
+        <div class="w-full items-center justify-center py-32  bg-gradient-to-b  from-sky-800 via-sky-700 to-sky-800  ">
+            <h1 class="text-slate text-center text-[3.2vw] font-bold font-sans text-white uppercase pb-4">Nuestros servicios</h1>
+            <p class="text-white  text-[1.5vw] xs:max-w-[90vw] md:max-w-[70vw] mx-auto font-sans text-center">En GUGA Equipos y Servicios ofrecemos la instalación, reinstalacion, mantenimiento correctivo y preventivo de sus equipos.</p>
+        </div>
+    </section>
     
     {{-- Instalacion y reinstalacion --}}
     {{-- <div class="flex justify-center my-12 px-4 lg:px-0">

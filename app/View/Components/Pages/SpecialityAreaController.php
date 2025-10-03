@@ -66,7 +66,6 @@ class SpecialityAreaController extends Controller
             if (!empty($appliedFilters)) {
                 // Aplanar el array de filtros para obtener solo las categorías específicas
                 $categories = collect($appliedFilters)->flatten()->unique()->toArray();
-                Log::info($categories);
                 $product->whereHas('category', function($q) use ($categories) {
                     $q->whereIn('name', $categories);
                 });

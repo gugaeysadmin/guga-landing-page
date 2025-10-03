@@ -1,8 +1,11 @@
 @props(["product", "index"])
-<div class="pro-detail block justify-center order-last lg:order-none  max-lg:mx-auto">
-    <h2 class="mb-2 font-manrope font-bold text-4xl mt-8 leading-10 text-gray-900 uppercase max-w-[40rem]">
+<div class="pro-detail block justify-center order-last lg:order-none  max-lg:mx-auto xs:px-4 sm:px-12 md:px-0">
+    <h2 class="mb-2 font-manrope font-bold text-4xl mt-8 leading-10 text-gray-900 break-words uppercase xs:max-w-[90vw] md:max-w-[40rem]">
         {{ $product->name }}
     </h2>
+    {{-- @foreach ( $product->category as $cat )
+        <p>{{ $cat->name }}</p>
+    @endforeach --}}
     <h3 class="mb-2 font-manrope font-semibold text-2xl mt-6 leading-10 text-sky-600 max-w-[40rem]">
         {{ $product->brand->name }}
     </h3>
@@ -10,7 +13,7 @@
         {{ $product->description }}
     </p>
 
-    <div class="flex flex-row w-full gap-6 mt-4">
+    <div class="flex xs:flex-col sm:flex-row w-full gap-6 mt-4">
         <a href="https://api.whatsapp.com/send?phone=5567099766" target="_blank" 
             class="flex flex-row justify-center items-center content-center rounded-full h-10 px-6 
                 bg-gradient-to-r
@@ -78,7 +81,7 @@
                         <p class="font-medium text-2xl leading-8 text-gray-900 mb-4">Modelos</p>
                         <div class="w-full overflow-auto">
 
-                            <div class="max-w-[40rem] overflow-auto ">
+                            <div class=" xs:max-w-[90vw] md:max-w-[40rem] overflow-auto ">
                                 {{-- <table class="min-w-full  border border-white  shadow-sm overflow-hidden border-separate" style="border-spacing: 0 0.1rem;">
                                     <thead>
                                         <tr>
@@ -138,7 +141,13 @@
                                     </tbody>
                                 </table> --}}
 
-                                <table class=" w-full max-w-[40rem] border border-white shadow-sm overflow-auto border-separate" style="border-spacing: 0 0.1rem;">
+                                <table class=" 
+                                    @if(count($headers) > 3) 
+                                        w-full
+                                    @else
+                                        w-[60%] 
+                                    @endif
+                                    max-w-[40rem] border border-white shadow-sm overflow-auto border-separate" style="border-spacing: 0 0.1rem;">
                                     <thead class="">
                                         <tr class="bg-gradient-to-r from-sky-600 to-sky-700">
                                             @foreach ($headers as $header)

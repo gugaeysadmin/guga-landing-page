@@ -136,7 +136,7 @@ class SpecAreaController extends Controller
             
             $validated = $request->validate([
                 'title' => 'sometimes|string|max:100',
-                'details' => 'sometimes|string',
+                'details' => 'nullable|string',
                 'index' => 'sometimes|integer',
                 'filters' => 'sometimes|string',
             ]);
