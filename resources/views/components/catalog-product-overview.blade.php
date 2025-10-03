@@ -1,12 +1,22 @@
 @props(["product", "index", "productDecode", "accesoryPdf" ])
 <div class="mx-auto md:flex md:flex-row gap-12 ">
+
+    @php
+        $hasVideo = false;
+        foreach($productDecode->product_images as $img){
+            if(str_starts_with(trim($img->type, '"'), 'video')){
+                $hasVideo = true;
+                break;
+            }
+        }
+    @endphp
     {{-- Imagenes y servicios --}}
     <div class="block">
         <div class="block sticky top-32 h-fit ">
-            <div class="block min-w-[21rem]  min-h-[31rem] rounded-2xl overflow-hidden bg-white items-center  shadow-xl" >
-                <div id="carousel-{{ $index }}" class="relative max-w-[21rem]  max-h-[31rem] bg-white rounded-2xl  overflow-hidden" data-carousel="static">
+            <div class="w-[21rem]  min-h-[31rem] rounded-2xl overflow-hidden bg-white items-center  shadow-xl" >
+                <div id="carousel-{{ $index }}" class="relative max-w-[21rem]  max-h-[31rem] bg-white rounded-2xl  overflow-hidden" data-carousel="{{ $hasVideo ? 'static': 'slide' }}" data-carousel-interval="{{ $index % 2 ===0  ? "4000" : "4500" }}">
                     <!-- Carousel wrapper -->
-                    <div class=" min-w-[21rem]  min-h-[31rem]  overflow-hidden">
+                    <div class=" w-[21rem]  min-h-[31rem]  overflow-hidden">
                         @foreach ($productDecode->product_images as $img )
 
                             @php
@@ -15,18 +25,30 @@
                             @endphp
                             @if (str_starts_with($type, 'image'))
                                 <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                                    <img src="/storage/{{ $img->url }}" class="absolute block w-full h-full object-contain bg-white" alt="...">
+                                    <img src="/storage/{{ $img->url }}" class=" block w-full h-full object-contain bg-white " alt="...">
                                 </div>
                             @elseif(str_starts_with($type, 'video'))
-                                <div class="hidden duration-1000 ease-in-out" data-carousel-item>
-                                    <video
+                                <div class="hidden duration-1000 ease-in-out py-8 bg-stone-900" data-carousel-item>
+                                    {{-- <video
                                         controls
-                                        class="absolute block w-full h-full object-contain -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-[-20]"
+                                        class="absolute block w-full h-full object-contain "
                                     >
                                         <source src="/storage/{{ $img->url }}" :type="{{ $type}}">
-                                    </video>
-                                </div>
+                                    </video> --}}
+                                    <div class="relative w-full h-full bg-white">
+                                        <!-- Video -->
+                                        <video
+                                            id="customVideo"
+                                            controls
+                                            class="w-full h-full object-contain"
+                                            data-video
+                                        >
+                                            <source src="/storage/{{ $img->url }}" type="{{ $type }}">
+                                        </video>
 
+                                    </div>
+                                </div>
+                                
                             @endif
                         @endforeach
                         <!-- Item 1 -->
@@ -52,19 +74,23 @@
                         @foreach ($productDecode->product_images as $img )
                             <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide {{ $img->index }}" data-carousel-slide-to="{{ $img->index }}"></button>
                         @endforeach
+                        {{-- <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button> --}}
                     </div>
                     <!-- Slider controls -->
-                    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                    <button type="button" class="absolute top-0 start-0 z-30 flex items-end justify-center h-[75%] pb-20 px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
                         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <svg class="w-4 h-4 text-slate-200 dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                             </svg>
                             <span class="sr-only">Previous</span>
                         </span>
                     </button>
-                    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                    <button type="button" class="absolute top-0 end-0 z-30 flex items-end justify-center h-[75%] pb-20  px-4 cursor-pointer group focus:outline-none" data-carousel-next>
                         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <svg class="w-4 h-4 text-slate-200 dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                             </svg>
                             <span class="sr-only">Next</span>
@@ -72,10 +98,14 @@
                     </button>
                 </div>
             </div>
-            <div class="flex flex-row justify-center gap-14 w-full mt-8">
+            <div class="flex flex-row flex-wrap justify-center gap-x-9 gap-y-4 max-w-[21rem] mt-8">
                 @if ($product->has_services == 1)
                     <div>
-                        <button class="h-20 w-20 rounded-full shadow-lg border flex items-center justify-center  bg-[#3eb8d7] hover:bg-sky-600 active:bg-sky-500 translate transition-300"
+                        <button 
+                            class="h-14 w-14 mx-auto rounded-xl shadow-lg border flex items-center justify-center
+                                bg-gradient-to-r from-[#3eb8d7] to-sky-600
+                                hover:from-[#3eb8d7] hover:to-sky-700
+                                transition-all duration-500  ease-in-out"  
                             type="button"
                             {{-- onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')" --}}
                             data-twe-toggle="modal"
@@ -83,17 +113,46 @@
                             data-twe-ripple-init
                             data-twe-ripple-color="light"
                         >
-                            <div class="h-16 w-16 border-2 border-white rounded-full flex items-center justify-center content-normal ">
-                                <i class="bi bi-gear text-3xl text-white"></i>
+                            <div class="h-14 w-14rounded-full flex items-center justify-center content-normal ">
+                                <i class="bi bi-tools text-2xl text-white scale-x-90"></i>
                             </div>
                         </button>
-                        <p class="text-lg mt-3 font-bold text-sky-500 text-center ">Servicios</p>
+                        <div>
+                            <p class="text-md max-w-16 mt-1 font-bold text-sky-500 text-center">Servicios</p>
+                        </div>
+                    </div>
+                @endif
+                @if ($product->has_manual == 1)
+                    <div>
+
+                        <button 
+                            class="h-14 w-14 mx-auto rounded-xl shadow-lg border flex items-center justify-center
+                                    bg-gradient-to-r from-[#3eb8d7] to-sky-600
+                                    hover:from-[#3eb8d7] hover:to-sky-700
+                                    transition-all duration-500  ease-in-out"                                                
+                            type="button"
+                            {{-- onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')" --}}
+                            data-twe-toggle="modal"
+                            data-twe-target="#manualModal-{{ $index }}"
+                            data-twe-ripple-init
+                            data-twe-ripple-color="light"
+                        >
+                            <div class="h-14 w-14  rounded-full flex items-center justify-center content-normal">
+                                {{-- <i class="bi bi-bookmark text-3xl text-white"></i> --}}
+                                <i class="bi bi-file-earmark-ruled  text-3xl text-white scale-x-90"></i>
+                            </div>
+                        </button>
+                        <p class="text-sm max-w-16 mt-1 font-bold text-sky-500 text-center ">Ficha Técnica</p>
                     </div>
                 @endif
                 @if ($product->has_accesrorypdf == 1)
-                    <div>
+                    <div >
 
-                        <button class="h-20 w-20 mx-auto rounded-full shadow-lg border flex items-center justify-center  bg-[#3eb8d7] hover:bg-sky-600 active:bg-sky-500 translate transition-300"
+                        <button 
+                            class="h-14 w-14 mx-auto rounded-xl shadow-lg border flex items-center justify-center
+                                    bg-gradient-to-r from-[#3eb8d7] to-sky-600
+                                    hover:from-[#3eb8d7] hover:to-sky-700
+                                    transition-all duration-500  ease-in-out"                                                
                             type="button"
                             {{-- onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')" --}}
                             data-twe-toggle="modal"
@@ -101,11 +160,37 @@
                             data-twe-ripple-init
                             data-twe-ripple-color="light"
                         >
-                            <div class="h-16 w-16 border-2 border-white rounded-full flex items-center justify-center content-normal">
-                                <i class="bi bi-bookmark text-3xl text-white"></i>
+                            <div class="h-14 w-14  rounded-full flex items-center justify-center content-normal">
+                                {{-- <i class="bi bi-bookmark text-3xl text-white"></i> --}}
+                                <i class="bi bi-display  text-3xl text-white scale-x-90"></i>
                             </div>
                         </button>
-                        <p class="text-lg mt-3 font-bold text-sky-500 text-center ">Ficha Técnica</p>
+                        <p class="text-sm max-w-20 mt-1 font-bold text-sky-500 text-center ">Accesorios</p>
+                    </div>
+                @endif
+                @if ($product->has_supply == 1)
+                    <div>
+
+                        <button 
+                            class="h-14 w-14 mx-auto rounded-xl shadow-lg border flex items-center justify-center
+                                    bg-gradient-to-r from-[#3eb8d7] to-sky-600
+                                    hover:from-[#3eb8d7] hover:to-sky-700
+                                    transition-all duration-500  ease-in-out"                                                
+                            type="button"
+                            {{-- onclick="showOfertModal('{{ $offert['name'] }}', '{{ $offert['description'] }}', '{{ $offert['img_url']}}')" --}}
+                            data-twe-toggle="modal"
+                            data-twe-target="#supplyModal-{{ $index }}"
+                            data-twe-ripple-init
+                            data-twe-ripple-color="light"
+                        >
+                            <div class="h-14 w-14  rounded-full flex items-center justify-center content-normal">
+                                {{-- <i class="bi bi-bookmark text-3xl text-white"></i> --}}
+                                <i class="bi bi-box-seam  text-3xl text-white scale-x-90"></i>
+                            </div>
+                        </button>
+                        <div>
+                            <p class="text-sm max-w-20 mt-1 font-bold text-sky-500 text-center ">Consumibles</p>
+                        </div>
                     </div>
                 @endif
             </div>
@@ -169,6 +254,69 @@
                     </div>
                 </div>
             @endif
+            @if ($product->has_manual == 1)
+                <div
+                    data-twe-modal-init
+                    class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                    id="manualModal-{{ $index }}"
+                    tabindex="-1"
+                    aria-labelledby="manualModalLabel"
+                    aria-modal="true"
+                    role="dialog">
+                    <div
+                        data-twe-modal-dialog-ref
+                        class="pointer-events-none flex min-h-screen w-full translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto ">
+                        <div class="pointer-events-auto  min-h-screen flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
+                            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 px-4 pt-2 pb-1">
+                                <!-- Modal title -->
+                                <h5 class="text-xl font-medium leading-normal text-[#0392ceff]" id="manualModalTitle">
+                                    Ficha Técnica
+                                </h5>
+                                <!-- Close button -->
+                                <button
+                                    type="button"
+                                    class="box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                    data-twe-modal-dismiss
+                                    aria-label="Close">
+                                    <span class="[&>svg]:h-6 [&>svg]:w-6">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="currentColor"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor">
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+
+                                    </span>
+                                </button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="flex flex-1 p-4">
+                                <?php
+                                    $url = "";
+                                    $page = 0;
+                                    if($product->manualpdf && $product->manualpdf != "" ){
+                                        $url =  $product->manualpdf;
+                                    }
+                                ?>
+                                <div class="flex flex-1 w-full">
+                                    <iframe
+                                        src="{{ asset("/storage/".$url) }}#page={{ $page }}&zoom=100"
+                                        class="w-full h-full"
+                                        frameborder="0"
+                                    ></iframe>
+                                </div>
+                            </div>
+                            <!-- Modal footer -->
+                        </div>
+                    </div>
+                </div>
+            @endif
             @if ($product->has_accesrorypdf == 1)
                 <div
                     data-twe-modal-init
@@ -180,12 +328,12 @@
                     role="dialog">
                     <div
                         data-twe-modal-dialog-ref
-                        class="pointer-events-none  flex flex-1 min-h-screen  w-full translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out">
-                        <div class="pointer-events-auto min-h-screen flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
-                            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 px-4 pb-1 pt-2">
+                        class="pointer-events-none flex min-h-screen w-full translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto ">
+                        <div class="pointer-events-auto  min-h-screen flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
+                            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 px-4 pt-2 pb-1">
                                 <!-- Modal title -->
                                 <h5 class="text-xl font-medium leading-normal text-[#0392ceff]" id="accesoryModalTitle">
-                                    Ficha Técnica
+                                    Accesorios
                                 </h5>
                                 <!-- Close button -->
                                 <button
@@ -229,7 +377,71 @@
                                         }
                                     }
                                 ?>
-                                <div class="min-h-[calc(100%)] w-full">
+                                <div class="flex flex-1 w-full">
+                                    <iframe
+                                        src="{{ asset("/storage/".$url) }}#page={{ $page }}&zoom=100"
+                                        class="w-full h-full"
+                                        frameborder="0"
+                                    ></iframe>
+                                </div>
+                            </div>
+                            <!-- Modal footer -->
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if ($product->has_supply == 1)
+                <div
+                    data-twe-modal-init
+                    class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                    id="supplyModal-{{ $index }}"
+                    tabindex="-1"
+                    aria-labelledby="supplyModalLabel"
+                    aria-modal="true"
+                    role="dialog">
+                    <div
+                        data-twe-modal-dialog-ref
+                        class="pointer-events-none flex min-h-screen w-full translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto ">
+                        <div class="pointer-events-auto  min-h-screen flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-4 outline-none">
+                            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 px-4 pt-2 pb-1">
+                                <!-- Modal title -->
+                                <h5 class="text-xl font-medium leading-normal text-[#0392ceff]" id="supplyModalTitle">
+                                    Consumibles
+                                </h5>
+                                <!-- Close button -->
+                                <button
+                                    type="button"
+                                    class="box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                    data-twe-modal-dismiss
+                                    aria-label="Close">
+                                    <span class="[&>svg]:h-6 [&>svg]:w-6">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="currentColor"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor">
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+
+                                    </span>
+                                </button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="flex flex-1 p-4">
+                                <?php
+                                    $url = "";
+                                    $page = 0;
+                                    if($product->supplypdf && $product->supplypdf != "" ){
+                                        $url =  $product->supplypdf;
+
+                                    }
+                                ?>
+                                <div class="flex flex-1 w-full">
                                     <iframe
                                         src="{{ asset("/storage/".$url) }}#page={{ $page }}&zoom=100"
                                         class="w-full h-full"

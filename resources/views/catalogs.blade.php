@@ -3,7 +3,7 @@
     <x-slot name="header"> <x-header :pages="$pages"/></x-slot>
     <div class="block relative">
         <!-- Imagen de cabecera -->
-        <img src="{{ asset('img/catalogos-wf.jpg') }}" alt="services_img" class="w-full h-[60vh] object-fill" style="object-position: 0 10%;"/>
+        <img src="{{ asset('img/catalogos-wf.jpg') }}" alt="services_img" class="w-full xs:h-full md:h-[60vh] object-fill" style="object-position: 0 10%;"/>
 
         <!-- Capa de opacidad -->
         <div class="absolute inset-0 bg-black bg-opacity-0"></div>
@@ -14,8 +14,8 @@
     </div>
     <section>
         <div class="w-full items-center justify-center py-32 bg-gradient-to-b  from-sky-800 via-sky-700 to-sky-800  ">
-            <h1 class="text-slate text-center text-[3.2vw] font-bold font-sans text-white uppercase pb-4">TODOS NUESTROS EQUIPOS</h1>
-            <p class="text-white  text-[1.5vw] xs:max-w-[90vw] md:max-w-[70vw] mx-auto font-sans text-center pb-12">Ponemos a tu alcance la mejor selección de equipos de nuestras áreas de especialidad, diseñados para responder a tus necesidades profesionales.</p>
+            <h1 class="text-slate text-center text-3xl font-bold font-sans text-white uppercase pb-4">TODOS NUESTROS EQUIPOS</h1>
+            <p class="text-white  text-lg xs:max-w-[90vw] md:max-w-[70vw] mx-auto font-sans text-center pb-12">Ponemos a tu alcance la mejor selección de equipos de nuestras áreas de especialidad, diseñados para responder a tus necesidades profesionales.</p>
             <x-equipment-areas-catalogs :specareas="$specareas"/>
         </div>
     </section>
@@ -31,9 +31,12 @@
     @endphp
 
     @if($filtroEspecialidad)
-        <div id="seccion-filtro" class="flex px-4 md:px-16 m-auto pb-40 bg-slate-50 scroll-mt-36">
+        <div id="seccion-filtro" class="xs:block md:flex px-4 md:px-16 m-auto pb-40 bg-slate-50 scroll-mt-36">
             <!-- Filtros -->
-            <aside class="w-1/4 bg-slate-50 p-4 mt-12 sticky">
+            <aside class="xs:block md:hidden bg-slate-50 p-4 mt-12 sticky">
+                <x-horizontal-filters  :title="'Categorias de producto'" :filters="$filters"/>
+            </aside>
+            <aside class="w-1/4 xs:hidden md:block bg-slate-50 p-4 mt-12 sticky">
                 <x-filters  :title="'Categorias de producto'" :filters="$filters"/>
             </aside>
             {{-- <?php
@@ -41,7 +44,7 @@
                 echo "<script>console.log(". json_encode($product->services_description ?? "") .");</script>";
             ?> --}}
             <!-- Contenido -->
-            <main class="w-3/4 p-4 mt-12" x-data="{ isGrid: false  }">
+            <main class="xs:w-full md:w-3/4 p-4 mt-12" x-data="{ isGrid: false  }">
                 <!-- Botón de cambio de modo -->
                 {{-- <div class="flex justify-end mb-4">
                     <button id="gridView" @click="isGrid = true" class="mr-2 px-4 py-2 bg-sky-600 rounded hover:bg-sky-500" id="gridView">
@@ -52,7 +55,7 @@
                     </button>
                 </div> --}}
                 <!-- Contenedor de productos -->
-                <div  id="productsContainer" class="flex flex-row flex-wrap gap-14">
+                <div  id="productsContainer" class="flex xs:flex-col md:flex-row flex-wrap gap-14">
                     @if (count($products) === 0)
                         <div class="w-full text-center pt-14">
                             <p class="uppercase text-2xl text-gray-400 font-bold"> no se encontraron productos</p>
@@ -91,13 +94,13 @@
                                     <h3 class=" font-sans mt-4 font-semibold xs:text-md md:text-2xl text-sky-600 uppercase ">{{ $product->name }}</h3>
                                 </div>
                         </button>
-                        <button x-show="!isGrid" class="productCard bg-slate-100 w-full rounded-xl p-4 shadow-lg hover:shadow-xl  flex transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group"
+                        <button x-show="!isGrid" class="productCard bg-slate-100 w-full xs:mx-auto md:xs-0 xs:block md:flex rounded-xl p-4 shadow-lg hover:shadow-xl  flex transition-all duration-300 ease-in-out hover:-translate-y-4 hover:cursor-pointer group"
                                 data-twe-toggle="modal"
                                 data-twe-target="#productModal-{{ $index }}"
                                 data-twe-ripple-init
                                 data-twe-ripple-color="light"
                         >
-                            <div class="w-52 h-64">
+                            <div class="xs:w-full md:w-52 h-64">
                                 <img src="{{ $img }}" alt="Producto" class="h-full w-full object-contain rounded mb-4">
                             </div>
                             <div class="p-4 w-full">
