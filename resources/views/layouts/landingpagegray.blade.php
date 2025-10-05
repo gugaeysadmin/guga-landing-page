@@ -23,7 +23,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/applaravel.js'])
         @stack('scripts')
     </head>
-    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
+    <body class="font-sans antialiased bg-gray-200 dark:bg-gray-900">
         <div class="flex flex-col min-h-screen relative">
             {{-- @include('layouts.navigation') --}}
 
@@ -35,10 +35,7 @@
                 </header>
             @endisset
 
-            <!-- 
-                Page Content 
-            
-            -->
+            <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>

@@ -12,7 +12,7 @@
             <p class="text-gray-200 font-sans font-semibold mb-16 max-w-[40rem] text-[1.2rem]">
                 {{ $description }}
             </p> 
-            <a href="/contact" class="bg-blue-700 hover:bg-blue-500 hover:font-semibold text-gray-200 py-[10px] px-[20px] border-none rounded-3xl text-[1rem]">Contáctanos</a>
+            <a href="/contacto" class="bg-blue-700 hover:bg-blue-500 hover:font-semibold text-gray-200 py-[10px] px-[20px] border-none rounded-3xl text-[1rem]">Contáctanos</a>
         </div>
     </div>
 </div>

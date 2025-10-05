@@ -66,15 +66,16 @@
                         @endif
                     </div>
                 @endforeach
+                
                 <div class="flex flex-row gap-4 ml-6">
                     <div class="h-full justify-center items-center content-center">
-                        <a class="bi bi-whatsapp mr-2 text-xl hnav-item" href="https://api.whatsapp.com/send?phone=5567099766"></a>
+                        <a class="bi bi-whatsapp mr-2 text-2xl hnav-item" href="https://api.whatsapp.com/send?phone=5567099766"></a>
                     </div>
                     <div class="h-full justify-center items-center content-center">
-                        <a class="bi bi-facebook mr-2 text-xl hnav-item" href="https://www.facebook.com/gugaeys/" target="_blank"></a>
+                        <a class="bi bi-facebook mr-2 text-2xl hnav-item" href="https://www.facebook.com/gugaeys/" target="_blank"></a>
                     </div class="h-full justify-center items-center content-center">
                     <div class="h-full justify-center items-center content-center">
-                        <a class="bi bi-linkedin text-xl hnav-item" href="https://www.linkedin.com/company/guga-equipos-y-servicios-sa-de-cv" target="_blank"></a>
+                        <a class="bi bi-linkedin text-2xl hnav-item" href="https://www.linkedin.com/company/guga-equipos-y-servicios-sa-de-cv" target="_blank"></a>
                     </div>
                 </div>
             </div>

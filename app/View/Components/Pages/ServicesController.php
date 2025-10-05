@@ -21,7 +21,7 @@ class ServicesController extends Controller
                 ['name' => 'Instalación y Re-instalación',          'to' => '/services'],
                 ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
                 ]],
-            ['name' => 'Contáctenos', 'to' => '/contact'],
+            ['name' => 'Contáctenos', 'to' => '/contacto'],
         ];
         return view('services',compact('pages'));
     }

@@ -22,7 +22,7 @@ class Header extends Component
                 //     ['name' => 'Mantenimiento correctivo y preventivo', 'to' => '/services']
                 //     ]],
             ['name' => 'Servicios', 'to' => '/services'],
-            ['name' => 'Contáctenos', 'to' => '/contact'],
+            ['name' => 'Contáctenos', 'to' => '/contacto'],
         ];
         return view('components.header', compact('pages'));
     }

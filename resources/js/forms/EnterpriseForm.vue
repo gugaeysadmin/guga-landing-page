@@ -256,7 +256,7 @@
       <!-- Vision -->
       <div  class="w-full py-4">
         <div class="flex flex-row items-center content-center gap-2">
-          <label for="vission" class="block text-md font-semibold text-cyan-800">vission</label>
+          <label for="vission" class="block text-md font-semibold text-cyan-800">Vision</label>
           <button 
             v-if="!editables.vission"
             class="h-7 w-7 rounded-lg hover:bg-slate-200 pt-[1px]"
@@ -311,7 +311,7 @@
       <!-- Valores -->
       <div  class="w-full py-4">
         <div class="flex flex-row items-center content-center gap-2">
-          <label for="values" class="block text-md font-semibold text-cyan-800">values</label>
+          <label for="values" class="block text-md font-semibold text-cyan-800">Valores</label>
           <button 
             v-if="!editables.values"
             class="h-7 w-7 rounded-lg hover:bg-slate-200 pt-[1px]"

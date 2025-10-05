@@ -3,9 +3,9 @@
     <h2 class="mb-2 font-manrope font-bold text-4xl mt-8 leading-10 text-gray-900 break-words uppercase xs:max-w-[90vw] md:max-w-[40rem]">
         {{ $product->name }}
     </h2>
-    {{-- @foreach ( $product->category as $cat )
+    @foreach ( $product->category as $cat )
         <p>{{ $cat->name }}</p>
-    @endforeach --}}
+    @endforeach
     <h3 class="mb-2 font-manrope font-semibold text-2xl mt-6 leading-10 text-sky-600 max-w-[40rem]">
         {{ $product->brand->name }}
     </h3>
@@ -31,7 +31,7 @@
             <p class="text-lg font-bold text-white">Whatsapp</p>
         </a>
 
-        <a href="/contact" class="flex flex-row justify-center items-center content-center rounded-full h-10 px-6
+        <a href="/contacto" class="flex flex-row justify-center items-center content-center rounded-full h-10 px-6
             bg-gradient-to-r
             from-blue-600 
             to-blue-700 
@@ -152,7 +152,13 @@
                                         <tr class="bg-gradient-to-r from-sky-600 to-sky-700">
                                             @foreach ($headers as $header)
                                                 @if ($header != 'imagen')
-                                                    <th class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider first:rounded-tl-lg last:rounded-tr-lg ">
+                                                    <th class="px-6 py-3 
+                                                        @if(count($headers) > 3) 
+                                                            text-left
+                                                        @else
+                                                            text-center 
+                                                        @endif
+                                                        text-xs font-semibold text-white uppercase tracking-wider first:rounded-tl-lg last:rounded-tr-lg ">
                                                         {{ $header }}
                                                     </th>
                                                 @endif
@@ -197,6 +203,11 @@
                                                     @foreach ($headers as $header)
                                                         @if ($header != 'imagen' && $header != 'pdf')
                                                             <td class="px-6 py-2 whitespace-nowrap text-xs text-gray-900 
+                                                                @if(count($headers) > 3) 
+                                                                    text-left
+                                                                @else
+                                                                    text-center 
+                                                                @endif
                                                                 @if($loop->parent->last) first:rounded-bl-lg last:rounded-br-lg @endif
                                                                 @if($rowindex % 2 === 0) bg-[#d4e0e9] @else bg-[#e4ebf0] @endif
                                                                 group-hover:bg-[#bdd1de] transition transition-300">

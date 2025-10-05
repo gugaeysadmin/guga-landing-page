@@ -567,7 +567,7 @@
                     <i class="bi bi-person-lines-fill text-[3.5rem]"></i>
                 </div>
                 <div class="w-[65%] flex items-center justify-center px-4">
-                    <a href="/contact"  class="rounded-full border-solid border-4 border-sky-50 p-4 bg-sky-100 hover:bg-sky-200 active:bg-sky-50">
+                    <a href="/contacto"  class="rounded-full border-solid border-4 border-sky-50 p-4 bg-sky-100 hover:bg-sky-200 active:bg-sky-50">
                         <h1 class=" font-semibold text-sky-800">CONTACTANOS</h1>
                     </a>
                 </div>

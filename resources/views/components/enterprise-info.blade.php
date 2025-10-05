@@ -9,7 +9,7 @@
             <p class="text-center italic text-xl whitespace-pre-line">{{ $about}}</p>
         </div>
         <div class="pb-24 flex justify-center">
-            <a href="/contact" class="rounded-xl py-2 px-4 mx-auto text-[#0392ceff] border-2 border-[#0392ceff]">
+            <a href="/contacto" class="rounded-xl py-2 px-4 mx-auto text-[#0392ceff] border-2 border-[#0392ceff]">
                 Contactanos
             </a>
         </div>

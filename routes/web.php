@@ -27,6 +27,9 @@ use App\View\Components\Pages\AdminController;
 
 use Illuminate\Support\Facades\Route;
 
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
+
 Route::get('/home', function () {
     return view('welcome');
 })->name('home2');
@@ -37,7 +40,7 @@ Route::get('/app/{any}', [AdminController::class, 'index'])->middleware(['auth',
 Route::get('/speciality-area/{specialty}', [SpecialityAreaController::class, 'showBySpecialty'])->name('speciality-area.show');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/catalogs', [CatalogsController::class, 'index'])->name('catalogs');
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/contacto', [ContactController::class, 'index'])->name('contact');
 Route::get('/services', [ServicesController::class, 'index'])->name('services');
 Route::get('/services/contact/{service}', [ServiceContactController::class, 'showByService'])->name('serviceContact');
 
@@ -172,6 +175,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/sitemap.xml', function () {
+    return Sitemap::create()
+        ->add(Url::create('/'))
+        ->add(Url::create('/catalogs'))
+        ->add(Url::create('/contact'))
+        ->add(Url::create('/services'));
 });
 
 
