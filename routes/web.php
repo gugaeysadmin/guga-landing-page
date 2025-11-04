@@ -19,6 +19,7 @@ use App\View\Components\Pages\AlliancesController;
 use App\View\Components\Pages\CatalogsController;
 use App\View\Components\Pages\ContactController;
 use App\Http\Controllers\ContactController as ContactControllerApi;
+use App\View\Components\Pages\ProductoController;
 use App\View\Components\Pages\ServiceContactController;
 use App\View\Components\Pages\ServicesController;
 use App\View\Components\Pages\SpecialityAreaController;
@@ -38,18 +39,22 @@ Route::get('/', [WelcomeController::class, 'index'])->name('home');
 Route::get('/app/{any}', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->where('any', '.*')->name('app.admin');
 
 Route::get('/speciality-area/{specialty}', [SpecialityAreaController::class, 'showBySpecialty'])->name('speciality-area.show');
-Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/producto/{slug}', [ProductoController::class, 'showBySearch'])->name('product.show');
+
+Route::get('/about', [WelcomeController::class, 'index'])->name('about');
 Route::get('/catalogs', [CatalogsController::class, 'index'])->name('catalogs');
 Route::get('/contacto', [ContactController::class, 'index'])->name('contact');
 Route::get('/services', [ServicesController::class, 'index'])->name('services');
 Route::get('/services/contact/{service}', [ServiceContactController::class, 'showByService'])->name('serviceContact');
+
+Route::get('/categoria-producto/biodex/accesorios-biodex/proteccion-exposicion-accesorios-biodex', [ServicesController::class, 'index'])->name('biodex');
+Route::get('/pj-categs/instalacion-y-reinstalacion', [ServicesController::class, 'index'])->name('instalation-reinstalation');
 
 Route::get('/alliances', [AlliancesController::class, 'index'])->name('alliances');
 
 
 
 // APIS
-
 Route::post('/contact/email', [ContactControllerApi::class, 'sendContact'])->name('contact.sendContact');
 Route::post('/contact/specific-email', [ContactControllerApi::class, 'specificServiceContact'])->name('contact.sendSpecificContact');
 Route::post('/contact/service/email', [ContactControllerApi::class, 'sendServiceContact'])->name('contact.sendServiceContact');

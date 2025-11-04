@@ -121,7 +121,7 @@
               label="name"
               @update:modelValue="addCategory"
               :reduce="category => category.id"
-              placeholder="Selecciona una categoía"
+              placeholder="Selecciona una categoría"
               class="flex-1"
             >
               <div slot="no-options">No se encontraron opciones!</div>

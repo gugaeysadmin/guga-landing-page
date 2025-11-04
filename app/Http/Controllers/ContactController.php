@@ -20,7 +20,7 @@ class ContactController extends Controller
         ]);
 
         // Enviar el correo
-        Mail::to('laquesada29@gmail.com')->send(new ContactFormMail($validated));
+        Mail::to('ventas1@gugaequiposyservicios.com.mx')->cc('info@gugaequiposyservicios.com.mx')->send(new ContactFormMail($validated));
 
         return back()->with('success', '¡Gracias por contactarnos! Hemos recibido tu mensaje.');
     }
@@ -36,7 +36,7 @@ class ContactController extends Controller
         ]);
 
         // Enviar el correo
-        Mail::to('laquesada29@gmail.com')->send(new ContactFormMail($validated));
+        Mail::to('ventas1@gugaequiposyservicios.com.mx')->cc('info@gugaequiposyservicios.com.mx')->send(new ContactFormMail($validated));
 
         return back()->with('success', '¡Gracias por contactarnos! Hemos recibido tu mensaje.');
     }
@@ -56,7 +56,7 @@ class ContactController extends Controller
         Log::info($validated);
 
         // Enviar el correo
-        Mail::to('laquesada29@gmail.com')->send(new ServiceContactFormMail($validated));
+        Mail::to('ventas1@gugaequiposyservicios.com.mx')->cc('info@gugaequiposyservicios.com.mx')->send(new ServiceContactFormMail($validated));
 
         return back()->with('success', '¡Gracias por contactarnos! Hemos recibido tu mensaje.');
     }

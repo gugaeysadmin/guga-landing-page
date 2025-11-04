@@ -170,6 +170,14 @@ export default {
           <i :class="isFullscreen ? 'bi bi-fullscreen-exit' : 'bi bi-arrows-fullscreen'"></i>
         </button>
 
+        <button
+          @click="downloadPdf"
+          title="Descargar PDF"
+          class="h-10 w-10 hover:bg-slate-100 shadow-xl flex items-center justify-center rounded-lg transition-all duration-100"
+        >
+          <i class="bi bi-download"></i>
+        </button>
+
         <!-- next page -->
         <button
           @click="nextPage"
@@ -334,6 +342,21 @@ export default {
         this.panX = 0;
         this.panY = 0;
       }
+    },
+
+    downloadPdf() {
+      const link = document.createElement('a');
+      
+      link.href = this.src;
+  
+      const filename = this.src.split('/').pop() || 'documento.pdf';
+      link.download = filename;
+  
+      link.target = '_blank';
+  
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     },
 
     startDrag(e) {
